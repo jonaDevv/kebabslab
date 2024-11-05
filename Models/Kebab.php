@@ -1,20 +1,23 @@
 <?php
 namespace Models;
+use Models\Ingrediente;
 
 Class Kebab{
 
     private int $id;
     private string $nombre;
     private string $foto;        
-    private float $precio;  
+    private float $precio;
+    private Ingrediente $ingredientes;
 
 
-    public function __construct(int $id,string $nombre,string $foto,float $precio){
+    public function __construct(int $id,string $nombre,string $foto,float $precio,Ingrediente $ingredientes){
 
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setFoto($foto);
         $this->setPrecio($precio);
+        $this->setIngredientes($ingredientes);
 
 
     }
@@ -70,6 +73,42 @@ Class Kebab{
         $this->precio = $precio;
 
 
+    }
+
+        public function getIngredientes():Ingrediente
+    {
+
+        return $this->ingredientes;
+    }
+
+    public function setIngredientes($ingredientes):void
+    {
+
+        $this->ingredientes = $ingredientes;
+
+
+    }
+
+    public function __toString(): string {
+        return $this->id . " " .
+               $this->nombre . " " .
+               $this->foto;
+       
+    }
+
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'foto' => $this->foto,
+            'precio' => $this->precio,
+            'ingredientes' => $this->ingredientes->toArray(),
+
+        ];
+    }
+
+    public function toJson(): string {
+        return json_encode($this->toArray());
     }
 }
   

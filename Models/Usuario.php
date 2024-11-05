@@ -6,13 +6,13 @@ class Usuario {
     private int $id;
     private string $nombre;
     private string $password;
-    private string $direccion;
+    private Direccion $direccion;
     private string $rol;
     private float $monedero;
     private string $foto;
     private string $carrito;
 
-    public function __construct(?int $id, string $nombre, string $password, string $direccion, string $rol, float $monedero, string $foto, string $carrito) {
+    public function __construct(?int $id, string $nombre, string $password, Direccion $direccion, string $rol, float $monedero, string $foto, string $carrito) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
@@ -47,7 +47,7 @@ class Usuario {
         $this->password = $password;
     }
 
-    public function getDireccion(): string {
+    public function getDireccion(): Direccion {
         return $this->direccion;
     }
 
