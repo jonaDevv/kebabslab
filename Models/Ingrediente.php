@@ -1,12 +1,12 @@
 <?php
-namespace App\Models;
+namespace Models;
 
-Class Kebab{
+Class Ingrediente{
 
-    private int $id;
+    private int $id;    
     private string $nombre;
-    private string $foto;        
-    private float $precio;  
+    private string $foto;
+    private float $precio;
 
 
     public function __construct(int $id,string $nombre,string $foto,float $precio){
@@ -23,7 +23,7 @@ Class Kebab{
     {        
         return $this->id;
     }   
-
+                            
     public function setId($id):void
     {
         $this->id = $id;
@@ -73,4 +73,5 @@ Class Kebab{
     }
 }
   
-    
+  
+?>

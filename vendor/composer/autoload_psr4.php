@@ -6,5 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Repository\\' => array($baseDir . '/Repository'),
+    'Models\\' => array($baseDir . '/Models'),
     'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
+    'Controllers\\' => array($baseDir . '/Controllers'),
+    'Api\\' => array($baseDir . '/Api'),
 );

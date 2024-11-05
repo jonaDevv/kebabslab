@@ -7,9 +7,9 @@
 </head>
 <body>
     <?=$this->section('header')?>
-    <h1> layout </h1>
-    <?=$this->section('welcome')?>
-    <?=$this->section('listado')?>
+
+    <?=$this->section('body')?>
+    
     <?=$this->section('footer')?>
 
 </body>

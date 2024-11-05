@@ -1,4 +1,17 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+?>
+
+
+
+
 <?php $this->layout('layout'); ?>
+
+
 
 <?php $this->start('header')?>
 <header>
@@ -8,10 +21,10 @@
     </div>
     <nav class="menu">
       <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="?inicio">Inicio</a></li>
+        <li><a href="?servicios">Servicios</a></li>
+        <li><a href="?nosotros">Nosotros</a></li>
+        <li><a href="?contacto">Contacto</a></li>
       </ul>
     </nav>
   </div>
@@ -19,20 +32,22 @@
 
 <?php $this->stop('header')?>
 
-<?php $this->start('welcome') ?>
-<h1></h1>
-<p>Hello World </p>
+
+//body de la pagina, esto será lo que vaya cambiando
+
+<?php $this->start('body') ?>
+
+<section>
+        <div id="cuerpo">
+        <?php
+           require_once("enruta.php");
+        ?>
+        </div>
+    </section>
+
+
 <?php $this->stop() ?>
 
-<?php $this->start('listado') ?>
-<h1>Lista de Usuarios</h1>
-<ul>
-<?php foreach ($users as $user): ?>
-        <li><?= $user['name']; ?> - <?= $user['email']; ?> </li>
-    <?php endforeach; ?>
-
-</ul>
-<?php $this->stop() ?>
 
 
 <?php $this->start('footer') ?>

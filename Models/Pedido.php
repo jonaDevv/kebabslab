@@ -1,20 +1,12 @@
 
 <?php
-namespace App\Models;
+namespace Models;
 
 use DateTime;
 
+
 Class Pedido{
-
-    /**id int AI PK
-    fecha_hora datetime
-    estado enum('recibido','preparacion','camino','entregado')
-    precio_total decimal(10,2)
-    coordenada point
-    direccion varchar(300)
-    usuario_id int"*/
-
-    //Falta la linea de pedido?             
+            
     
 
     private int $id;
@@ -22,7 +14,7 @@ Class Pedido{
     private string $estado;
     private float $precio_total;
     private string $coordenada; //Point en formato WKT
-    private string $direccion;
+    private Direccion $direccion;
     private int $usuario_id;                        
     
     public function __construct(int $id,DateTime $fecha_hora,string $estado,float $precio_total,string $coordenada,string $direccion,int $usuario_id){
@@ -78,7 +70,7 @@ Class Pedido{
     {
         $this->coordenada = $coordenada;
     }
-    public function getDireccion():string
+    public function getDireccion():Direccion
     {
         return $this->direccion;
     }

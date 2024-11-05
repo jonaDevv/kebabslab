@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace Models;
 
 Class Alergeno{
 
@@ -7,7 +7,7 @@ Class Alergeno{
     private string $nombre;
     private string $foto;
 
-    public function __construct(int $id,string $nombre,string $foto){
+    public function __construct(?int $id,string $nombre,string $foto){
 
         $this->setId($id);
         $this->setNombre($nombre);
@@ -21,9 +21,9 @@ Class Alergeno{
         return $this->id;
     }   
                             
-    public function setId($id):void
+    public function setId(?int$id):void
     {
-        $this->id = $id;
+        $this->id = $id ?? 0;
     }
 
     public function getNombre():string
@@ -53,6 +53,26 @@ Class Alergeno{
         $this->foto = $foto;
 
 
+    }
+
+    public function __toString(): string {
+        return $this->id . " " .
+               $this->nombre . " " .
+               $this->foto;
+       
+    }
+
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'foto' => $this->foto,
+
+        ];
+    }
+
+    public function toJson(): string {
+        return json_encode($this->toArray());
     }
 
 }
