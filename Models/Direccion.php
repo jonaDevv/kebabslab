@@ -4,11 +4,11 @@ namespace Models;
 Class Direccion{
 
    
-     private int $id;
-     private string $localidad;
-     private string $provincia;
-     private string $cordenadas;
-     private  $usuario_id;
+     public int $id;
+     public string $localidad;
+     public string $provincia;
+     public string $cordenadas;
+     public  int $usuario_id;
 
      public function __construct(int $id,string $localidad,string $provincia,string $cordenadas,string $usuario_id){
 
@@ -18,7 +18,7 @@ Class Direccion{
          $this->setCordenadas($cordenadas);
          $this->setUsuario_id($usuario_id);          
 
- }  
+    }  
 
      public function getId():int
      {        
@@ -60,6 +60,33 @@ Class Direccion{
      public function setUsuario_id($usuario_id):void
      {
          $this->usuario_id = $usuario_id;
-     }       
+     }
+
+
+
+    public function __toString(): string {
+        return $this->id . " " .
+               $this->localidad . " " .
+               $this->provincia . " " .
+               $this->cordenadas . " " .
+               $this->usuario_id;
+       
+    }
+
+    
+
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
+    }
+     
+     
+
+
+
+
+
+
+
+
 
 }               

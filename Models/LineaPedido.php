@@ -3,11 +3,11 @@ namespace Models;
 
 Class LineaPedido{
    
-    private int $id;
-    private string $kebabs;
-    private int $cantidad;
-    private float $precio;
-    private int $pedido_id;
+    public int $id;
+    public string $kebabs;
+    public int $cantidad;
+    public float $precio;
+    public int $pedido_id;
 
     public function __construct(int $id,string $kebabs,int $cantidad,float $precio,int $pedido_id){
 
@@ -88,6 +88,21 @@ Class LineaPedido{
         $this->pedido_id = $pedido_id;
 
 
+    }
+
+    public function __toString(): string {
+        return $this->id . " " .
+               $this->kebabs . " " .
+               $this->cantidad . " " .
+               $this->precio . " " .
+               $this->pedido_id;
+       
+    }
+
+   
+
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
     }
 
    

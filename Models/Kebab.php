@@ -4,14 +4,14 @@ use Models\Ingrediente;
 
 Class Kebab{
 
-    private int $id;
-    private string $nombre;
-    private string $foto;        
-    private float $precio;
-    private Ingrediente $ingredientes;
+    public int $id;
+    public string $nombre;
+    public string $foto;        
+    public float $precio;
+    public array $ingredientes;
 
 
-    public function __construct(int $id,string $nombre,string $foto,float $precio,Ingrediente $ingredientes){
+    public function __construct(int $id,string $nombre,string $foto,float $precio,array $ingredientes){
 
         $this->setId($id);
         $this->setNombre($nombre);
@@ -75,7 +75,7 @@ Class Kebab{
 
     }
 
-        public function getIngredientes():Ingrediente
+        public function getIngredientes():array
     {
 
         return $this->ingredientes;
@@ -89,26 +89,20 @@ Class Kebab{
 
     }
 
+    
+
     public function __toString(): string {
         return $this->id . " " .
                $this->nombre . " " .
-               $this->foto;
-       
+               $this->foto . " " .
+               $this->precio . " " .               
+               $this->ingredientes; 
     }
 
-    public function toArray(): array {
-        return [
-            'id' => $this->id,
-            'nombre' => $this->nombre,
-            'foto' => $this->foto,
-            'precio' => $this->precio,
-            'ingredientes' => $this->ingredientes->toArray(),
+   
 
-        ];
-    }
-
-    public function toJson(): string {
-        return json_encode($this->toArray());
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
     }
 }
   

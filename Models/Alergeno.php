@@ -3,9 +3,9 @@ namespace Models;
 
 Class Alergeno{
 
-    private int $id;
-    private string $nombre;
-    private string $foto;
+    public int $id;
+    public string $nombre;
+    public string $foto;
 
     public function __construct(?int $id,string $nombre,string $foto){
 
@@ -62,19 +62,18 @@ Class Alergeno{
        
     }
 
-    public function toArray(): array {
-        return [
-            'id' => $this->id,
-            'nombre' => $this->nombre,
-            'foto' => $this->foto,
+    // public function toArray(): array {
+    //     return [
+    //         'id' => $this->id,
+    //         'nombre' => $this->nombre,
+    //         'foto' => $this->foto,
 
-        ];
+    //     ];
+    // }
+
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
     }
-
-    public function toJson(): string {
-        return json_encode($this->toArray());
-    }
-
 }
   
   

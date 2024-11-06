@@ -1,5 +1,3 @@
-/* The class `repoAlergeno` implements CRUD operations for managing allergens in a database using PHP
-and PDO. */
 <?php
 
 
@@ -12,25 +10,11 @@ and PDO. */
 
     Class repoAlergeno implements RepoCrud{
         
-        private static $listaAlergenos = [];
+       
 
         
         //METODOS CRUD
 
-        /**
-         * The `create` function in PHP is used to insert a new record into the `alergeno` table with
-         * the provided data, handling potential errors and returning a success or failure status.
-         * 
-         * @param alergeno The `create` function you provided seems to be a method for creating a new
-         * record in a database table for an "alergeno" object. It takes an `` parameter which
-         * is expected to be an object with `getNombre()` and `getFoto()` methods to retrieve the
-         * 
-         * @return The `create` function is returning a boolean value. If the insertion of the new
-         * "alergeno" (allergen) into the database is successful, it returns `true`. If there is an
-         * error during the insertion process or an exception is caught, it returns `false`.
-         * Additionally, in case of a database error, it sets the HTTP response status to indicate a
-         * server error and returns
-         */
         public static function create($alergeno) {
             // Asegurarse de que el objeto pasado es de tipo Usuario
             
@@ -203,7 +187,7 @@ and PDO. */
                     // Crear un nuevo objeto $usuario
                     $alergeno = new Alergeno($row->id, $row->nombre, $row->foto);
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
-                    $alergenosArray[] = $alergeno->toArray(); // Asegúrate de que el método toArray() esté definido
+                    $alergenosArray[] = $alergeno->toJson(); // Asegúrate de que el método toArray() esté definido
                 }
 
 

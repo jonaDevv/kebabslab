@@ -9,13 +9,13 @@ Class Pedido{
             
     
 
-    private int $id;
-    private DateTime $fecha_hora;
-    private string $estado;
-    private float $precio_total;
-    private string $coordenada; //Point en formato WKT
-    private Direccion $direccion;
-    private int $usuario_id;                        
+    public int $id;
+    public DateTime $fecha_hora;
+    public string $estado;
+    public float $precio_total;
+    public string $coordenada; //Point en formato WKT
+    public Direccion $direccion;
+    public int $usuario_id;                        
     
     public function __construct(int $id,DateTime $fecha_hora,string $estado,float $precio_total,string $coordenada,string $direccion,int $usuario_id){
         
@@ -85,6 +85,24 @@ Class Pedido{
     public function setUsuario_id($usuario_id):void
     {
         $this->usuario_id = $usuario_id;
-    }       
+    }   
+    
+    
+
+    public function __toString(): string {
+        return $this->id . " " .
+               $this->fecha_hora . " " .
+               $this->estado . " " .
+               $this->precio_total . " " .
+               $this->coordenada . " " .
+               $this->direccion . " " .
+               $this->usuario_id;
+    }
+
+   
+
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
+    }
 
 }

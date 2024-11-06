@@ -4,20 +4,22 @@ use Models\Alergeno;
 
 Class Ingrediente{
 
-    private int $id;    
-    private string $nombre;
-    private string $foto;
-    private float $precio;
-    private Alergeno $alergeno;
+    public int $id;    
+    public string $nombre;
+    public string $foto;
+    public float $precio;
+    public string $estado;
+    public array $alergenos;
 
 
-    public function __construct(int $id,string $nombre,string $foto,float $precio,Alergeno $alergeno){
+    public function __construct(?int $id,string $nombre,string $foto,float $precio,string $estado,array $alergenos = []){
 
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setFoto($foto);
         $this->setPrecio($precio);
-        $this->setAlergeno($alergeno);
+        $this->setEstado($estado);
+        $this->setAlergeno($alergenos);
 
 
     }
@@ -27,7 +29,7 @@ Class Ingrediente{
         return $this->id;
     }   
                             
-    public function setId($id):void
+    public function setId(?int $id):void
     {
         $this->id = $id;
     }
@@ -75,16 +77,30 @@ Class Ingrediente{
 
     }
 
-        public function getAlergeno():Alergeno
+        public function getEstado():string
     {
 
-        return $this->alergeno;
+        return $this->estado;
+    }
+
+    public function setEstado($estado):void
+    {
+
+        $this->estado = $estado;
+
+
+    }
+
+        public function getAlergeno():array
+    {
+
+        return $this->alergenos;
     }
 
     public function setAlergeno($alergeno):void
     {
 
-        $this->alergeno = $alergeno;
+        $this->alergenos = $alergeno;
 
 
     }
@@ -92,24 +108,19 @@ Class Ingrediente{
     public function __toString(): string {
         return $this->id . " " .
                $this->nombre . " " .
-               $this->foto;
+               $this->foto . " " .
+               $this->precio . " " .
+               $this->estado . " " .
+               $this->alergenos;
        
     }
 
-    public function toArray(): array {
-        return [
-            'id' => $this->id,
-            'nombre' => $this->nombre,
-            'foto' => $this->foto,
-            'precio' => $this->precio,
-            'alergeno' => $this->alergeno->toArray(),
+   
 
-        ];
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
     }
 
-    public function toJson(): string {
-        return json_encode($this->toArray());
-    }
 }
   
   

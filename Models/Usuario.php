@@ -6,13 +6,13 @@ class Usuario {
     private int $id;
     private string $nombre;
     private string $password;
-    private Direccion $direccion;
+    private array$direccion;
     private string $rol;
     private float $monedero;
     private string $foto;
     private string $carrito;
 
-    public function __construct(?int $id, string $nombre, string $password, Direccion $direccion, string $rol, float $monedero, string $foto, string $carrito) {
+    public function __construct(?int $id, string $nombre, string $password, array $direccion, string $rol, float $monedero, string $foto, string $carrito) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
@@ -47,7 +47,7 @@ class Usuario {
         $this->password = $password;
     }
 
-    public function getDireccion(): Direccion {
+    public function getDireccion(): array{
         return $this->direccion;
     }
 
@@ -98,20 +98,10 @@ class Usuario {
                $this->carrito;
     }
 
-    public function toArray(): array {
-        return [
-            'id' => $this->id,
-            'nombre' => $this->nombre,
-            'password' => $this->password,
-            'direccion' => $this->direccion,
-            'rol' => $this->rol,
-            'monedero' => $this->monedero,
-            'foto' => $this->foto,
-            'carrito' => $this->carrito,
-        ];
-    }
+    
+   
 
-    public function toJson(): string {
-        return json_encode($this->toArray());
+    public function toJson() {
+        return get_object_vars($this); // Convierte todas las propiedades públicas en un array
     }
 }

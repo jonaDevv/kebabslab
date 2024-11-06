@@ -18,6 +18,7 @@ use Repository\repoAlergeno;
             case 'GET':
                 
                 // Lógica para manejar GET (obtener uno o varios usuarios)
+                //Método para estas funciones
                 if (isset($_GET['id']) && !empty($_GET['id'])) {
                     
                     $id = $_GET['id'];
