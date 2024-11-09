@@ -1,17 +1,18 @@
 <?php
 namespace Models;
+
 use Models\Ingrediente;
 
 Class Kebab{
 
-    public int $id;
+    public ?int $id;
     public string $nombre;
     public string $foto;        
     public float $precio;
     public array $ingredientes;
 
 
-    public function __construct(int $id,string $nombre,string $foto,float $precio,array $ingredientes){
+    public function __construct(?int $id,string $nombre,string $foto,float $precio,array $ingredientes = []){
 
         $this->setId($id);
         $this->setNombre($nombre);
@@ -27,7 +28,7 @@ Class Kebab{
         return $this->id;
     }   
 
-    public function setId($id):void
+    public function setId(?int $id):void
     {
         $this->id = $id;
     }
@@ -41,7 +42,7 @@ Class Kebab{
     public function setNombre($nombre):void
     {
 
-        $this->nombre = strtoupper($nombre);
+        $this->nombre = ucfirst($nombre);
 
 
     }

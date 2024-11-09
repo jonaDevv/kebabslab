@@ -35,7 +35,7 @@ Class Alergeno{
     public function setNombre($nombre):void
     {
 
-        $this->nombre = strtoupper($nombre);
+        $this->nombre = ucfirst($nombre);
 
 
     }

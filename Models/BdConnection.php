@@ -23,7 +23,7 @@ class BdConnection {
         }
 
         // Asignar valores de configuración
-        $host = $config['host'];
+        $host = $config['host'];//nombre de contenedor
         $db = $config['db'];
         $user = $config['user'];
         $pass = $config['pass'];

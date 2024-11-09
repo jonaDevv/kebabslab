@@ -40,10 +40,12 @@
                 $stmtAlergeno = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) 
                                                 VALUES (:ingrediente_id, :alergeno_id)");
         
-                foreach ($ingrediente->getAlergenos() as $alergeno) {
+                foreach ($ingrediente->getAlergeno() as $alergeno) {
+                    // Si $alergeno es un array, no puedes usar getId() directamente.
+                    // Usamos el índice del array para obtener el 'id'
                     $stmtAlergeno->execute([
                         'ingrediente_id' => $ingredienteId,
-                        'alergeno_id' => $alergeno->getId() // Asegúrate de que Alergeno tiene el método getId()
+                        'alergeno_id' => $alergeno['id'] // Accede directamente a 'id' si $alergeno es un array
                     ]);
                 }
         
@@ -135,7 +137,7 @@
                 $conn->beginTransaction();
         
                 // 1. Actualizar los datos del ingrediente
-                $stmtUpdate = $conn->prepare("UPDATE ingredientes SET nombre = :nombre, precio = :precio, foto = :foto, estado = :estado WHERE id = :id");
+                $stmtUpdate = $conn->prepare("UPDATE ingrediente SET nombre = :nombre, precio = :precio, foto = :foto, estado = :estado WHERE id = :id");
                 $stmtUpdate->execute([
                     'id' => $id,
                     'nombre' => $ingrediente->getNombre(),
@@ -146,17 +148,17 @@
         
                 // 2. Actualizar las relaciones en la tabla intermedia
                 // Eliminar relaciones existentes
-                $stmtDeleteRelations = $conn->prepare("DELETE FROM ingredientes_alergeno WHERE ingrediente_id = :ingrediente_id");
+                $stmtDeleteRelations = $conn->prepare("DELETE FROM ingrediente_alergeno WHERE ingrediente_id = :ingrediente_id");
                 $stmtDeleteRelations->execute(['ingrediente_id' => $id]);
         
                 // Insertar las nuevas relaciones
                 $alergenos = $ingrediente->getAlergeno(); // Asegúrate de que esto devuelva un array de ids de alérgenos
         
                 foreach ($alergenos as $alergenoId) {
-                    $stmtInsertRelation = $conn->prepare("INSERT INTO ingredientes_alergeno (ingrediente_id, alergeno_id) VALUES (:ingrediente_id, :alergeno_id)");
+                    $stmtInsertRelation = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) VALUES (:ingrediente_id, :alergeno_id)");
                     $stmtInsertRelation->execute([
                         'ingrediente_id' => $id,
-                        'alergeno_id' => $alergenoId,
+                        'alergeno_id' => $alergenoId['id'],
                     ]);
                 }
         
@@ -182,7 +184,7 @@
         
             try {
                 // Preparar la sentencia SQL para eliminar el ingrediente
-                $stmtDelete = $conn->prepare("DELETE FROM ingredientes WHERE id = :id");
+                $stmtDelete = $conn->prepare("DELETE FROM ingrediente WHERE id = :id");
                 $stmtDelete->execute(['id' => $id]);
         
                 // Verificar cuántas filas fueron afectadas

@@ -4,7 +4,7 @@ use Models\Alergeno;
 
 Class Ingrediente{
 
-    public int $id;    
+    public ?int $id;    
     public string $nombre;
     public string $foto;
     public float $precio;
@@ -43,7 +43,7 @@ Class Ingrediente{
     public function setNombre($nombre):void
     {
 
-        $this->nombre = strtoupper($nombre);
+        $this->nombre = ucfirst($nombre);
 
 
     }
@@ -91,7 +91,7 @@ Class Ingrediente{
 
     }
 
-        public function getAlergeno():array
+    public function getAlergeno():array
     {
 
         return $this->alergenos;

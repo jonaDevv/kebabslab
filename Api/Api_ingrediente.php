@@ -26,24 +26,27 @@ switch ($method) {
     case 'POST':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-
+        var_dump($data);
         // Verificar si se recibieron todos los datos necesarios
         if (
-            isset($data['nombre']) && 
-            isset($data['foto']) && 
-            isset($data['precio']) && 
-            isset($data['estado']) && 
-            isset($data['alergenos']) // Asegúrate de que este campo esté presente
-        ) {
+            isset($data[0]['nombre']) && // Verificar si el campo nombre está presente
+            isset($data[0]['foto']) && // Verificar si el campo foto está presente
+            isset($data[0]['precio']) && // Verificar si el campo precio está presente
+            isset($data[0]['estado']) && // Verificar si el campo estado está presente
+            isset($data[0]['alergenos']) // Verificar si el campo alergenos está presente
+        )  // Verificar si el campo alergenos está presente
+         {
+            // Crear el objeto Ingrediente
             // Crear el objeto Ingrediente
             $ingrediente = new Ingrediente(
                 null,  // ID se generará automáticamente
-                $data['nombre'],
-                $data['foto'],
-                $data['precio'],
-                $data['estado'],
-                $data['alergenos'] // Debes asegurarte que este sea un array de IDs de alérgenos
+                $data[0]['nombre'],
+                $data[0]['foto'],
+                $data[0]['precio'],
+                $data[0]['estado'],
+                $data[0]['alergenos'] // Debes asegurarte que este sea un array de IDs de alérgenos
             );
+
 
             // Intentar crear el ingrediente
             if (repoIngrediente::create($ingrediente)) {
@@ -53,6 +56,8 @@ switch ($method) {
                 http_response_code(500); // Error en la creación
                 echo json_encode(["message" => "Error al crear el ingrediente"]);
             }
+
+            
         } else {
             http_response_code(400); // Bad Request
             echo json_encode(["message" => "Datos de ingrediente inválidos"]);
@@ -62,19 +67,19 @@ switch ($method) {
     case 'PUT':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-
+        
         // Verificar si se recibió el ID
-        if (isset($data['id'])) {
-            $id = $data['id']; // ID del ingrediente a actualizar
+        if (isset($data[0]['id'])) {
+            $id = $data[0]['id']; // ID del ingrediente a actualizar
 
             // Crear un nuevo objeto ingrediente con los datos proporcionados
             $ingrediente = new Ingrediente(
-                $data['id'],  // ID del ingrediente
-                $data['nombre'] ?? null,
-                $data['foto'] ?? null,
-                $data['precio'] ?? null,
-                $data['estado'] ?? null,
-                $data['alergenos'] ?? [] // Array de IDs de alérgenos, si existe
+                $data[0]['id'],  // ID del ingrediente
+                $data[0]['nombre'] ?? null,
+                $data[0]['foto'] ?? null,
+                $data[0]['precio'] ?? null,
+                $data[0]['estado'] ?? null,
+                $data[0]['alergenos'] ?? [] // Array de IDs de alérgenos, si existe
             );
 
             header("Content-Type: application/json");
@@ -99,8 +104,10 @@ switch ($method) {
 
             header("Content-Type: application/json");
             if (repoIngrediente::delete($id)) {
+
                 http_response_code(204); // No Content
                 echo json_encode(["message" => "Ingrediente eliminado con éxito"]);
+                
             } else {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Ingrediente no encontrado"]);
