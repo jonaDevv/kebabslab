@@ -8,3 +8,6 @@ use Controllers\HomeController;
 $controller = new HomeController(); 
 $controller->index();
 
+
+?>
+

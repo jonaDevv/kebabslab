@@ -1,27 +1,20 @@
 <?php
 namespace Controllers;
 
-
 use League\Plates\Engine;
-use Repository\repoUsuario;
 
 
 class HomeController {
     protected $templates;
 
     public function __construct() {
-        $this->templates = new Engine('templates');
+        // Configura Plates para que utilice el directorio correcto de plantillas
+        $this->templates = new Engine('./templates'); // Ajusta la ruta aquí si es necesario
     }
 
-   // public function index() {
-     //   $userModel = new User();
-       /// $users = $userModel->getUsers();
-        //echo $this->templates->render('home', ['users' => $users]);
-    //}
     public function index() {
-
-        $repoUsuario = new repoUsuario();
-        $users = $repoUsuario->getAll();
-        echo $this->templates->render('home', ['users' => $users]);
+        // Puedes usar la instancia $this->templates creada en el constructor
+        echo $this->templates->render('home');
     }
 }
+?>

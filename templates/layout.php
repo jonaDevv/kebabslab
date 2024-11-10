@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Proyecto</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../asset/css/istyle.css">
 </head>
 <body>
     <?=$this->section('header')?>
@@ -14,4 +14,3 @@
 
 </body>
 </html>
-//Marca el orden el layout.

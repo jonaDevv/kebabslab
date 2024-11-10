@@ -1,14 +1,3 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-?>
-
-
-
-
 <?php $this->layout('layout'); ?>
 
 
@@ -40,7 +29,7 @@ error_reporting(E_ALL);
 <section>
         <div id="cuerpo">
         <?php
-           require_once("enruta.php");
+           include __DIR__ . '/../vistas/principal/prueba.html';
         ?>
         </div>
     </section>
