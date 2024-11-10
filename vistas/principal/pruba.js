@@ -36,14 +36,3 @@ window.addEventListener("load", function() {
 
 });
 
-function verKebab() {
-    
-    // URL de la API o del servidor al que se quiere hacer la solicitud GET
-    
-
-    
-
-
-
-
-}

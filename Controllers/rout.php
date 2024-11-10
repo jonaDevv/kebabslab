@@ -2,7 +2,7 @@
 <?php
 
 // Asegúrate de que el autoload esté configurado
-require_once 'autoloader.php'; // Esto puede ser tu archivo de autoload o configuración del autoload según tu estructura
+require_once "./autoRutas.php"; // Esto puede ser tu archivo de autoload o configuración del autoload según tu estructura
 
 if (isset($_GET['menu'])) {
     $menu = $_GET['menu'];

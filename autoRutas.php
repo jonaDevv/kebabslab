@@ -3,7 +3,7 @@
 // En "controllers/InicioController.php"
 class InicioController {
     public function index() {
-        require_once 'Vistas/index.php'; // o lo que sea necesario para esta acción
+        require_once 'vistas/principal/index.html'; // o lo que sea necesario para esta acción
     }
 }
 

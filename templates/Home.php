@@ -22,15 +22,16 @@
 <?php $this->stop('header')?>
 
 
-//body de la pagina, esto será lo que vaya cambiando
+
 
 <?php $this->start('body') ?>
 
 <section>
         <div id="cuerpo">
         <?php
-           include __DIR__ . '/../vistas/principal/prueba.html';
+           include __DIR__ . '/../Controllers/rout.php';
         ?>
+
         </div>
     </section>
 
