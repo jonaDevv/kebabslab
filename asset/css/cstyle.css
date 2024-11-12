@@ -11,6 +11,7 @@
     
 }
 
+
 /* Estilo para cada carta */
 .carta {
     background-color: #f39c12;
@@ -33,6 +34,7 @@
 .carta:hover {
     background-color:#24245c;
     color: white;
+    background-image: url("/asset/img/favicon1.png");
     cursor: pointer;
     border: 1px solid white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
