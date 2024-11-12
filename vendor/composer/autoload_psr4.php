@@ -10,6 +10,7 @@ return array(
     'Repository\\' => array($baseDir . '/Repository'),
     'Models\\' => array($baseDir . '/Models'),
     'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
+    'Helper\\' => array($baseDir . '/Helper'),
     'Controllers\\' => array($baseDir . '/Controllers'),
     'Api\\' => array($baseDir . '/Api'),
 );

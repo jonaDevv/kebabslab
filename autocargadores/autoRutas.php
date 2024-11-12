@@ -1,11 +1,40 @@
 <?php
 
+error_reporting(E_ALL); // Reporta todos los tipos de errores
+ini_set('display_errors', 1); // Muestra errores en la salida
+ini_set('display_startup_errors', 1); // Muestra errores en el inicio
+
 // En "controllers/InicioController.php"
 class InicioController {
     public function index() {
-        require_once ""; // o lo que sea necesario para esta acción
+        include __DIR__ ."/../vistas/principal/index.html"; // o lo que sea necesario para esta acción
     }
 }
+
+class alGusto {
+    public function gusto() {
+        include __DIR__ . '/../vistas/principal/crearKebab.html'; // o lo que sea necesario para esta acción
+    }
+
+
+}
+
+class carta {
+    public function carta() {
+        include __DIR__ . '/../vistas/principal/carta.html'; // o lo que sea necesario para esta acción
+    }
+
+
+}
+
+class login {
+    public function openlogin() {
+        include __DIR__ . '/../vistas/login/login.html'; // o lo que sea necesario para esta acción
+    }
+
+
+}
+
 
 // En "controllers/LoginController.php"
 class LoginController {

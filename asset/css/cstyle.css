@@ -1,0 +1,42 @@
+/* Estilo para el contenedor principal */
+#carta {
+    display: flex;
+    
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    flex-direction: column;
+    gap: 0px; /* Añade espacio entre las cartas */
+    padding: 20px; /* Padding para asegurarte de que no se peguen al borde */
+    height: 60vh; /* Establece la altura al 100% de la ventana */
+    
+}
+
+/* Estilo para cada carta */
+.carta {
+    background-color: #f39c12;
+    width: 40vw; /* La carta ocupa el 40% del ancho de la ventana */
+    height: 20vh; /* Altura fija para las cartas */
+    display: flex;
+    justify-content: center; /* Centra el contenido dentro de la carta horizontalmente */
+    align-items: center; /* Centra el contenido dentro de la carta verticalmente */
+    border: 1px solid black;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+    transition: all 0.1s ease-in-out; /* Animación de transición */
+    font-weight: 700;
+}
+
+/* Estilo adicional para el texto */
+.carta div {
+    padding: 10px;
+}
+
+.carta:hover {
+    background-color:#24245c;
+    color: white;
+    cursor: pointer;
+    border: 1px solid white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+    text-size-adjust: 120%;
+
+}

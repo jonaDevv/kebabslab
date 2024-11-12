@@ -1,0 +1,118 @@
+.alGusto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f39c12;
+    height: 85vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ventana {
+  display: grid;
+  grid-template-columns:35% 1fr 1fr; /* Dos columnas de igual tamaño */
+  grid-template-rows: 10% 50% 20% 15% 5%; /* Filas para imagen, nombre, descripción, y precio */
+  grid-gap: 5px; /* Espacio entre las celdas */
+  background-color: white;
+  height: 90%; /* Ajusta según tu necesidad */
+  width: 40%;
+  border: 1px solid #24245c;
+  border-radius: 0% 3% 0% 10%;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.part{
+
+    overflow: hidden;
+}
+
+#foto {
+  grid-column: 1 ; /* Imagen ocupa las dos columnas */
+  grid-row:2/3;
+  text-align: center;
+  height: 60%;
+  color: white;
+  background-color: #24245c;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+}
+
+#nombre {
+  grid-column: 1 ; /* Nombre ocupa las dos columnas */
+  grid-row: 3;
+  height: 20%;
+  
+  text-align: center;
+  color: white;
+
+  background-color: #24245c;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+
+}
+
+#descripcion {
+  grid-column: 1; /* Descripción ocupa las dos columnas */
+  grid-row: 3/5;
+  text-align: center;
+  background-color: #24245c;
+  color: white;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  
+
+}
+
+#ingrediente {
+    grid-column: 2/3; /* Ingredientes en la primera columna */
+    grid-row: 2/4;
+    background-color: #f39c12;
+    color: white;
+    padding: 10px;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  }
+  
+  #aIngrediente {
+    grid-column: 3/5; /* Añadir ingredientes en la segunda columna */
+    grid-row: 2/4;
+    background-color: #f39c12;
+    color: white;
+    padding: 10px;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  }
+
+#alergenos {
+  grid-column: 2 / 5; /* Alergenos ocupan las dos columnas */
+  grid-row: 4;
+  text-align: center;
+  color: white;
+
+  background-color: #f39c12;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+
+}
+
+#precio {
+  grid-column: 4; /* Precio ocupa las dos columnas */
+  text-align: center;
+  color: white;
+  grid-row: 5;
+  overflow: hidden;
+  padding: auto;
+  background-color: #f39c12;
+
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+}
+
+#plus {
+    grid-column: 4; /* Precio ocupa las dos columnas */
+    grid-row: 1;
+    text-align: center;
+    color: white;
+    height: 50px;
+    width: 50px;
+    margin:0;
+    padding: 0;
+
+    
+    
+}
+
