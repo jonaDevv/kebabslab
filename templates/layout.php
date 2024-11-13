@@ -2,16 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi Proyecto</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <title>KEBABSLAB</title>
+    <link rel="stylesheet" href="../asset/css/istyle.css">
+    <script src="/asset/js/modalLogin.js" defer></script>
+    <link rel="stylesheet" href="../asset/css/mstyle.css">
+    
+    
+    <link rel="icon" href="../asset/img/favicon1.png" type="image/x-icon">
 </head>
 <body>
     <?=$this->section('header')?>
-    <h1> layout </h1>
-    <?=$this->section('welcome')?>
-    <?=$this->section('listado')?>
+
+    <?=$this->section('body')?>
+    
     <?=$this->section('footer')?>
 
 </body>
 </html>
-//Marca el orden el layout.

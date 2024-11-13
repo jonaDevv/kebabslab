@@ -1,0 +1,150 @@
+body{
+
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    font-family: Jetbrains Mono;
+    width: 100%;
+    margin: 0;
+    
+    
+      
+}
+
+/* Estilos de footer */
+footer {
+    background-color: #24245c;
+    color: #fff;
+    padding: 20px 0;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10%;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  
+  .footer-section {
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .footer-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .footer-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li {
+    margin: 5px 0;
+  }
+  
+  .footer-section ul li a,
+  .footer-section .social a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-section .social a {
+    margin: 0 5px;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9em;
+    background-color: #222;
+  }
+
+  /* Estilos del header */
+/* Estilos generales del header */
+header {
+  background-color:#24245c; /* Color de fondo del header */
+  color: white;
+  padding: 10px 5px;
+}
+
+/* Contenedor principal del header */
+.header-container {
+  display: flex;
+  flex-direction: column; /* Organiza los elementos en una columna (titulo arriba y menú abajo) */
+  align-items: center; /* Centra los elementos horizontalmente */
+}
+
+/* Estilo para el logo */
+.logo a {
+  font-size: 36px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+/* Estilo para el menú */
+.menu nav ul {
+  list-style-type: none;
+  padding: 5px;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Centra el menú horizontalmente */
+}
+
+.menu nav ul li {
+  margin: 0 15px;  /* Espacio entre los elementos del menú */
+}
+
+.menu nav ul li a,
+.menu nav ul li button {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Efecto hover para los enlaces y el botón */
+.menu nav ul li a:hover,
+.menu nav ul li button:hover {
+  color: #f39c12;
+}
+
+/* Contenedor del video */
+.video-background-container {
+  position: relative;
+  width: 90%;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  overflow: hidden; /* Oculta cualquier parte del video que se salga */
+  
+}
+
+/* Estilo del video */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que el video cubra todo el contenedor sin distorsionarse */
+  z-index: -1; /* Asegura que el video quede en el fondo */
+  border-radius: 0 0 20px 20px;
+}
+
+/* Estilo para el contenido de la página */
+.content {
+  position: relative;
+  z-index: 1; /* Asegura que el contenido se muestre por encima del video */
+  text-align: center; /* Centra el texto */
+  color: rgb(2, 2, 2);
+  padding: 20px;
+}
+.video-background {
+  filter: blur(5px); /* Ajusta el valor según lo que desees */
+  object-fit: cover;
+  background-color: #222;
+}

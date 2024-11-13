@@ -1,0 +1,194 @@
+.alGusto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f39c12;
+    height: 85vh;
+    width: 100%;
+    overflow: hidden;   
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+
+   
+    background-position: center;
+}
+    
+    
+
+
+
+
+.ventana {
+  display: grid;
+  grid-template-columns:40% 30% 18% 10%; /* Dos columnas de igual tamaño */
+  grid-template-rows: 7% 35% 5% 25% 20% 5%; /* Filas para imagen, nombre, descripción, y precio */
+  grid-gap:5px 10px; /* Espacio entre las celdas */
+  
+  background-color: white;
+  height: 82%; /* Ajusta según tu necesidad */
+  width: 40%;
+  
+  border-radius: 0% 3% 0% 10%;
+  padding: 30px;
+  overflow: auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+
+
+.part{
+
+    overflow: hidden;
+    
+}
+
+#foto {
+
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  grid-column: 1 ; /* Imagen ocupa las dos columnas */
+  grid-row:2;
+  text-align: center;
+  
+  color: black;
+  background-color: #ffffff;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  border-radius: 3% 0% 0% 0%;
+  
+  
+}
+
+#nombre {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  
+  grid-column: 1 ; /* Nombre ocupa las dos columnas */
+  grid-row: 3;
+  ;
+ 
+  
+  text-align: center;
+  color: black;
+  background-color: #ffffff;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+
+}
+
+#descripcion {
+  grid-column: 1; /* Descripción ocupa las dos columnas */
+  grid-row: 4;
+  
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: black;
+  background-color: #ffffff;
+  box-shadow: inset 0px 0px 10px rgba(138, 138, 138, 0.6); /* Sombreado interno */
+  border-radius: 0% 0% 0% 0%;
+  
+
+}
+
+#ingrediente {
+    grid-column: 2/3; /* Ingredientes en la primera columna */
+    grid-row: 2/6;
+    background-color: #ffffff;
+    color: black;
+    padding: 10px;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+
+  }
+  
+  #aIngrediente {
+    grid-column: 3/5; /* Añadir ingredientes en la segunda columna */
+    grid-row: 2/6;
+    background-color: #ffffff;
+    color: black;
+    padding: 10px;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+    border-radius: 0% 1% 2.4% 0%;
+    
+  }
+
+#alergenos {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+
+  grid-column: 1 ; /* Alergenos ocupan las dos columnas */
+  grid-row: 5/6;
+  text-align: center;
+  color: black;
+
+  background-color: #ffffff;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  border-radius: 0%  0%  0% 2%;
+
+}
+
+#precio {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  
+  
+
+  grid-column: 4; /* Precio ocupa las dos columnas */
+  grid-row: 6;
+  text-align: center;
+  color: #ffffff;
+  overflow: hidden;
+  padding: auto;
+  background-color: #24245c;
+  border-style: solid 1px;
+  border-color: #f39c12;
+  
+  
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  border-radius: 10% 10% 10% 10%;
+}
+
+#precio:hover {
+    
+  color: white;
+  cursor: pointer;
+  transform: scale(1.1);
+  text-size-adjust: 120%;
+  background-color: #f39c12;
+  
+
+
+
+
+}
+
+#plus {
+    grid-column: 4; /* Precio ocupa las dos columnas */
+    grid-row: 1;
+    text-align: center;
+    background-image: url("/asset/img/favicon1.png");
+    color: white;
+    height: 100%;
+    width: 70%;
+    margin:0 auto;
+    padding: 0;
+    
+}
+
+#plus:hover {
+    
+    color: white;
+    cursor: pointer;
+    transform: scale(1.1);
+    text-size-adjust: 120%;
+    rotate: 45deg;
+
+
+
+
+}
+

@@ -1,38 +1,52 @@
 <?php $this->layout('layout'); ?>
 
+
+
 <?php $this->start('header')?>
 <header>
   <div class="header-container">
     <div class="logo">
-      <a href="#">Mi Proyecto</a>
+      <a href="?menu=inicio"><img src="/asset/img/favicon1.png" width="20px" height="30px">KebabsLab</a>
     </div>
-    <nav class="menu">
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
+    <div class="menu">
+      <nav>
+        <ul>
+          <li><a href="?menu=inicio">Inicio</a></li>
+          <li><a href="?menu=gusto">Kebab</a></li>
+          <li><a href="?menu=carta">Carta</a></li>
+          <li><a id="openModal">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+    
   </div>
+  
 </header>
+
+
 
 <?php $this->stop('header')?>
 
-<?php $this->start('welcome') ?>
-<h1></h1>
-<p>Hello World </p>
+
+
+
+<?php $this->start('body') ?>
+
+<section>
+        <div id="cuerpo">
+        <?php
+          //  include __DIR__ . '/../Controllers/rout.php';
+          use Controllers\rout;
+          rout::rout();
+        ?>
+        
+
+        </div>
+    </section>
+
+
 <?php $this->stop() ?>
 
-<?php $this->start('listado') ?>
-<h1>Lista de Usuarios</h1>
-<ul>
-<?php foreach ($users as $user): ?>
-        <li><?= $user['name']; ?> - <?= $user['email']; ?> </li>
-    <?php endforeach; ?>
-
-</ul>
-<?php $this->stop() ?>
 
 
 <?php $this->start('footer') ?>
@@ -45,7 +59,7 @@
     <div class="footer-section links">
       <h3>Enlaces Rápidos</h3>
       <ul>
-        <li><a href="#home">Inicio</a></li>
+        <li><a href="?menu=inicio">Inicio</a></li>
         <li><a href="#services">Servicios</a></li>
         <li><a href="#about">Sobre Nosotros</a></li>
         <li><a href="#contact">Contacto</a></li>
@@ -68,4 +82,6 @@
     <p>&copy; 2024 Empresa. Todos los derechos reservados.</p>
   </div>
 </footer>
+
 <?php $this->stop() ?>
+
