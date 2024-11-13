@@ -12,5 +12,6 @@ return array(
     'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
     'Helper\\' => array($baseDir . '/Helper'),
     'Controllers\\' => array($baseDir . '/Controllers'),
+    'AutoCargador\\' => array($baseDir . '/AutoCargador'),
     'Api\\' => array($baseDir . '/Api'),
 );

@@ -9,7 +9,8 @@
             "Repository\\": "Repository/",
             "Api\\": "Api/",
             "Vistas\\": "Vistas/",
-            "Helper\\": "Helper/"
+            "Helper\\": "Helper/",
+            "AutoCargador\\": "AutoCargador/"
             
         }
     }

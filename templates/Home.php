@@ -35,7 +35,9 @@
 <section>
         <div id="cuerpo">
         <?php
-           include __DIR__ . '/../Controllers/rout.php';
+          //  include __DIR__ . '/../Controllers/rout.php';
+          use Controllers\rout;
+          rout::rout();
         ?>
         
 

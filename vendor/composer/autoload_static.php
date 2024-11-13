@@ -33,6 +33,7 @@ class ComposerStaticInit9dbb8d27343757572a72f7e813afd380
         ),
         'A' => 
         array (
+            'AutoCargador\\' => 13,
             'Api\\' => 4,
         ),
     );
@@ -61,6 +62,10 @@ class ComposerStaticInit9dbb8d27343757572a72f7e813afd380
         'Controllers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Controllers',
+        ),
+        'AutoCargador\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/AutoCargador',
         ),
         'Api\\' => 
         array (
