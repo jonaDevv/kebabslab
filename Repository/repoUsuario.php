@@ -3,6 +3,7 @@
 
     namespace Repository;
     use Models\Usuario;
+    use Models\Direccion;
     use Models\BdConnection;
     use PDO; // Importa PDO
     use PDOException; 
@@ -29,21 +30,36 @@
 
                 $conn->beginTransaction();
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO usuario (nombre, password, direccion, rol, correo,monedero, foto, carrito) 
+                $stmt = $conn->prepare("INSERT INTO usuario (nombre, password, rol, correo,monedero, foto, carrito) 
                                         VALUES (:nombre, :password, :direccion, :rol, :monedero, :foto, :carrito)");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
                 $resultado = $stmt->execute([
                     'nombre' => $usuario->getNombre(),
                     'password' => $usuario->getPassword(),
-                    'direccion' => $usuario->getDireccion(),
                     'rol' => $usuario->getRol(),
                     'correo' => $usuario->getCorreo(),
                     'monedero' => $usuario->getMonedero(),
                     'foto' => $usuario->getFoto(),
                     'carrito' => $usuario->getCarrito()
                 ]);
-        
+                
+                    // Obtener el ID del nuevo Usuario
+                $UsuarioId = $conn->lastInsertId();
+
+                // Insertar los ingredientes en la tabla intermedia
+                $stmtDireccion = $conn->prepare("INSERT INTO direccion (direccion,usuario_id)
+                                                VALUES (:direccion, :usuario_id)");
+
+                $stmtDireccion->execute([
+                    'direccion' => $usuario->getDireccion(),
+                    'usuario_id' => $UsuarioId
+                ]);
+            
+
+                 // Confirmar la transacción
+                $conn->commit();
+            
                 // Verificar si la inserción fue exitosa
                 if ($resultado) {
                     
@@ -87,7 +103,22 @@
                         $registro->carrito,
                         $registro->direccion,
                     );
-        
+
+                    $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:'.$id.");
+                    $stmt->execute(['usuario_id' => $id]);
+
+                    $result = $stmtDireccion->fetch(PDO::FETCH_OBJ);
+
+                    if($result)
+                    {
+                        $direccion=new Direccion($result->id,$result->nombre,$result->cordenadas);
+                        $usuario->setDireccion($direccion);
+
+                    }
+
+                    
+
+
                     http_response_code(200);
                     header('Content-Type: application/json');
                     echo json_encode($usuario); // Aquí devuelves el usuario en formato JSON
@@ -96,6 +127,20 @@
                     http_response_code(404);
                     echo json_encode(["message" => "No se encontró el usuario"]); 
                 }
+
+                 // Confirmar la transacción
+                 $conn->commit();
+            
+                 // Verificar si la inserción fue exitosa
+                 if ($registro) {
+                     
+                     return true;
+                 } else {
+                     
+                     return false;
+                 }
+
+
             } catch (PDOException $e) {
                 $conn->rollBack();
                 header('Content-Type: application/json');
@@ -206,7 +251,9 @@
         {
                 // Obtener la conexión a la base de datos
                 $conn = BdConnection::getConnection();
+
             try {
+
                 $conn->beginTransaction();
                 // Preparar la consulta
                 $sql = "SELECT * FROM usuario"; // Cambia "usuario" por el nombre de tu tabla
@@ -216,12 +263,37 @@
                 $stmt->execute();
         
                 $usuariosArray = []; // Array para almacenar los usuarios
+               
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     // Crear un nuevo objeto $usuario
-                    $usuario = new Usuario($row->id, $row->nombre, $row->password, $row->direccion, $row->rol, $row->correo, $row->monedero, $row->foto, $row->carrito);
+                    $usuario = new Usuario(
+                        $row->id, 
+                        $row->nombre, 
+                        $row->password, 
+                        $row->rol, 
+                        $row->correo, 
+                        $row->monedero, 
+                        $row->foto, 
+                        $row->carrito,
+                                        );
+                    
+                    $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:'.$id.");
+                    $stmt->execute(['usuario_id' => $id]);
+
+                    $result = $stmtDireccion->fetch(PDO::FETCH_OBJ);
+
+                    if($result)
+                    {
+                        $direccion=new Direccion($result->id,$result->nombre,$result->cordenadas);
+                        $usuario->setDireccion($direccion);
+
+                    }
+                    
+                    
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
                     $usuariosArray[] = $usuario->toJson(); // Asegúrate de que el método toArray() esté definido
                 }
+                
         
                 // Establecer la cabecera de tipo de contenido
                 header("Content-Type: application/json");

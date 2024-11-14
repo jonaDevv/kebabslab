@@ -6,14 +6,14 @@ class Usuario {
     private int $id;
     private string $nombre;
     private string $password;
-    private array$direccion;
+    private array  $direccion;
     private string $rol;
     private string $correo;
     private float $monedero;
     private string $foto;
     private string $carrito;
 
-    public function __construct(?int $id, string $nombre, string $password, array $direccion, string $rol,string $correo, float $monedero, string $foto, string $carrito) {
+    public function __construct(?int $id, string $nombre, string $password, array $direccion = [], string $rol,string $correo, float $monedero, string $foto, string $carrito) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
