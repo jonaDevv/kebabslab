@@ -10,7 +10,7 @@ use PDOException;
 
 Class repoKebab implements RepoCrud {
     
-    private static $listaKebabs = []; // Array para almacenar los kebabs
+   
 
     // METODOS CRUD
 
@@ -259,6 +259,7 @@ Class repoKebab implements RepoCrud {
         
                     // Crear un array para los alérgenos de este ingrediente
                     $alergenosArray = [];
+                    
                     while ($alergenoRow = $stmtAlergenos->fetch(PDO::FETCH_OBJ)) {
                         $alergenosArray[] = $alergenoRow->nombre;
                     }

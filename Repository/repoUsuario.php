@@ -79,6 +79,7 @@
         }
         
         public static function read($id) { 
+
             $conn = BdConnection::getConnection();
             
             try {
@@ -101,44 +102,55 @@
                         $registro->monedero,
                         $registro->foto,
                         $registro->carrito,
-                        $registro->direccion,
+                       
                     );
 
-                    $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:'.$id.");
-                    $stmt->execute(['usuario_id' => $id]);
+                    $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:usuario_id");
+                    $stmtDireccion->execute(['usuario_id' => $id]);
 
-                    $result = $stmtDireccion->fetch(PDO::FETCH_OBJ);
+                    $direccionesArray = [];
 
-                    if($result)
-                    {
-                        $direccion=new Direccion($result->id,$result->nombre,$result->cordenadas);
-                        $usuario->setDireccion($direccion);
-
+                    while ($direccionRow = $stmtDireccion->fetch(PDO::FETCH_OBJ)) {
+                        
+                        $direccionesArray[] = new Direccion(
+                            $direccionRow->id,
+                            $direccionRow->nombre,
+                            $direccionRow->cordenadas
+                        );
                     }
+                       
+                        // Asignar el array de ingredientes al kebab
+                    if (count($direccionesArray) > 0) {
+                        $usuario->setDireccion($direccionesArray); // Asumimos que hay un método setIngredientes en la clase Kebab
+                    }
+                    
 
                     
 
+                    $conn->commit();
 
                     http_response_code(200);
                     header('Content-Type: application/json');
-                    echo json_encode($usuario); // Aquí devuelves el usuario en formato JSON
+                    echo json_encode($usuario->toJson()); // Aquí devuelves el usuario en formato JSON
+                   
                     exit; // Termina la ejecución aquí para evitar enviar múltiples respuestas
+
+                    
                 } else {
                     http_response_code(404);
                     echo json_encode(["message" => "No se encontró el usuario"]); 
                 }
 
                  // Confirmar la transacción
-                 $conn->commit();
             
-                 // Verificar si la inserción fue exitosa
-                 if ($registro) {
+                //  // Verificar si la inserción fue exitosa
+                //  if ($registro) {
                      
-                     return true;
-                 } else {
+                //      return true;
+                //  } else {
                      
-                     return false;
-                 }
+                //      return false;
+                //  }
 
 
             } catch (PDOException $e) {
@@ -237,6 +249,10 @@
                    
                     return false;
                 }
+
+                $conn->commit();
+
+                
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP en caso de error
                 $conn->rollBack();
@@ -275,20 +291,29 @@
                         $row->monedero, 
                         $row->foto, 
                         $row->carrito,
-                                        );
+                        );
                     
-                    $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:'.$id.");
-                    $stmt->execute(['usuario_id' => $id]);
+                    $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:usuario_id");
+                    $stmtDireccion->execute(['usuario_id' => $row->id]);
 
-                    $result = $stmtDireccion->fetch(PDO::FETCH_OBJ);
+                    $direccionesArray = [];
 
-                    if($result)
-                    {
-                        $direccion=new Direccion($result->id,$result->nombre,$result->cordenadas);
-                        $usuario->setDireccion($direccion);
+                    
 
+                    while ($direccionRow = $stmtDireccion->fetch(PDO::FETCH_OBJ)) {
+                        
+                        $direccionesArray[] = new Direccion(
+                            $direccionRow->id,
+                            $direccionRow->nombre,
+                            $direccionRow->cordenadas
+                        );
                     }
                     
+                        
+                        // Asignar el array de ingredientes al kebab
+                    if (count($direccionesArray) > 0) {
+                        $usuario->setDireccion($direccionesArray); // Asumimos que hay un método setIngredientes en la clase Kebab
+                    }
                     
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
                     $usuariosArray[] = $usuario->toJson(); // Asegúrate de que el método toArray() esté definido

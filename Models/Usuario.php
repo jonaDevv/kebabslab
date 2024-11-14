@@ -6,23 +6,23 @@ class Usuario {
     private int $id;
     private string $nombre;
     private string $password;
-    private array  $direccion;
     private string $rol;
     private string $correo;
     private float $monedero;
     private string $foto;
     private string $carrito;
+    private array  $direccion;
 
-    public function __construct(?int $id, string $nombre, string $password, array $direccion = [], string $rol,string $correo, float $monedero, string $foto, string $carrito) {
+    public function __construct(?int $id, string $nombre, string $password, string $rol,string $correo, float $monedero, string $foto, string $carrito, array $direccion = []) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
-        $this->setDireccion($direccion); // Correcto
         $this->setRol($rol);
         $this->setCorreo($correo);
         $this->setMonedero($monedero);
         $this->setFoto($foto);
         $this->setCarrito($carrito);
+        $this->setDireccion($direccion); // Correcto
     }
 
     public function getId(): int {

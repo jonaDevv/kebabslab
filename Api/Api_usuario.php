@@ -19,6 +19,7 @@ switch ($method) {
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             $id = $_GET['id'];
             $usuario = repoUsuario::read($id); // Método para obtener un kebab por ID
+
         } else {
             // Obtener todos los kebabs
             $usuario = repoUsuario::getAll(); // Método para obtener todos los kebabs
@@ -68,6 +69,8 @@ switch ($method) {
                 http_response_code(500); // Error en la creación
                 echo json_encode(["message" => "Error al crear el kebab"]);
             }
+
+
             
         } else {
             http_response_code(400); // Bad Request
@@ -78,7 +81,7 @@ switch ($method) {
     case 'PUT':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-        
+        var_dump($data);
         // Verificar si se recibió el ID
         if (isset($data[0]['id'])) {
             $id = $data[0]['id']; // ID del usario a actualizar
@@ -97,7 +100,7 @@ switch ($method) {
            // Crear el objeto usuario
            $usuario= new Usuario(
         
-                null,  // ID se generará automáticamente
+                $data[0]['id'],
                 $data[0]['nombre']??null,
                 $data[0]['password']??null,
                 $data[0]['rol']??null,

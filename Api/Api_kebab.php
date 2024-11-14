@@ -102,6 +102,8 @@ switch ($method) {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Kebab no encontrado"]);
             }
+
+            
         } else {
             http_response_code(400); // Bad Request
             echo json_encode(["message" => "ID de kebab no proporcionado"]);
