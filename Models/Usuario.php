@@ -8,16 +8,18 @@ class Usuario {
     private string $password;
     private array$direccion;
     private string $rol;
+    private string $correo;
     private float $monedero;
     private string $foto;
     private string $carrito;
 
-    public function __construct(?int $id, string $nombre, string $password, array $direccion, string $rol, float $monedero, string $foto, string $carrito) {
+    public function __construct(?int $id, string $nombre, string $password, array $direccion, string $rol,string $correo, float $monedero, string $foto, string $carrito) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
         $this->setDireccion($direccion); // Correcto
         $this->setRol($rol);
+        $this->setCorreo($correo);
         $this->setMonedero($monedero);
         $this->setFoto($foto);
         $this->setCarrito($carrito);
@@ -63,6 +65,14 @@ class Usuario {
         $this->rol = $rol; // Corrige la propiedad aquí
     }
 
+    public function getCorreo(): string {
+        return $this->correo;
+    }
+
+    public function setCorreo($correo): void {
+        $this->correo = $correo; // Corrige la propiedad aquí
+    }
+
     public function getMonedero(): float {
         return $this->monedero;
     }
@@ -93,6 +103,7 @@ class Usuario {
                $this->password . " " .
                $this->direccion . " " .
                $this->rol . " " .
+               $this->correo . " " .
                $this->monedero . " " .
                $this->foto . " " .
                $this->carrito;

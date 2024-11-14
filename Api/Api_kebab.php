@@ -79,6 +79,7 @@ switch ($method) {
                 foreach ($data[0]['ingredientes'] as $ingredienteId) {
                     $ingredientes[] = ['id' => $ingredienteId]; // Asumimos que cada ingrediente es un ID
                 }
+                
             }else{
 
                 $ingredientes = [];

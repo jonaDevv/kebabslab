@@ -26,7 +26,7 @@ window.addEventListener("load", function() {
             json.forEach(item => {
                 const cartaDiv = document.createElement('div');
                 cartaDiv.classList.add('carta');
-        
+                cartaDiv.kebab = item;
                 // Agregar nombre y precio del kebab al contenido del div
                 cartaDiv.textContent = `${item.nombre}  ${item.precio} €`;
         

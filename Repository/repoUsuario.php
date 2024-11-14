@@ -26,8 +26,10 @@
             $conn = BdConnection::getConnection();
         
             try {
+
+                $conn->beginTransaction();
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO usuario (nombre, password, direccion, rol, monedero, foto, carrito) 
+                $stmt = $conn->prepare("INSERT INTO usuario (nombre, password, direccion, rol, correo,monedero, foto, carrito) 
                                         VALUES (:nombre, :password, :direccion, :rol, :monedero, :foto, :carrito)");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
@@ -36,6 +38,7 @@
                     'password' => $usuario->getPassword(),
                     'direccion' => $usuario->getDireccion(),
                     'rol' => $usuario->getRol(),
+                    'correo' => $usuario->getCorreo(),
                     'monedero' => $usuario->getMonedero(),
                     'foto' => $usuario->getFoto(),
                     'carrito' => $usuario->getCarrito()
@@ -52,6 +55,7 @@
                 
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP
+                $conn->rollBack();
                 header('HTTP/1.1 500 Error en la base de datos');
                 echo json_encode(["error" => $e->getMessage()]);
                 return false;
@@ -62,6 +66,8 @@
             $conn = BdConnection::getConnection();
             
             try {
+                $conn->beginTransaction();
+
                 $stmt = $conn->prepare("SELECT * FROM usuario WHERE id=:id");
                 $stmt->execute(['id' => $id]);
                 
@@ -75,6 +81,7 @@
                         $registro->nombre,
                         $registro->password,
                         $registro->rol,
+                        $registro->correo,
                         $registro->monedero,
                         $registro->foto,
                         $registro->carrito,
@@ -90,6 +97,7 @@
                     echo json_encode(["message" => "No se encontró el usuario"]); 
                 }
             } catch (PDOException $e) {
+                $conn->rollBack();
                 header('Content-Type: application/json');
                 http_response_code(500);
                 echo json_encode(["error" => $e->getMessage()]);
@@ -111,10 +119,12 @@
             $conn = BdConnection::getConnection();
         
             try {
+                $conn->beginTransaction();
+
                 // Preparar la sentencia SQL para actualizar un usuario existente
                 $stmt = $conn->prepare("UPDATE usuario 
                                         SET nombre = :nombre, password = :password, direccion = :direccion, 
-                                            rol = :rol, monedero = :monedero, foto = :foto, carrito = :carrito
+                                            rol = :rol, correo=:correo, monedero = :monedero, foto = :foto, carrito = :carrito
                                         WHERE id = :id");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
@@ -124,6 +134,7 @@
                     'password' => $usuario->getPassword(),
                     'direccion' => $usuario->getDireccion(),
                     'rol' => $usuario->getRol(),
+                    'correo' => $usuario->getCorreo(),
                     'monedero' => $usuario->getMonedero(),
                     'foto' => $usuario->getFoto(),
                     'carrito' => $usuario->getCarrito()
@@ -146,6 +157,7 @@
 
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP
+                $conn->rollBack();
                 header('HTTP/1.1 500 Internal Server Error');
                 echo json_encode(["error" => "Error en la base de datos: " . $e->getMessage()]);
             }
@@ -155,9 +167,14 @@
 
 
         public static function delete($id) {
+
+            // Obtener la conexión a la base de datos
+            $conn = BdConnection::getConnection();
+
             try {
-                $conn = BdConnection::getConnection();
-        
+
+                $conn->beginTransaction();
+                
                 // Preparar la sentencia SQL para eliminar el usuario
                 $stmt = $conn->prepare("DELETE FROM usuario WHERE id = :id");
                 $stmt->execute(['id' => $id]);
@@ -177,6 +194,7 @@
                 }
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP en caso de error
+                $conn->rollBack();
                 header('HTTP/1.1 500 Error en la base de datos');
                 echo json_encode(["error" => $e->getMessage()]);
             }
@@ -188,7 +206,8 @@
         {
                 // Obtener la conexión a la base de datos
                 $conn = BdConnection::getConnection();
-                
+            try {
+                $conn->beginTransaction();
                 // Preparar la consulta
                 $sql = "SELECT * FROM usuario"; // Cambia "usuario" por el nombre de tu tabla
                 $stmt = $conn->prepare($sql);
@@ -199,9 +218,9 @@
                 $usuariosArray = []; // Array para almacenar los usuarios
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     // Crear un nuevo objeto $usuario
-                    $usuario = new Usuario($row->id, $row->nombre, $row->password, $row->direccion, $row->rol, $row->monedero, $row->foto, $row->carrito);
+                    $usuario = new Usuario($row->id, $row->nombre, $row->password, $row->direccion, $row->rol, $row->correo, $row->monedero, $row->foto, $row->carrito);
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
-                    $usuariosArray[] = $usuario->toArray(); // Asegúrate de que el método toArray() esté definido
+                    $usuariosArray[] = $usuario->toJson(); // Asegúrate de que el método toArray() esté definido
                 }
         
                 // Establecer la cabecera de tipo de contenido
@@ -209,7 +228,12 @@
                 // Codificar el array de usuarios a JSON y devolverlo
                 echo json_encode($usuariosArray);
                 exit; // Terminar el script después de enviar la respuesta
-            
+                
+            } catch (PDOException $e) {
+                $conn->rollBack();
+                header('HTTP/1.1 500 Error en la base de datos');
+                echo json_encode(["error" => $e->getMessage()]);
+            }
         }
 
 
