@@ -4,7 +4,7 @@ namespace Models;
 
 class Usuario {
 
-    public int $id;
+    public ?int $id;
     public string $nombre;
     public string $password;
     public string $rol;
@@ -34,7 +34,7 @@ class Usuario {
     }
 
     public function setId(?int $id){
-        $this->id = $id ?? 0;// Correcto
+        $this->id = $id;// Correcto
     }
 
     public function getNombre(): string {

@@ -94,15 +94,7 @@ switch ($method) {
                 $direccion = [];
             }
 
-            if (isset($data[0]['alergia'])) {
-                $alergia = [];
-                foreach ($data[0]['alergia'] as $alergiaId) {
-                    $alergia[] = ['id' => $alergiaId]; 
-                }
-            }else{
-
-                $alergia = [];
-            }
+            
 
            // Crear el objeto usuario
            if($user=repoUsuario::read($id)){
@@ -116,7 +108,7 @@ switch ($method) {
                 $user->setMonedero($data[0]['monedero']??$user->getMonedero());
                 $user->setFoto($data[0]['foto']??$user->getFoto());
                 $user->setCarrito($data[0]['carrito']??$user->getCarrito());
-                $user->setDireccion($alergia??$user->getAlergia());
+                $user->setAlergia($data[0]['alergia']??$user->getAlergia());
                 $user->setDireccion($direccion??$user->getDireccion());
                 
         
@@ -129,6 +121,7 @@ switch ($method) {
             if (repoUsuario::update($id, $user)) {
                 http_response_code(200); // OK
                 echo json_encode(["message" => "Usuario actualizado correctamente"]);
+                echo json_encode($user);
             } else {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Usuario no encontrado"]);

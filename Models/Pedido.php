@@ -10,14 +10,14 @@ Class Pedido{
 
     public ?int $id;
     public int $usuario_id;                        
-    public DateTime $fecha_hora;
+    public $fecha_hora;
     public array $lineasPedido;
     public string $estado;
     public float $precio_total;
     public  $direccion;
-    public string $coordenada; //Point en formato WKT
+    public $coordenada; //Point en formato WKT
     
-    public function __construct(?int $id,int $usuario_id,DateTime $fecha_hora, string $estado,float $precio_total,$direccion,string $coordenada="",array $lineaPedido=[]){
+    public function __construct(?int $id,int $usuario_id,$fecha_hora, string $estado,float $precio_total,$direccion,$coordenada="",array $lineaPedido=[]){
         
         $this->setId($id);
         $this->setUsuario_id($usuario_id);          
@@ -39,11 +39,11 @@ Class Pedido{
     {
         $this->id = $id;
     }                           
-    public function getFecha_hora():DateTime    
+    public function getFecha_hora() 
     {
         return $this->fecha_hora;
     }                           
-    public function setFecha_hora($fecha_hora):void
+    public function setFecha_hora($fecha_hora)
     {
         $this->fecha_hora = $fecha_hora;
     }
@@ -71,11 +71,11 @@ Class Pedido{
     {
         $this->precio_total = $precio_total;
     }
-    public function getCoordenada():string
+    public function getCoordenada()
     {
         return $this->coordenada;
     }
-    public function setCoordenada($coordenada):void
+    public function setCoordenada($coordenada)
     {
         $this->coordenada = $coordenada;
     }

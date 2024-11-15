@@ -153,7 +153,6 @@
                 // Insertar las nuevas relaciones
                 $alergenos = $ingrediente->getAlergeno(); // Asegúrate de que esto devuelva un array de ids de alérgenos
         
-                //Comprobar si es un objeto con el método getId()
                 foreach ($alergenos as $alergeno) {
                     if (is_object($alergeno) && method_exists($alergeno, 'getId')) {
                         // Si es un objeto con el método getId(), procedemos normalmente

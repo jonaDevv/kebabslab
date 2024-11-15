@@ -8,6 +8,7 @@
     use PDO; // Importa PDO
     use PDOException; 
     use Exception;
+    use DateTime;
      
 
     Class repoPedido implements RepoCrud{
@@ -25,18 +26,16 @@
         
             try {
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO pedido (usuario_id, fecha_hora, lineasPedido, estado, precio_total, coordenada, direccion) 
-                                        VALUES (:usuario_id, :fecha_hora, :lineasPedido, :estado, :precio_total, :coordenada, :direccion)");
+                $stmt = $conn->prepare("INSERT INTO pedido (usuario_id, fecha_hora, estado, precio_total,  direccion) 
+                                        VALUES (:usuario_id, :fecha_hora,:estado, :precio_total,  :direccion)");
                                        
                 
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto pedido
                 $resultado = $stmt->execute([
                     'usuario_id' => $pedido->getUsuario_id(),
                     'fecha_hora' => $pedido->getFecha_hora(),
-                    'lineasPedido' => $pedido->getLineasPedido(),
                     'estado' => $pedido->getEstado(),
                     'precio_total' => $pedido->getPrecio_total(),
-                    'coordenada' => $pedido->getCoordenada(),
                     'direccion' => $pedido->getDireccion()
                 ]);
         
@@ -86,27 +85,37 @@
                         $registro->direccion
                     );
 
-                    $stmtPedido = $conn->prepare("SELECT * FROM linea_pedido WHERE pedido_id=:pedido_id");
-                    $stmtPedido->execute(['pedido_id' => $id]);
+                    $stmtlineaPedido = $conn->prepare("SELECT * FROM linea_pedido WHERE pedido_id=:pedido_id");
+                    $stmtlineaPedido->execute(['pedido_id' => $registro->id]);
 
-                  $pedidosArray = [];
+                    $lineaPedidoArray = [];
 
-                    while ($pedidoRow = $stmtPedido->fetch(PDO::FETCH_OBJ)) {
+
+                    
                         
-                        $pedidoArray[] = new LineaPedido(
-                            $pedidoRow->id,
-                            $pedidoRow->pedido_id,
-                            $pedidoRow->cantidad,
-                            $pedidoRow->kebabs,
-                            $pedidoRow->precio
-                        );
-                         
+                    while ($row = $stmtlineaPedido->fetch(PDO::FETCH_OBJ)) {
+                    
+                        // Decodificar el campo kebabs (JSON en formato cadena)
+                        $kebabs = json_decode($row->kebabs, true); // Decodificar el JSON de kebabs
                         
+                        // Verificar si la decodificación fue exitosa
+                        if ($kebabs === null) {
+                            throw new Exception('Error al decodificar el campo kebabs');
+                        }
+    
+                        // Crear el objeto LineaPedido
+                        $lineaPedido = new LineaPedido($row->id, $row->pedido_id, $row->cantidad, $kebabs, $row->precio);
+                        
+                        // Agregar la línea de pedido a la respuesta
+                        $lineaPedidoArray[] = $lineaPedido->toJson(); 
                     }
-                       
+                    
+                    
+                        
                         // Asignar el array de ingredientes al kebab
-                    if (count($pedidosArray) > 0) {
-                        $pedido->setLineasPedido($pedidosArray); // Asumimos que hay un método setIngredientes en la clase Kebab
+                    if (count($lineaPedidoArray) > 0) {
+                        
+                        $pedido->setLineasPedido($lineaPedidoArray); 
                         
                     }
                     
@@ -131,69 +140,104 @@
             }
         }
         
-        
-
-        
         public static function update($id, $pedido) {
-            // Asegurarse de que el objeto pasado es de tipo Usuario
-            if (!$pedido instanceof Pedido) {
-                header('HTTP/1.1 400 Bad Request');
-                echo json_encode(["error" => "Datos de pedido inválidos"]);
-                return; // Salir de la función
-            }
-        
-            // Obtener la conexión a la base de datos
             $conn = BdConnection::getConnection();
-        
+            
             try {
                 $conn->beginTransaction();
-                // Preparar la sentencia SQL para actualizar un pedido existente
+                
+                // Actualizar el pedido
                 $stmt = $conn->prepare("UPDATE pedido
                                         SET usuario_id = :usuario_id, fecha_hora = :fecha_hora,
-                                         lineasPedido = :lineasPedido, estado = :estado,
-                                          precio_total = :precio_total, coordenada = :coordenada, direccion = :direccion
+                                            estado = :estado, precio_total = :precio_total, 
+                                            coordenada = :coordenada, direccion = :direccion
                                         WHERE id = :id");
-
         
-                // Ejecutar la sentencia, asignando valores de las propiedades del objeto pedido
-                $resultado = $stmt->execute([
-
+                $f = $pedido->getFecha_hora();
+                $fechaStr = $f['date'];
+                $fecha = new DateTime($fechaStr);
+                $fechaSinMicrosegundos = $fecha->format('Y-m-d H:i:s');
+        
+                $coordenada = "POINT(" . $pedido->getCoordenada() . ")";
+        
+                // Ejecutar la sentencia de actualización del pedido
+                $stmt->execute([
                     'id' => $id,
                     'usuario_id' => $pedido->getUsuario_id(),
-                    'fecha_hora' => $pedido->getFecha_hora(),
-                    'lineasPedido' => $pedido->getLineasPedido(),
+                    'fecha_hora' => $fechaSinMicrosegundos,
                     'estado' => $pedido->getEstado(),
                     'precio_total' => $pedido->getPrecio_total(),
-                    'coordenada' => $pedido->getCoordenada(),
+                    'coordenada' => $coordenada,
                     'direccion' => $pedido->getDireccion()
-    
                 ]);
-
-                header("Content-Type: application/json");
-
-                
-
-                // Verificar si la actualización fue exitosa
-                if ($resultado) {
-                   
-                    $conn->commit();
-                    return true;
-                } else {
-                    $conn->commit();
-                    return false;
+        
+                // Actualizar las líneas de pedido
+                $lineas = $pedido->getLineasPedido();
+                $lineasExistentes = [];
+        
+                // Recuperar las líneas de pedido existentes para evitar eliminarlas accidentalmente
+                $stmtLineasExistentes = $conn->prepare("SELECT id FROM linea_pedido WHERE pedido_id = :pedido_id");
+                $stmtLineasExistentes->execute(['pedido_id' => $id]);
+                while ($row = $stmtLineasExistentes->fetch(PDO::FETCH_ASSOC)) {
+                    $lineasExistentes[] = $row['id'];
                 }
-
-                echo json_encode($pedido);
-                
-
-
+        
+                // Insertar o actualizar las relaciones de líneas de pedido
+                foreach ($lineas as $linea) {
+                    if (is_object($linea) && method_exists($linea, 'getId')) {
+                        $lineaId = $linea->getId();
+        
+                        // Si la línea ya existe, no insertamos una nueva
+                        if (in_array($lineaId, $lineasExistentes)) {
+                            // Si ya existe, eliminamos la relación anterior y la volvemos a insertar
+                            $stmtUpdateRelation = $conn->prepare("UPDATE linea_pedido SET pedido_id = :pedido_id WHERE id = :linea_id");
+                            $stmtUpdateRelation->execute([
+                                'pedido_id' => $id,
+                                'linea_id' => $lineaId
+                            ]);
+                        } else {
+                            // Insertar una nueva relación
+                            $stmtInsertRelation = $conn->prepare("INSERT INTO linea_pedido (pedido_id, linea_id) VALUES (:pedido_id, :linea_id)");
+                            $stmtInsertRelation->execute([
+                                'pedido_id' => $id,
+                                'linea_id' => $lineaId
+                            ]);
+                        }
+                    } else {
+                        error_log("Ingrediente inválido encontrado: " . print_r($linea, true));
+                    }
+                }
+        
+                // Eliminar las líneas de pedido que ya no están en el array de líneas actuales
+                $lineasActuales = array_map(function($linea) {
+                    return $linea->getId();
+                }, $lineas);
+        
+                $lineasParaEliminar = array_diff($lineasExistentes, $lineasActuales);
+        
+                if (!empty($lineasParaEliminar)) {
+                    // Construir la cadena de placeholders para los ? en la consulta SQL
+                    $placeholders = implode(',', array_fill(0, count($lineasParaEliminar), '?'));
+                    $stmtDelete = $conn->prepare("DELETE FROM linea_pedido WHERE id IN ($placeholders)");
+        
+                    // Ejecutar la eliminación de las líneas de pedido que ya no están asociadas
+                    $stmtDelete->execute($lineasParaEliminar);
+                }
+        
+                $conn->commit();
+                return true;
+        
             } catch (PDOException $e) {
-                // Manejo de errores y respuesta de estado HTTP
+                // Si ocurre algún error, revertir cambios
                 $conn->rollBack();
                 header('HTTP/1.1 500 Internal Server Error');
                 echo json_encode(["error" => "Error en la base de datos: " . $e->getMessage()]);
+                return false;
             }
         }
+        
+        
+        
         
         
 
@@ -253,45 +297,44 @@
                         $row->usuario_id, 
                         $fecha,
                         $row->estado, 
-                        $row->precio_total, 
-                        $row->coordenada, 
-                        $row->direccion
+                        $row->precio_total,
+                        $row->direccion, 
+                        $row->coordenada 
+                        
                     );
                     
                     $stmtlineaPedido = $conn->prepare("SELECT * FROM linea_pedido WHERE pedido_id=:pedido_id");
                     $stmtlineaPedido->execute(['pedido_id' => $row->id]);
 
-                    $lineasPedidoArray = [];
+                    $lineaPedidoArray = [];
 
 
                     
                         
-                    while ($lineaPedidoRow = $stmtlineaPedido->fetch(PDO::FETCH_OBJ)) {
-                        // Verifica que las propiedades existen antes de usarlas
-                        $kebabs = isset($lineaPedidoRow->kebabs) ? $lineaPedidoRow->kebabs : 'Kebabs no disponibles';
-                        $cantidad = isset($lineaPedidoRow->cantidad) ? $lineaPedidoRow->cantidad : 'Cantidad no disponible';
-                        $precio = isset($lineaPedidoRow->precio) ? $lineaPedidoRow->precio : 'Precio no disponible';
-                        $pedido_id = isset($lineaPedidoRow->pedido_id) ? $lineaPedidoRow->pedido_id : 'Pedido_id no disponible';
-
-                        // Crear la instancia de Direccion con las propiedades validadas
-                        $lineasPedidoArray[] = new LineaPedido(
-                            $lineaPedidoRow->id,
-                            $pedido_id,
-                            $cantidad,
-                            $kebabs,
-                            $precio,
-                        );
-
+                    while ($row = $stmtlineaPedido->fetch(PDO::FETCH_OBJ)) {
+                    
+                        // Decodificar el campo kebabs (JSON en formato cadena)
+                        $kebabs = json_decode($row->kebabs, true); // Decodificar el JSON de kebabs
+                        
+                        // Verificar si la decodificación fue exitosa
+                        if ($kebabs === null) {
+                            throw new Exception('Error al decodificar el campo kebabs');
+                        }
+    
+                        // Crear el objeto LineaPedido
+                        $lineaPedido = new LineaPedido($row->id, $row->pedido_id, $row->cantidad, $kebabs, $row->precio);
+                        
+                        // Agregar la línea de pedido a la respuesta
+                        $lineaPedidoArray[] = $lineaPedido->toJson(); 
                     }
                     
                     
                         
                         // Asignar el array de ingredientes al kebab
-                    if (count($lineasPedidoArray) > 0) {
+                    if (count($lineaPedidoArray) > 0) {
                         
-                        $pedido->setLineasPedido($lineasPedidoArray); 
+                        $pedido->setLineasPedido($lineaPedidoArray); 
                         
-                    
                     }
                     
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
@@ -304,6 +347,7 @@
                  header("Content-Type: application/json");
                  // Codificar el array de usuarios a JSON y devolverlo
                  echo json_encode($pedidosArray);
+                //var_dump($pedidosArray);
                  exit; // Terminar el script después de enviar la respuesta
 
                  
