@@ -7,6 +7,7 @@
     use Models\LineaPedido;
     use PDO; // Importa PDO
     use PDOException; 
+    use Exception;
      
 
     Class repoPedido implements RepoCrud{
@@ -70,11 +71,15 @@
         
               if ($registro) {
                    
+                    $fecha = date_create($registro->fecha_hora);
+                    if (!$fecha) {
+                        // Si la fecha no es válida, puedes usar un valor por defecto o lanzar un error
+                        throw new Exception("Fecha inválida en el registro");
+                    }
                     $pedido = new Pedido(
                         $registro->id,
                         $registro->usuario_id,
-                        $registro->fecha_hora,
-                        $registro->lineasPedido,
+                        $fecha,
                         $registro->estado,
                         $registro->precio_total,
                         $registro->coordenada,
@@ -90,10 +95,10 @@
                         
                         $pedidoArray[] = new LineaPedido(
                             $pedidoRow->id,
-                            $pedidoRow->kebabs,
+                            $pedidoRow->pedido_id,
                             $pedidoRow->cantidad,
-                            $pedidoRow->precio,
-                            $pedidoRow->pedido_id
+                            $pedidoRow->kebabs,
+                            $pedidoRow->precio
                         );
                          
                         
@@ -105,6 +110,7 @@
                         
                     }
                     
+                    $pedidosArray[]=$pedido->toJson();
                     
         
                     http_response_code(200);
@@ -115,7 +121,7 @@
 
                 } else {
                     http_response_code(404);
-                    echo json_encode(["message" => "No se encontró el alergeno"]); 
+                    echo json_encode(["message" => "No se encontró el pedido"]); 
                 }
 
             } catch (PDOException $e) {
@@ -227,6 +233,7 @@
         {
                 // Obtener la conexión a la base de datos
                 $conn = BdConnection::getConnection();
+            
                 
             try {  
                 // Preparar la consulta
@@ -240,11 +247,11 @@
                
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     
+                    $fecha = date_create($row->fecha_hora);
                     $pedido = new Pedido(
                         $row->id, 
                         $row->usuario_id, 
-                        $row->fecha_hora, 
-                        $row->lineasPedido, 
+                        $fecha,
                         $row->estado, 
                         $row->precio_total, 
                         $row->coordenada, 
@@ -269,10 +276,10 @@
                         // Crear la instancia de Direccion con las propiedades validadas
                         $lineasPedidoArray[] = new LineaPedido(
                             $lineaPedidoRow->id,
-                            $kebabs,
+                            $pedido_id,
                             $cantidad,
+                            $kebabs,
                             $precio,
-                            $pedido_id
                         );
 
                     }
@@ -289,20 +296,22 @@
                     
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
                     $pedidosArray[] = $pedido->toJson(); // Asegúrate de que el método toArray() esté definido
+                
+                    
                 }
 
+                 // Establecer la cabecera de tipo de contenido
+                 header("Content-Type: application/json");
+                 // Codificar el array de usuarios a JSON y devolverlo
+                 echo json_encode($pedidosArray);
+                 exit; // Terminar el script después de enviar la respuesta
 
+                 
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP en caso de error
                 header('HTTP/1.1 500 Error en la base de datos');
                 echo json_encode(["error" => $e->getMessage()]);
             }
-        
-                // Establecer la cabecera de tipo de contenido
-                header("Content-Type: application/json");
-                // Codificar el array de usuarios a JSON y devolverlo
-                echo json_encode($pedidosArray);
-                exit; // Terminar el script después de enviar la respuesta
             
         }
 

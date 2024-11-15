@@ -5,6 +5,7 @@
     use Models\Usuario;
     use Models\Direccion;
     use Models\BdConnection;
+    use Models\Alergeno;
     use PDO; // Importa PDO
     use PDOException; 
      
@@ -59,6 +60,21 @@
                         'direccion' => $direccionString,
                         'usuario_id' => $UsuarioId
                     ]);
+                }
+
+                if ($usuario->getAlergia()!=null){
+                    /// Insertar los alérgenos en la tabla intermedia
+                    $stmtAlergeno = $conn->prepare("INSERT INTO usuario_has_alergenos (usuario_id, alergeno_id) 
+                    VALUES (:usuario_id, :alergeno_id)");
+
+                    foreach ($usuario->getAlergia() as $alergia) {
+                        
+                        $stmtAlergeno->execute([
+                            'usuario_id' => $UsuarioId,
+                            'alergeno_id' => $alergia['id'] // Accede directamente a 'id' si $alergeno es un array
+                        ]);
+
+                    }
                 }
                  // Confirmar la transacción
                 $conn->commit();
@@ -120,13 +136,30 @@
                             $direccionRow->nombre,
                             $direccionRow->cordenadas
                         );
-                    }
-                       
+                    }   
                         // Asignar el array de ingredientes al kebab
                     if (count($direccionesArray) > 0) {
                         $usuario->setDireccion($direccionesArray); // Asumimos que hay un método setIngredientes en la clase Kebab
                     }
+
                     
+                    $stmtAlergenos = $conn->prepare("
+                            SELECT a.* FROM alergeno a
+                            INNER JOIN usuario_has_alergeno ua ON a.id = ua.alergeno_id
+                            WHERE ua.usuario_id = :usuario_id
+                    ");
+                    $stmtAlergenos->execute(['usuario_id' => $id]);
+                        
+                    // Crear un array para los alérgenos
+                    $alergenosArray = [];
+                    while ($alergenoRow = $stmtAlergenos->fetch(PDO::FETCH_OBJ)) {
+                        $alergenosArray[] = new Alergeno($alergenoRow->id, $alergenoRow->nombre, $alergenoRow->foto); // Asumimos que Alergeno tiene un constructor con id y nombre
+                    }
+                    
+                        // Asignar el array de ingredientes al kebab
+                    if (count($alergenosArray) > 0) {
+                        $usuario->setAlergia($alergenosArray); // Asumimos que hay un método setIngredientes en la clase Kebab
+                    }
 
                     
 
@@ -135,6 +168,7 @@
                     http_response_code(200);
                     header('Content-Type: application/json');
                     echo json_encode($usuario->toJson()); // Aquí devuelves el usuario en formato JSON
+                    $conn->commit();
                     return $usuario;
                    
                     exit; // Termina la ejecución aquí para evitar enviar múltiples respuestas
@@ -142,20 +176,21 @@
                     
                 } else {
                     http_response_code(404);
-                    echo json_encode(["message" => "No se encontró el usuario"]); 
+                    echo json_encode(["message" => "No se encontró el usuario"]);
+                    return false; 
                 }
 
-                 // Confirmar la transacción
+                //  // Confirmar la transacción
             
-                //  // Verificar si la inserción fue exitosa
-                  if ($registro) {
+                // //  // Verificar si la inserción fue exitosa
+                //   if ($registro) {
                      
-                    $conn->commit();
-                      return true;
-                  } else {
-                    $conn->commit();
-                      return false;
-                 }
+                    
+                      
+                //   } else {
+                //     $conn->commit();
+                      
+                //  }
 
 
             } catch (PDOException $e) {
@@ -201,6 +236,21 @@
                     'carrito' => $usuario->getCarrito(),
                    
                 ]);
+
+                if ($usuario->getAlergia()!=null){
+                    /// Insertar los alérgenos en la tabla intermedia
+                    $stmtAlergeno = $conn->prepare("INSERT INTO usuario_has_alergenos (usuario_id, alergeno_id) 
+                    VALUES (:usuario_id, :alergeno_id)");
+
+                    foreach ($usuario->getAlergia() as $alergia) {
+                        
+                        $stmtAlergeno->execute([
+                            'usuario_id' => $id,
+                            'alergeno_id' => $alergia['id'] // Accede directamente a 'id' si $alergeno es un array
+                        ]);
+
+                    }
+                }
 
                 header("Content-Type: application/json");
 
@@ -291,17 +341,13 @@
                         $row->correo, 
                         $row->monedero, 
                         $row->foto, 
-                        $row->carrito
+                        $row->carrito,
                         );
                     
                     $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:usuario_id");
                     $stmtDireccion->execute(['usuario_id' => $row->id]);
 
                     $direccionesArray = [];
-
-                    
-
-                    
                         
                     while ($direccionRow = $stmtDireccion->fetch(PDO::FETCH_OBJ)) {
                         // Verifica que las propiedades existen antes de usarlas
@@ -315,13 +361,33 @@
                             $cordenadas
                         );
                     }
-                    
-                    
                         
-                        // Asignar el array de ingredientes al kebab
                     if (count($direccionesArray) > 0) {
                         $usuario->setDireccion($direccionesArray); // Asumimos que hay un método setIngredientes en la clase Kebab
                     }
+
+                    //Ahora buscamos los alergenos
+                    $stmtAlergenos = $conn->prepare("
+                            SELECT a.* FROM alergeno a
+                            INNER JOIN usuario_has_alergeno ua ON a.id = ua.alergeno_id
+                            WHERE ua.usuario_id = :usuario_id
+                    ");
+
+                    $stmtAlergenos->execute(['usuario_id' => $usuario->getId()]);
+                        
+                    // Crear un array para los alérgenos
+                    $alergenosArray = [];
+
+                    while ($alergenoRow = $stmtAlergenos->fetch(PDO::FETCH_OBJ)) {
+                        $alergenosArray[] = new Alergeno($alergenoRow->id, $alergenoRow->nombre, $alergenoRow->foto); // Asumimos que Alergeno tiene un constructor con id y nombre
+                    }
+                    
+                        // Asignar el array de ingredientes al kebab
+                    if (count($alergenosArray) > 0) {
+                        $usuario->setAlergia($alergenosArray); // Asumimos que hay un método setIngredientes en la clase Kebab
+                    }
+                     
+                    
                     
                     // Convertir el objeto a un array y añadirlo a la lista de usuarios
                     $usuariosArray[] = $usuario->toJson(); // Asegúrate de que el método toArray() esté definido
@@ -333,6 +399,7 @@
                 // Codificar el array de usuarios a JSON y devolverlo
                 echo json_encode($usuariosArray);
                 exit; // Terminar el script después de enviar la respuesta
+                
                 
             } catch (PDOException $e) {
                 

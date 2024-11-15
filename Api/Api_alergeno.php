@@ -39,13 +39,14 @@ use Repository\repoAlergeno;
 
                     // Verificar si se recibieron todos los datos necesarios
                     if (
-                        isset($data['nombre']) && isset($data['foto'])) 
+                        isset($data[0]['nombre']) && isset($data[0]['foto'])) 
                     {
                         // Crear el objeto Alergeno de forma similar
                         $alergeno = new Alergeno(
+                            
                             null,  
-                            $data['nombre'],
-                            $data['foto'],
+                            $data[0]['nombre'],
+                            $data[0]['foto'],
                            
                         );
 
@@ -119,7 +120,7 @@ use Repository\repoAlergeno;
 
                         header("Content-Type: application/json");
                         if (repoAlergeno::delete($id)) {
-                            http_response_code(204); // No Content
+                            http_response_code(200); // No Content
                             echo json_encode(["message" => "Alergeno eliminado con éxito"]);
                         } else {
                             http_response_code(404); // Not Found

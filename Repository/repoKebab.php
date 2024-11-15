@@ -170,11 +170,15 @@ Class repoKebab implements RepoCrud {
             $ingredientes = $kebab->getIngredientes(); // Asegúrate de que esto devuelva un array de ids de ingredientes
 
             foreach ($ingredientes as $ingrediente) {
-                $stmtInsertRelation = $conn->prepare("INSERT INTO kebab_ingrediente (kebab_id, ingrediente_id) VALUES (:kebab_id, :ingrediente_id)");
-                $stmtInsertRelation->execute([
-                    'kebab_id' => $id,
-                    'ingrediente_id' => $ingrediente['id'],
-                ]);
+                if (is_object($ingrediente) && method_exists($ingrediente, 'getId')) {
+                    $stmtInsertRelation = $conn->prepare("INSERT INTO kebab_ingrediente (kebab_id, ingrediente_id) VALUES (:kebab_id, :ingrediente_id)");
+                    $stmtInsertRelation->execute([
+                        'kebab_id' => $id,
+                        'ingrediente_id' => $ingrediente->getId(),
+                    ]);
+                } else {
+                    error_log("Ingrediente inválido encontrado: " . print_r($ingrediente, true));
+                }
             }
 
             // Confirmar la transacción

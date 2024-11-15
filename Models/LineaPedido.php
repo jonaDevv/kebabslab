@@ -3,13 +3,13 @@ namespace Models;
 
 Class LineaPedido{
    
-    public int $id;
-    public string $kebabs;
+    public ?int $id;
+    public $kebabs;
     public int $cantidad;
     public float $precio;
     public int $pedido_id;
 
-    public function __construct(int $id,int $pedido_id,string $kebabs,int $cantidad,float $precio){
+    public function __construct(?int $id,int $pedido_id,int $cantidad,$kebabs,float $precio){
 
         $this->setId($id);
         $this->setPedido_id($pedido_id); 
@@ -25,21 +25,23 @@ Class LineaPedido{
         return $this->id;
     }   
                             
-    public function setId($id):void
+    public function setId(?int $id):void
     {
         $this->id = $id;
     }
 
-    public function getKebabs():string
+    public function getKebabs()
     {
+    
 
-        return $this->kebabs;
+    return $this->kebabs; // Devolver como string si falla la decodificación
     }
 
     public function setKebabs($kebabs):void
     {
+        
 
-        $this->kebabs = strtoupper($kebabs);
+        $this->kebabs = $kebabs;
 
 
     }

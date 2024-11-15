@@ -11,7 +11,6 @@
 
     Class repoIngrediente implements RepoCrud{
         
-        private static $listaIngredientes = []; // Array para almacenar los ingredientes
 
         
         //METODOS CRUD
@@ -35,20 +34,20 @@
         
                 // Obtener el ID del nuevo ingrediente
                 $ingredienteId = $conn->lastInsertId();
-        
-                // Insertar los alérgenos en la tabla intermedia
-                $stmtAlergeno = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) 
-                                                VALUES (:ingrediente_id, :alergeno_id)");
-        
-                foreach ($ingrediente->getAlergeno() as $alergeno) {
-                    // Si $alergeno es un array, no puedes usar getId() directamente.
-                    // Usamos el índice del array para obtener el 'id'
-                    $stmtAlergeno->execute([
-                        'ingrediente_id' => $ingredienteId,
-                        'alergeno_id' => $alergeno['id'] // Accede directamente a 'id' si $alergeno es un array
-                    ]);
+                if ($ingrediente->getAlergeno()!=null){
+                    // Insertar los alérgenos en la tabla intermedia
+                    $stmtAlergeno = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) 
+                                                    VALUES (:ingrediente_id, :alergeno_id)");
+            
+                    foreach ($ingrediente->getAlergeno() as $alergeno) {
+                        // Si $alergeno es un array, no puedes usar getId() directamente.
+                        // Usamos el índice del array para obtener el 'id'
+                        $stmtAlergeno->execute([
+                            'ingrediente_id' => $ingredienteId,
+                            'alergeno_id' => $alergeno['id'] // Accede directamente a 'id' si $alergeno es un array
+                        ]);
+                    }
                 }
-        
                 // Confirmar la transacción
                 $conn->commit();
                 return true;
@@ -107,6 +106,7 @@
         
                 http_response_code(200);
                 header('Content-Type: application/json');
+
                 echo json_encode($ingrediente); // Devuelve el ingrediente con alérgenos en formato JSON
                 return $ingrediente;
         
@@ -146,20 +146,26 @@
                     'estado' => $ingrediente->getEstado(),
                 ]);
         
-                // 2. Actualizar las relaciones en la tabla intermedia
-                // Eliminar relaciones existentes
+                
                 $stmtDeleteRelations = $conn->prepare("DELETE FROM ingrediente_alergeno WHERE ingrediente_id = :ingrediente_id");
                 $stmtDeleteRelations->execute(['ingrediente_id' => $id]);
         
                 // Insertar las nuevas relaciones
                 $alergenos = $ingrediente->getAlergeno(); // Asegúrate de que esto devuelva un array de ids de alérgenos
         
-                foreach ($alergenos as $alergenoId) {
-                    $stmtInsertRelation = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) VALUES (:ingrediente_id, :alergeno_id)");
-                    $stmtInsertRelation->execute([
-                        'ingrediente_id' => $id,
-                        'alergeno_id' => $alergenoId['id'],
-                    ]);
+                //Comprobar si es un objeto con el método getId()
+                foreach ($alergenos as $alergeno) {
+                    if (is_object($alergeno) && method_exists($alergeno, 'getId')) {
+                        // Si es un objeto con el método getId(), procedemos normalmente
+                        $stmtInsertRelation = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) VALUES (:ingrediente_id, :alergeno_id)");
+                        $stmtInsertRelation->execute([
+                            'ingrediente_id' => $id,
+                            'alergeno_id' => $alergeno->getId(),
+                        ]);
+                    } else {
+                        // Si el alérgeno no es un objeto válido con el método getId(), registramos un error
+                        error_log("Alergeno inválido encontrado: " . print_r($alergeno, true));
+                    }
                 }
         
                 // Confirmar la transacción
@@ -242,7 +248,7 @@
                     if (count($alergenosArray) > 0) {
                         $ingrediente->setAlergeno($alergenosArray); // Asumimos que hay un método setAlergeno en la clase Ingrediente
                     }
-                    $ingrediente->setAlergeno($alergenosArray); // Asumimos que hay un método setAlergeno en la clase Ingrediente
+                    //$ingrediente->setAlergeno($alergenosArray); // Asumimos que hay un método setAlergeno en la clase Ingrediente
         
                     // Agregar el ingrediente al array final
                     $ingredientesArray[] = $ingrediente->toJson();

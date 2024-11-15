@@ -4,17 +4,17 @@ namespace Models;
 Class Direccion{
 
    
-     public int $id;
-     public string $nombre;
-     public string $cordenadas;
-     public  int $usuario_id;
+     public ?int $id;
+     public string $direccion;
+     public ?string $cordenadas;
+     public  ?int $usuario_id;
 
-     public function __construct(?int $id,int $usuario_id,string $nombre,string $cordenadas=""){
+     public function __construct(?int $id,?int $usuario_id,string $direccion,?string $cordenadas=""){
 
          $this->setId($id);
-         $this->setNombre($nombre);
-         $this->setCordenadas($cordenadas);
          $this->setUsuario_id($usuario_id);          
+         $this->setDireccion($direccion);
+         $this->setCordenadas($cordenadas);
 
     }  
 
@@ -27,13 +27,13 @@ Class Direccion{
      {
          $this->id = $id;
      } 
-     public function getNombre():string{
-         return $this->nombre;
+     public function getDireccion(){
+         return $this->direccion;
      }                        
-     public function setNombre($nombre):void{
-         $this->nombre = $nombre;
+     public function setDireccion($direccion):void{
+         $this->direccion = $direccion;
      }                                                                 
-     public function getCordenadas():string
+     public function getCordenadas()
      {
          return $this->cordenadas;
      }
@@ -45,7 +45,7 @@ Class Direccion{
       {
           return $this->usuario_id;
      }
-     public function setUsuario_id($usuario_id):void
+     public function setUsuario_id(?int $usuario_id):void
      {
           $this->usuario_id = $usuario_id;
     }
@@ -54,9 +54,9 @@ Class Direccion{
 
     public function __toString(): string {
         return $this->id . " " .
-               $this->nombre . " " .
+               $this->usuario_id. " " .
+               $this->direccion. " " .
                $this->cordenadas ;
-               $this->usuario_id;
        
     }
 

@@ -3,17 +3,20 @@
 namespace Models;
 
 class Usuario {
-    private int $id;
-    private string $nombre;
-    private string $password;
-    private string $rol;
-    private string $correo;
-    private float $monedero;
-    private  $foto;
-    private  $carrito;
-    private array  $direccion;
 
-    public function __construct(?int $id, string $nombre, string $password, string $rol,string $correo, float $monedero=0.0, $foto="", $carrito="", array $direccion = []) {
+    public int $id;
+    public string $nombre;
+    public string $password;
+    public string $rol;
+    public string $correo;
+    public float $monedero;
+    public  $foto;
+    public  $carrito;
+    public array $alergia;
+    public array  $direccion;
+    
+
+    public function __construct(?int $id, string $nombre, string $password, string $rol,string $correo, float $monedero=0.0, $foto="", $carrito="", array $alergia = [], array $direccion = []) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
@@ -22,6 +25,7 @@ class Usuario {
         $this->setMonedero($monedero);
         $this->setFoto($foto);
         $this->setCarrito($carrito);
+        $this->setAlergia($alergia);
         $this->setDireccion($direccion); // Correcto
     }
 
@@ -47,6 +51,14 @@ class Usuario {
 
     public function setPassword($password) {
         $this->password = $password;
+    }
+
+    public function getAlergia(): array{
+        return $this->alergia;
+    }
+
+    public function setAlergia($alergia) {
+        $this->alergia = $alergia; // Corrige la propiedad aquí
     }
 
     public function getDireccion(): array{
@@ -106,6 +118,7 @@ class Usuario {
                $this->monedero . " " .
                $this->foto . " " .
                $this->carrito . " " .
+               $this->alergia . " " .
                $this->direccion;
     }
 

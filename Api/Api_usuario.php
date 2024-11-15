@@ -51,6 +51,7 @@ switch ($method) {
                 $data[0]['monedero']??0.0, 
                 $data[0]['foto']??null,
                 $data[0]['carrito']??null,
+                $data[0]['alergia']??$data[0]['alergia']=[],
                 $data[0]['direccion']??$data[0]['direccion']=[]
                 
                
@@ -93,6 +94,16 @@ switch ($method) {
                 $direccion = [];
             }
 
+            if (isset($data[0]['alergia'])) {
+                $alergia = [];
+                foreach ($data[0]['alergia'] as $alergiaId) {
+                    $alergia[] = ['id' => $alergiaId]; 
+                }
+            }else{
+
+                $alergia = [];
+            }
+
            // Crear el objeto usuario
            if($user=repoUsuario::read($id)){
 
@@ -105,6 +116,7 @@ switch ($method) {
                 $user->setMonedero($data[0]['monedero']??$user->getMonedero());
                 $user->setFoto($data[0]['foto']??$user->getFoto());
                 $user->setCarrito($data[0]['carrito']??$user->getCarrito());
+                $user->setDireccion($alergia??$user->getAlergia());
                 $user->setDireccion($direccion??$user->getDireccion());
                 
         

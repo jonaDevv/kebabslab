@@ -24,12 +24,12 @@
         
             try {
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO direccion (nombre, cordenadas, usuario_id) 
-                                        VALUES (:nombre, :cordenadas, :usuario_id)");
+                $stmt = $conn->prepare("INSERT INTO direccion (direccion, cordenadas, usuario_id) 
+                                        VALUES (:direccion, :cordenadas, :usuario_id)");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
                 $resultado = $stmt->execute([
-                    'nombre' => $direccion->getNombre(),
+                    'direccion' => $direccion->getDireccion(),
                     'cordenadas' => $direccion->getCordenadas(),
                     'usuario_id' => $direccion->getUsuario_id()]);
         
@@ -65,7 +65,7 @@
                     $direccion = new Direccion(
                         $registro->id,
                         $registro->usuario_id,
-                        $registro->nombre,
+                        $registro->direccion,
                         $registro->cordenadas,
                     );
         
@@ -105,14 +105,14 @@
                 $conn->beginTransaction();
                 // Preparar la sentencia SQL para actualizar un alergeno existente
                 $stmt = $conn->prepare("UPDATE direccion
-                                        SET nombre = :nombre, cordenadas = :cordenadas, usuario_id = :usuario_id
+                                        SET direccion = :direccion, cordenadas = :cordenadas, usuario_id = :usuario_id
                                         WHERE id = :id");
                                         
         
                 
                 $resultado = $stmt->execute([
                     'id' => $id,
-                    'nombre' => $direccion->getNombre(),
+                    'direccion' => $direccion->getDireccion(),
                     'cordenadas' => $direccion->getCordenadas(),
                     'usuario_id' => $direccion->getUsuario_id()
                     
@@ -192,7 +192,7 @@
                 $direccionArray = []; 
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     
-                    $direccion = new Direccion($row->id, $row->nombre, $row->cordenadas, $row->usuario_id);
+                    $direccion = new Direccion($row->id,$row->usuario_id, $row->direccion, $row->cordenadas) ;
                     
                     $direccionArray[] = $direccion->toJson(); // Asegúrate de que el método toArray() esté definido
                 }
