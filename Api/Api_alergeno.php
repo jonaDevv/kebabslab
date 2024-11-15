@@ -75,19 +75,25 @@ use Repository\repoAlergeno;
                     $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
                    
                     // Verificar si se recibió el ID
-                    if (isset($data['id'])) {
-                        $id = $data['id']; // ID del alergeno a actualizar
+                    if (isset($data[0]['id'])) {
+                        $id = $data[0]['id']; // ID del alergeno a actualizar
                 
                         // Crear un nuevo objeto alergeno con los datos proporcionados
-                        $alergeno = new Alergeno(
-                            $data['id'],  // ID del alergeno
-                            $data['nombre'] ?? null,
-                            $data['foto'] ?? null,
-                           
-                        );
+                        if($alerg=repoAlergeno::read($id)){
+
+                            $alerg->setNombre($data[0]['nombre']??$alerg->getNombre());
+                            $alerg->setFoto($data[0]['foto']??$alerg->getFoto());
+                    
+                            
+                        }else{
+                            return false;
+                        }
+
+
+
                         header("Content-Type: application/json");
                         // Llamar al método de actualización del repositorio
-                        if (repoAlergeno::update($id, $alergeno)) {
+                        if (repoAlergeno::update($id, $alerg)) {
                             http_response_code(200); // OK
                             echo json_encode(["message" => "Alergeno actualizado correctamente"]);
                         } else {

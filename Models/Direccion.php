@@ -7,14 +7,14 @@ Class Direccion{
      public int $id;
      public string $nombre;
      public string $cordenadas;
-     //public  int $usuario_id;
+     public  int $usuario_id;
 
-     public function __construct(?int $id,string $nombre,string $cordenadas){
+     public function __construct(?int $id,int $usuario_id,string $nombre,string $cordenadas=""){
 
          $this->setId($id);
          $this->setNombre($nombre);
          $this->setCordenadas($cordenadas);
-         //$this->setUsuario_id($usuario_id);          
+         $this->setUsuario_id($usuario_id);          
 
     }  
 
@@ -41,14 +41,14 @@ Class Direccion{
      {
          $this->cordenadas = $cordenadas;
      }
-    //  public function getUsuario_id():string
-    //  {
-    //      return $this->usuario_id;
-    //  }
-    //  public function setUsuario_id($usuario_id):void
-    //  {
-    //      $this->usuario_id = $usuario_id;
-    //  }
+      public function getUsuario_id():string
+      {
+          return $this->usuario_id;
+     }
+     public function setUsuario_id($usuario_id):void
+     {
+          $this->usuario_id = $usuario_id;
+    }
 
 
 
@@ -56,7 +56,7 @@ Class Direccion{
         return $this->id . " " .
                $this->nombre . " " .
                $this->cordenadas ;
-            //    $this->usuario_id;
+               $this->usuario_id;
        
     }
 

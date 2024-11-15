@@ -9,11 +9,11 @@ class Usuario {
     private string $rol;
     private string $correo;
     private float $monedero;
-    private string $foto;
-    private string $carrito;
+    private  $foto;
+    private  $carrito;
     private array  $direccion;
 
-    public function __construct(?int $id, string $nombre, string $password, string $rol,string $correo, float $monedero, string $foto, string $carrito, array $direccion = []) {
+    public function __construct(?int $id, string $nombre, string $password, string $rol,string $correo, float $monedero=0.0, $foto="", $carrito="", array $direccion = []) {
         $this->setId($id);
         $this->setNombre($nombre);
         $this->setPassword($password);
@@ -37,7 +37,7 @@ class Usuario {
         return $this->nombre;
     }
 
-    public function setNombre($nombre): void {
+    public function setNombre($nombre) {
         $this->nombre = ucfirst($nombre);
     }
 
@@ -45,7 +45,7 @@ class Usuario {
         return $this->password;
     }
 
-    public function setPassword($password): void {
+    public function setPassword($password) {
         $this->password = $password;
     }
 
@@ -53,7 +53,7 @@ class Usuario {
         return $this->direccion;
     }
 
-    public function setDireccion($direccion): void {
+    public function setDireccion($direccion) {
         $this->direccion = $direccion; // Corrige la propiedad aquí
     }
 
@@ -61,7 +61,7 @@ class Usuario {
         return $this->rol;
     }
 
-    public function setRol($rol): void {
+    public function setRol($rol) {
         $this->rol = $rol; // Corrige la propiedad aquí
     }
 
@@ -69,7 +69,7 @@ class Usuario {
         return $this->correo;
     }
 
-    public function setCorreo($correo): void {
+    public function setCorreo($correo) {
         $this->correo = $correo; // Corrige la propiedad aquí
     }
 
@@ -77,23 +77,23 @@ class Usuario {
         return $this->monedero;
     }
 
-    public function setMonedero($monedero): void {
+    public function setMonedero($monedero) {
         $this->monedero = $monedero; // Corrige la propiedad aquí
     }
 
-    public function getFoto(): string {
+    public function getFoto(){
         return $this->foto;
     }
 
-    public function setFoto($foto): void {
+    public function setFoto($foto) {
         $this->foto = $foto; // Corrige la propiedad aquí
     }
 
-    public function getCarrito(): string {
+    public function getCarrito(){
         return $this->carrito;
     }
 
-    public function setCarrito($carrito): void {
+    public function setCarrito($carrito) {
         $this->carrito = $carrito; // Corrige la propiedad aquí
     }
 
@@ -101,12 +101,12 @@ class Usuario {
         return $this->id . " " .
                $this->nombre . " " .
                $this->password . " " .
-               $this->direccion . " " .
-               $this->rol . " " .
                $this->correo . " " .
+               $this->rol . " " .
                $this->monedero . " " .
                $this->foto . " " .
-               $this->carrito;
+               $this->carrito . " " .
+               $this->direccion;
     }
 
     

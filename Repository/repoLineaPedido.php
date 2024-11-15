@@ -2,21 +2,21 @@
 
 
     namespace Repository;
-    use Models\Alergeno;
+    use Models\LineaPedido;
     use Models\BdConnection;
     use PDO; // Importa PDO
     use PDOException; 
      
 
-    Class repoAlergeno implements RepoCrud{
+    Class repolinearPedido implements RepoCrud{
         
        
 
         
         //METODOS CRUD
 
-        public static function create($alergeno) {
-            // Asegurarse de que el objeto pasado es de tipo Usuario
+        public static function create($lineaPedido) {
+            
             
         
             // Obtener la conexión a la base de datos
@@ -24,15 +24,15 @@
         
             try {
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO alergeno (nombre, foto) 
-                                        VALUES (:nombre, :foto)");
+                $stmt = $conn->prepare("INSERT INTO linea_pedido(pedido_id,cantidad,kebabs,precio)
+                                                values(:pedido_id,:cantidad,:kebabs,:precio)");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
                 $resultado = $stmt->execute([
-                    'nombre' => $alergeno->getNombre(),
-                    'foto' => $alergeno->getFoto(),
-                    
-                ]);
+                    'pedido_id' => $lineaPedido->getPedido_id(),
+                    'cantidad' => $lineaPedido->getCantidad(),
+                    'kebabs' => $lineaPedido->getKebabs(),
+                    'precio' => $lineaPedido->getPrecio()]);
         
                 // Verificar si la inserción fue exitosa
                 if ($resultado) {
@@ -55,7 +55,7 @@
             $conn = BdConnection::getConnection();
             
             try {
-                $stmt = $conn->prepare("SELECT * FROM alergeno WHERE id=:id");
+                $stmt = $conn->prepare("SELECT * FROM linea_pedido WHERE id=:id");
                 $stmt->execute(['id' => $id]);
                 
                 // Verificar qué registros se están obteniendo
@@ -63,22 +63,23 @@
                  
         
                 if ($registro) {
-                    $alergeno = new Alergeno(
+                    $lineaPedido= new LineaPedido(
                         $registro->id,
-                        $registro->nombre,
-                        $registro->foto,
- 
+                        $registro->pedido_id,
+                        $registro->cantidad,
+                        $registro->kebabs,
+                        $registro->precio
                     );
         
                     http_response_code(200);
                     header('Content-Type: application/json');
-                    echo json_encode($alergeno); // Aquí devuelves el usuario en formato JSON
-                    return $alergeno;
+                    echo json_encode($lineaPedido); 
+                    return $lineaPedido;
                     exit; // Termina la ejecución aquí para evitar enviar múltiples respuestas
 
                 } else {
                     http_response_code(404);
-                    echo json_encode(["message" => "No se encontró el alergeno"]); 
+                    echo json_encode(["message" => "No se encontró la línea de pedido"]); 
                 }
 
             } catch (PDOException $e) {
@@ -91,11 +92,11 @@
         
 
         
-        public static function update($id, $alergeno) {
-            // Asegurarse de que el objeto pasado es de tipo Usuario
-            if (!$alergeno instanceof Alergeno) {
+        public static function update($id, $lineaPedido) {
+            
+            if (!$lineaPedido instanceof LineaPedido) {
                 header('HTTP/1.1 400 Bad Request');
-                echo json_encode(["error" => "Datos de usuario inválidos"]);
+                echo json_encode(["error" => "Datos de linea pedido inválidos"]);
                 return; // Salir de la función
             }
         
@@ -105,16 +106,19 @@
             try {
                 $conn->beginTransaction();
                 // Preparar la sentencia SQL para actualizar un alergeno existente
-                $stmt = $conn->prepare("UPDATE alergeno
-                                        SET nombre = :nombre, foto = :foto
+                $stmt = $conn->prepare("UPDATE linea_pedido
+                                        SET pedido_id = :pedido_id, cantidad = :cantidad, kebabs = :kebabs, precio = :precio
                                         WHERE id = :id");
+                                        
         
-                // Ejecutar la sentencia, asignando valores de las propiedades del objeto alergeno
+                
                 $resultado = $stmt->execute([
-                    'id' => $id,  // Usa el parámetro $id para especificar el alergeno a actualizar
-                    'nombre' => $alergeno->getNombre(),
-                    'foto' => $alergeno->getFoto(),
-
+                    'id' => $id,
+                    'pedido_id' => $lineaPedido->getPedido_id(),
+                    'cantidad' => $lineaPedido->getCantidad(),
+                    'kebabs' => $lineaPedido->getKebabs(),
+                    'precio' => $lineaPedido->getPrecio()
+                    
                 ]);
 
                 header("Content-Type: application/json");
@@ -131,7 +135,7 @@
                     return false;
                 }
 
-                echo json_encode($alergeno);
+                echo json_encode($lineaPedido);
                 
 
 
@@ -150,16 +154,14 @@
             try {
                 $conn = BdConnection::getConnection();
         
-                // Preparar la sentencia SQL para eliminar el usuario
-                $stmt = $conn->prepare("DELETE FROM alergeno WHERE id = :id");
+                
+                $stmt = $conn->prepare("DELETE FROM linea_pedido WHERE id = :id");
                 $stmt->execute(['id' => $id]);
                 
                
 
                 // Verificar cuántas filas fueron afectadas
-                if ($stmt->rowCount() > 0) {
-                    // Si se eliminó al menos un usuario, enviar código 200 OK
-                   
+                if ($stmt->rowCount() > 0) { 
                     
                     return true;
                     
@@ -167,6 +169,8 @@
                    
                     return false;
                 }
+
+
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP en caso de error
                 header('HTTP/1.1 500 Error en la base de datos');
@@ -183,18 +187,18 @@
                 
             try {  
                 // Preparar la consulta
-                $sql = "SELECT * FROM alergeno"; // Cambia "usuario" por el nombre de tu tabla
+                $sql = "SELECT * FROM linea_pedido"; // Cambia "usuario" por el nombre de tu tabla
                 $stmt = $conn->prepare($sql);
         
                 // Ejecutar la consulta
                 $stmt->execute();
         
-                $alergenosArray = []; // Array para almacenar los usuarios
+                $lineaPedidoArray = []; 
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-                    // Crear un nuevo objeto $usuario
-                    $alergeno = new Alergeno($row->id, $row->nombre, $row->foto);
-                    // Convertir el objeto a un array y añadirlo a la lista de usuarios
-                    $alergenosArray[] = $alergeno->toJson(); // Asegúrate de que el método toArray() esté definido
+                    
+                    $lineaPedido = new LineaPedido($row->id, $row->pedido_id, $row->cantidad, $row->kebabs, $row->precio);
+                    
+                    $lineaPedidoArray = $lineaPedido->toJson(); // Asegúrate de que el método toArray() esté definido
                 }
 
 
@@ -207,7 +211,7 @@
                 // Establecer la cabecera de tipo de contenido
                 header("Content-Type: application/json");
                 // Codificar el array de usuarios a JSON y devolverlo
-                echo json_encode($alergenosArray);
+                echo json_encode($$lineaPedidoArray);
                 exit; // Terminar el script después de enviar la respuesta
             
         }

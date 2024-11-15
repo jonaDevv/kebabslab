@@ -1,11 +1,16 @@
 <?php
 namespace Helper;
-Use Helper\sesion;
+
+use Helper\Sesion;
+
+
 
 class Login
 {
     public static function Identifica(string $usuario,string $contrasena,bool $recuerdame)
     {
+
+        
         
     }
 
@@ -25,7 +30,7 @@ class Login
 
     function login($nombre){ //Solo para USERRR
 
-        //iniciaSesion();
+        Sesion::iniciaSesion();
         $_SESSION['user']=$nombre;
 
     }
@@ -34,9 +39,9 @@ class Login
     function logout(){
 
         
-        //$_SESSION['USER']="";
+        $_SESSION['USER']="";
         session_unset(); 
-        // finalizaSesion();
+        Sesion::finalizaSesion();
 
     }
 

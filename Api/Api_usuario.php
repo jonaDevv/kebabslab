@@ -29,19 +29,14 @@ switch ($method) {
     case 'POST':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-        var_dump($data);
+        
         // Verificar si se recibieron todos los datos necesarios
         if (
             isset($data[0]['nombre']) && // Verificar si el campo nombre está presente
             isset($data[0]['password']) &&
-            isset($data[0]['direccion']) &&
             isset($data[0]['rol']) &&
-            isset($data[0]['correo']) &&
-            isset($data[0]['monedero']) &&
-            isset($data[0]['foto']) &&
-            isset($data[0]['carrito'])
-
-
+            isset($data[0]['correo']) 
+           
             
         ) {
 
@@ -52,11 +47,12 @@ switch ($method) {
                 $data[0]['nombre'],
                 $data[0]['password'],
                 $data[0]['rol'],
-                $data[0]['direccion'],
                 $data[0]['correo'],
-                floatval($data[0]['monedero']), 
-                $data[0]['foto'],
-                $data[0]['carrito']
+                $data[0]['monedero']??0.0, 
+                $data[0]['foto']??null,
+                $data[0]['carrito']??null,
+                $data[0]['direccion']??$data[0]['direccion']=[]
+                
                
 
             );
@@ -67,7 +63,7 @@ switch ($method) {
                 echo json_encode(["message" => "Usuario creado con éxito"]);
             } else {
                 http_response_code(500); // Error en la creación
-                echo json_encode(["message" => "Error al crear el kebab"]);
+                echo json_encode(["message" => "Error al crear el usuario"]);
             }
 
 
@@ -81,7 +77,7 @@ switch ($method) {
     case 'PUT':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-        var_dump($data);
+        
         // Verificar si se recibió el ID
         if (isset($data[0]['id'])) {
             $id = $data[0]['id']; // ID del usario a actualizar
@@ -98,25 +94,27 @@ switch ($method) {
             }
 
            // Crear el objeto usuario
-           $usuario= new Usuario(
-        
-                $data[0]['id'],
-                $data[0]['nombre']??null,
-                $data[0]['password']??null,
-                $data[0]['rol']??null,
-                $data[0]['correo']??null,
-                floatval($data[0]['monedero']??null), 
-                $data[0]['foto']??null,
-                $data[0]['carrito']??null,
-                $direccion[]
+           if($user=repoUsuario::read($id)){
 
            
 
-            );
+                $user->setNombre($data[0]['nombre']??$user->getNombre());
+                $user->setPassword($data[0]['password']??$user->getPassword());
+                $user->setRol($data[0]['rol']??$user->getRol());
+                $user->setCorreo($data[0]['correo']??$user->getCorreo());
+                $user->setMonedero($data[0]['monedero']??$user->getMonedero());
+                $user->setFoto($data[0]['foto']??$user->getFoto());
+                $user->setCarrito($data[0]['carrito']??$user->getCarrito());
+                $user->setDireccion($direccion??$user->getDireccion());
+                
+        
+            }else{
+                return false;
+            }
 
             header("Content-Type: application/json");
             // Llamar al método de actualización del repositorio
-            if (repoUsuario::update($id, $usuario)) {
+            if (repoUsuario::update($id, $user)) {
                 http_response_code(200); // OK
                 echo json_encode(["message" => "Usuario actualizado correctamente"]);
             } else {
@@ -135,11 +133,12 @@ switch ($method) {
             $id = $_GET['id'];
 
             header("Content-Type: application/json");
+            
             if (repoUsuario::delete($id)) {
 
-                http_response_code(204); // No Content
+                // No Content
                 echo json_encode(["message" => "Usuario eliminado con éxito"]);
-                
+                http_response_code(200); 
             } else {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Usuario no encontrado"]);

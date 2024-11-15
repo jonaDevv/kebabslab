@@ -9,19 +9,15 @@ Class LineaPedido{
     public float $precio;
     public int $pedido_id;
 
-    public function __construct(int $id,string $kebabs,int $cantidad,float $precio,int $pedido_id){
+    public function __construct(int $id,int $pedido_id,string $kebabs,int $cantidad,float $precio){
 
         $this->setId($id);
+        $this->setPedido_id($pedido_id); 
         $this->setKebabs($kebabs);
         $this->setCantidad($cantidad);
         $this->setPrecio($precio);              
-        $this->setPedido_id($pedido_id);    
+
         
-
-
-
-
-
     }
     
     public function getId():int

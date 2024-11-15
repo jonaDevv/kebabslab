@@ -30,8 +30,8 @@
 
                 $conn->beginTransaction();
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO usuario (nombre, password, rol, correo,monedero, foto, carrito) 
-                                        VALUES (:nombre, :password, :direccion, :rol, :monedero, :foto, :carrito)");
+                $stmt = $conn->prepare("INSERT INTO usuario (nombre, password, rol,correo,monedero, foto, carrito) 
+                                        VALUES (:nombre, :password, :rol, :correo, :monedero, :foto, :carrito)");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
                 $resultado = $stmt->execute([
@@ -47,16 +47,19 @@
                     // Obtener el ID del nuevo Usuario
                 $UsuarioId = $conn->lastInsertId();
 
-                // Insertar los ingredientes en la tabla intermedia
-                $stmtDireccion = $conn->prepare("INSERT INTO direccion (direccion,usuario_id)
-                                                VALUES (:direccion, :usuario_id)");
+                if ($usuario->getDireccion()!=null){
+                    // Convertir el array direccion en una cadena (separada por comas o espacios)
+                    $direccionString = implode(", ", $usuario->getDireccion());
 
-                $stmtDireccion->execute([
-                    'direccion' => $usuario->getDireccion(),
-                    'usuario_id' => $UsuarioId
-                ]);
-            
+                    // Preparar la consulta SQL
+                    $stmtDireccion = $conn->prepare("INSERT INTO direccion (direccion, usuario_id) VALUES (:direccion, :usuario_id)");
 
+                    // Ejecutar la consulta con los parámetros
+                    $stmtDireccion->execute([
+                        'direccion' => $direccionString,
+                        'usuario_id' => $UsuarioId
+                    ]);
+                }
                  // Confirmar la transacción
                 $conn->commit();
             
@@ -132,6 +135,7 @@
                     http_response_code(200);
                     header('Content-Type: application/json');
                     echo json_encode($usuario->toJson()); // Aquí devuelves el usuario en formato JSON
+                    return $usuario;
                    
                     exit; // Termina la ejecución aquí para evitar enviar múltiples respuestas
 
@@ -144,13 +148,14 @@
                  // Confirmar la transacción
             
                 //  // Verificar si la inserción fue exitosa
-                //  if ($registro) {
+                  if ($registro) {
                      
-                //      return true;
-                //  } else {
-                     
-                //      return false;
-                //  }
+                    $conn->commit();
+                      return true;
+                  } else {
+                    $conn->commit();
+                      return false;
+                 }
 
 
             } catch (PDOException $e) {
@@ -180,8 +185,8 @@
 
                 // Preparar la sentencia SQL para actualizar un usuario existente
                 $stmt = $conn->prepare("UPDATE usuario 
-                                        SET nombre = :nombre, password = :password, direccion = :direccion, 
-                                            rol = :rol, correo=:correo, monedero = :monedero, foto = :foto, carrito = :carrito
+                                        SET nombre = :nombre, password = :password, 
+                                            rol = :rol, correo =:correo, monedero = :monedero, foto = :foto, carrito = :carrito
                                         WHERE id = :id");
         
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
@@ -189,12 +194,12 @@
                     'id' => $id,  // Usa el parámetro $id para especificar el usuario a actualizar
                     'nombre' => $usuario->getNombre(),
                     'password' => $usuario->getPassword(),
-                    'direccion' => $usuario->getDireccion(),
                     'rol' => $usuario->getRol(),
                     'correo' => $usuario->getCorreo(),
                     'monedero' => $usuario->getMonedero(),
                     'foto' => $usuario->getFoto(),
-                    'carrito' => $usuario->getCarrito()
+                    'carrito' => $usuario->getCarrito(),
+                   
                 ]);
 
                 header("Content-Type: application/json");
@@ -202,9 +207,10 @@
                 // Verificar si la actualización fue exitosa
                 if ($resultado) {
                    
+                    $conn->commit();
                     return true;
                 } else {
-                    
+                    $conn->commit();
                     return false;
                 }
 
@@ -237,21 +243,16 @@
                 $stmt->execute(['id' => $id]);
                 
                
-
-                // Verificar cuántas filas fueron afectadas
+                echo json_encode("Borrado");
                 if ($stmt->rowCount() > 0) {
-                    // Si se eliminó al menos un usuario, enviar código 200 OK
-                   
-                    
+                    // Si se eliminó al menos un usuario, confirmar la transacción
+                    $conn->commit();
                     return true;
-                    
                 } else {
-                   
+                    // Si no se eliminó ningún usuario (posiblemente porque no existe)
+                    $conn->commit();
                     return false;
                 }
-
-                $conn->commit();
-
                 
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP en caso de error
@@ -270,7 +271,7 @@
 
             try {
 
-                $conn->beginTransaction();
+               
                 // Preparar la consulta
                 $sql = "SELECT * FROM usuario"; // Cambia "usuario" por el nombre de tu tabla
                 $stmt = $conn->prepare($sql);
@@ -290,7 +291,7 @@
                         $row->correo, 
                         $row->monedero, 
                         $row->foto, 
-                        $row->carrito,
+                        $row->carrito
                         );
                     
                     $stmtDireccion = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:usuario_id");
@@ -300,14 +301,21 @@
 
                     
 
-                    while ($direccionRow = $stmtDireccion->fetch(PDO::FETCH_OBJ)) {
+                    
                         
+                    while ($direccionRow = $stmtDireccion->fetch(PDO::FETCH_OBJ)) {
+                        // Verifica que las propiedades existen antes de usarlas
+                        $nombre = isset($direccionRow->nombre) ? $direccionRow->nombre : 'Nombre no disponible';
+                        $cordenadas = isset($direccionRow->cordenadas) ? $direccionRow->cordenadas : 'Cordenadas no disponibles';
+
+                        // Crear la instancia de Direccion con las propiedades validadas
                         $direccionesArray[] = new Direccion(
                             $direccionRow->id,
-                            $direccionRow->nombre,
-                            $direccionRow->cordenadas
+                            $nombre,
+                            $cordenadas
                         );
                     }
+                    
                     
                         
                         // Asignar el array de ingredientes al kebab
@@ -327,7 +335,7 @@
                 exit; // Terminar el script después de enviar la respuesta
                 
             } catch (PDOException $e) {
-                $conn->rollBack();
+                
                 header('HTTP/1.1 500 Error en la base de datos');
                 echo json_encode(["error" => $e->getMessage()]);
             }

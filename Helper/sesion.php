@@ -33,7 +33,7 @@ class Sesion
 
     //----------
 
-    function iniciaSesion() {
+    public static function iniciaSesion() {
         if (session_status() === PHP_SESSION_NONE) {
                 session_start();
         }
@@ -42,21 +42,21 @@ class Sesion
 
     
 
-    function finalizaSesion(){
+    public static function finalizaSesion(){
 
         session_destroy();
     
     }
 
     //Escribir sesion   escribirSesion(user,nombre);
-    function leerSesion($clave){// Dice si existe o no. Devuelve true o false
+    public static function leerSesion($clave){// Dice si existe o no. Devuelve true o false
 
         (isset($_SESSION[$clave]))? $respuesta=$_SESSION[$clave]: $respuesta="Desconocido";
 
         return $respuesta;
     }
 
-    function existeClave($clave):bool
+    public static function existeClave($clave):bool
     {// Dice si existe o no. Devuelve true o false
 
         return isset($_SESSION[$clave]);

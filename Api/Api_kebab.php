@@ -85,19 +85,26 @@ switch ($method) {
                 $ingredientes = [];
             }
 
-            $kebab = new Kebab(
-                $data[0]['id'],  // ID del kebab
-                $data[0]['nombre'] ?? null,
-                $data[0]['foto'] ?? null,
-                $data[0]['precio'] ?? null,
-                $ingredientes  // Array de IDs de ingredientes
-            );
+            if($keb=repoKebab::read($id)){
+
+           
+                $keb->setNombre($data[0]['nombre']??$keb->getNombre());
+                $keb->setFoto($data[0]['foto']??$keb->getFoto());
+                $keb->setPrecio($data[0]['precio']??$keb->getPrecio());
+                $keb->setIngredientes($ingredientes??$keb->getIngredientes());
+        
+            }else{
+                return false;
+            }
+
+
 
             header("Content-Type: application/json");
             // Llamar al método de actualización del repositorio
-            if (repoKebab::update($id, $kebab)) {
+            if (repoKebab::update($id, $keb)) {
                 http_response_code(200); // OK
                 echo json_encode(["message" => "Kebab actualizado correctamente"]);
+                echo json_encode($keb);
             } else {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Kebab no encontrado"]);
@@ -116,9 +123,10 @@ switch ($method) {
             $id = $_GET['id'];
 
             header("Content-Type: application/json");
+            
             if (repoKebab::delete($id)) {
 
-                http_response_code(204); // No Content
+                http_response_code(200); // No Content
                 echo json_encode(["message" => "Kebab eliminado con éxito"]);
                 
             } else {

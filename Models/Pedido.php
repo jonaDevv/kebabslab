@@ -9,22 +9,24 @@ Class Pedido{
     
 
     public int $id;
+    public int $usuario_id;                        
     public DateTime $fecha_hora;
+    public array $lineasPedido;
     public string $estado;
     public float $precio_total;
-    public string $coordenada; //Point en formato WKT
     public Direccion $direccion;
-    public int $usuario_id;                        
+    public string $coordenada; //Point en formato WKT
     
-    public function __construct(int $id,DateTime $fecha_hora,string $estado,float $precio_total,string $coordenada,string $direccion,int $usuario_id){
+    public function __construct(int $id,int $usuario_id,DateTime $fecha_hora,array $lineaPedido, string $estado,float $precio_total,string $direccion,string $coordenada=""){
         
         $this->setId($id);
+        $this->setUsuario_id($usuario_id);          
         $this->setFecha_hora($fecha_hora);
+        $this->setLineasPedido($lineaPedido);
         $this->setEstado($estado);
         $this->setPrecio_total($precio_total);
         $this->setCoordenada($coordenada);
         $this->setDireccion($direccion);
-        $this->setUsuario_id($usuario_id);          
 
 }  
 
@@ -52,6 +54,14 @@ Class Pedido{
     public function setEstado($estado):void
     {
         $this->estado = $estado;
+    }
+    public function getLineasPedido():array
+    {
+        return $this->lineasPedido;
+    }
+    public function setLineasPedido($lineasPedido):void
+    {
+        $this->lineasPedido = $lineasPedido;
     }
     public function getPrecio_total():float
     {
@@ -90,12 +100,13 @@ Class Pedido{
 
     public function __toString(): string {
         return $this->id . " " .
+               $this->usuario_id. " " .
                $this->fecha_hora . " " .
+               $this->lineasPedido . " " .
                $this->estado . " " .
                $this->precio_total . " " .
                $this->coordenada . " " .
-               $this->direccion . " " .
-               $this->usuario_id;
+               $this->direccion;
     }
 
    
