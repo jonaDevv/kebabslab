@@ -134,7 +134,8 @@
                         
                         $direccionesArray[] = new Direccion(
                             $direccionRow->id,
-                            $direccionRow->nombre,
+                            $direccionRow->usuario_id,
+                            $direccionRow->direccion,
                             $direccionRow->cordenadas
                         );
                     }   
@@ -195,10 +196,11 @@
 
         
         public static function update($id, $usuario) {
+            // Compruebo si es una instancia de Usuario
             if (!$usuario instanceof Usuario) {
                 header('HTTP/1.1 400 Bad Request');
                 echo json_encode(["error" => "Datos de usuario inválidos"]);
-                return;
+                return false;
             }
         
             $conn = BdConnection::getConnection();
@@ -230,27 +232,35 @@
                 }
         
                 // Eliminar relaciones antiguas
+                error_log("Eliminando relaciones antiguas para usuario_id = $id");
+                
                 $stmtDeleteRelations = $conn->prepare("DELETE FROM usuario_has_alergeno WHERE usuario_id = :usuario_id");
                 $stmtDeleteRelations->execute(['usuario_id' => $id]);
         
                 // Insertar nuevas relaciones
                 $alergenos = $usuario->getAlergia();
+                
                 if (!is_array($alergenos)) {
                     throw new Exception("El método getAlergia() no devolvió un array.");
                 }
         
                 foreach ($alergenos as $alergeno) {
-                    if (is_object($alergeno) && method_exists($alergeno, 'getId')) {
+                    if (is_array($alergeno) && isset($alergeno['id'])) {
+                        
+                        $usuarioId = $id;
+                        $alergenoId = $alergeno['id'];
+                        error_log("Insertando relación: usuario_id = $usuarioId, alergeno_id = $alergenoId");
+                
                         $stmtInsertRelation = $conn->prepare("
                             INSERT INTO usuario_has_alergeno (usuario_id, alergeno_id) 
                             VALUES (:usuario_id, :alergeno_id)
                         ");
                         $stmtInsertRelation->execute([
-                            'usuario_id' => $id,
-                            'alergeno_id' => $alergeno->getId(),
+                            'usuario_id' => $usuarioId,
+                            'alergeno_id' => $alergenoId,
                         ]);
                     } else {
-                        error_log("Alergeno inválido: " . print_r($alergeno, true));
+                        error_log("Elemento no válido en alergenos: " . print_r($alergeno, true));
                     }
                 }
         
@@ -264,6 +274,7 @@
                 return false;
             }
         }
+        
         
         
         

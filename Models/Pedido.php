@@ -55,7 +55,7 @@ Class Pedido{
     {
         $this->estado = $estado;
     }
-    public function getLineasPedido():array
+    public function getLineasPedido()
     {
         return $this->lineasPedido;
     }

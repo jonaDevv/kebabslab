@@ -107,7 +107,8 @@
                         $lineaPedido = new LineaPedido($row->id, $row->pedido_id, $row->cantidad, $kebabs, $row->precio);
                         
                         // Agregar la línea de pedido a la respuesta
-                        $lineaPedidoArray[] = $lineaPedido->toJson(); 
+                        //$lineaPedidoArray[] = $lineaPedido->toJson();
+                        $pedido->setLineasPedido($lineaPedido->toJson());
                     }
                     
                     
@@ -144,21 +145,22 @@
             $conn = BdConnection::getConnection();
             
             try {
+
                 $conn->beginTransaction();
                 
                 // Actualizar el pedido
-                $stmt = $conn->prepare("UPDATE pedido
+                $stmt = $conn->prepare("
+                                        UPDATE pedido
                                         SET usuario_id = :usuario_id, fecha_hora = :fecha_hora,
-                                            estado = :estado, precio_total = :precio_total, 
-                                            coordenada = :coordenada, direccion = :direccion
-                                        WHERE id = :id");
+                                            estado = :estado, precio_total = :precio_total, direccion = :direccion
+                                        WHERE id = :id
+                                        ");
         
                 $f = $pedido->getFecha_hora();
                 $fechaStr = $f['date'];
                 $fecha = new DateTime($fechaStr);
                 $fechaSinMicrosegundos = $fecha->format('Y-m-d H:i:s');
-        
-                $coordenada = "POINT(" . $pedido->getCoordenada() . ")";
+
         
                 // Ejecutar la sentencia de actualización del pedido
                 $stmt->execute([
@@ -167,62 +169,65 @@
                     'fecha_hora' => $fechaSinMicrosegundos,
                     'estado' => $pedido->getEstado(),
                     'precio_total' => $pedido->getPrecio_total(),
-                    'coordenada' => $coordenada,
                     'direccion' => $pedido->getDireccion()
                 ]);
         
                 // Actualizar las líneas de pedido
+                
+
+                $stmtDeleteRelations = $conn->prepare("DELETE FROM linea_pedido WHERE pedido_id = :pedido_id");
+                $stmtDeleteRelations->execute(['pedido_id' => $id]);
+        
+                // Insertar nuevas relaciones
                 $lineas = $pedido->getLineasPedido();
-                $lineasExistentes = [];
-        
-                // Recuperar las líneas de pedido existentes para evitar eliminarlas accidentalmente
-                $stmtLineasExistentes = $conn->prepare("SELECT id FROM linea_pedido WHERE pedido_id = :pedido_id");
-                $stmtLineasExistentes->execute(['pedido_id' => $id]);
-                while ($row = $stmtLineasExistentes->fetch(PDO::FETCH_ASSOC)) {
-                    $lineasExistentes[] = $row['id'];
+                var_dump($lineas);
+                
+                if (!is_array($lineas)) {
+                    throw new Exception("El método getLineasPedido() no devolvió un array.");
                 }
         
-                // Insertar o actualizar las relaciones de líneas de pedido
                 foreach ($lineas as $linea) {
-                    if (is_object($linea) && method_exists($linea, 'getId')) {
-                        $lineaId = $linea->getId();
-        
-                        // Si la línea ya existe, no insertamos una nueva
-                        if (in_array($lineaId, $lineasExistentes)) {
-                            // Si ya existe, eliminamos la relación anterior y la volvemos a insertar
-                            $stmtUpdateRelation = $conn->prepare("UPDATE linea_pedido SET pedido_id = :pedido_id WHERE id = :linea_id");
-                            $stmtUpdateRelation->execute([
-                                'pedido_id' => $id,
-                                'linea_id' => $lineaId
-                            ]);
-                        } else {
-                            // Insertar una nueva relación
-                            $stmtInsertRelation = $conn->prepare("INSERT INTO linea_pedido (pedido_id, linea_id) VALUES (:pedido_id, :linea_id)");
-                            $stmtInsertRelation->execute([
-                                'pedido_id' => $id,
-                                'linea_id' => $lineaId
-                            ]);
+                    
+                    
+                        
+                        $pedidoId = $id;
+                        //$lineaId = $linea['id'];
+                        //error_log("Insertando relación: pedido_id = $pedidoId, linea_id = $lineaId");
+                        
+                                // Asegúrate de convertir 'kebabs' a JSON si es un array o un objeto
+                        $kebabsJson = json_encode($linea['kebabs']);
+
+                        // Preparar la sentencia SQL para insertar un nuevo pedido
+                        $stmt = $conn->prepare("
+
+                             INSERT INTO linea_pedido (pedido_id, cantidad, kebabs, precio)
+                            VALUES (:pedido_id, :cantidad, :kebabs, :precio)
+                        
+                        ");
+
+                        // Verificar si la conversión a JSON fue exitosa
+                        if ($kebabsJson === false) {
+                        // Manejar el error si no se pudo convertir 'kebabs' a JSON
+                        echo json_encode(["error" => "Error al convertir kebabs a JSON"]);
+                        exit;
                         }
-                    } else {
-                        error_log("Ingrediente inválido encontrado: " . print_r($linea, true));
-                    }
+
+                        // Ejecutar la sentencia, asignando valores de las propiedades del objeto lineaPedido
+                        $stmt->execute([
+                        'pedido_id' => $linea['pedido_id'],
+                        'cantidad' => $linea['cantidad'],
+                        'kebabs' => $kebabsJson,  // Pasamos la cadena JSON
+                        'precio' => $linea['precio']
+                        ]);
+
+                       
+                   
                 }
+                
+                
+                
+                
         
-                // Eliminar las líneas de pedido que ya no están en el array de líneas actuales
-                $lineasActuales = array_map(function($linea) {
-                    return $linea->getId();
-                }, $lineas);
-        
-                $lineasParaEliminar = array_diff($lineasExistentes, $lineasActuales);
-        
-                if (!empty($lineasParaEliminar)) {
-                    // Construir la cadena de placeholders para los ? en la consulta SQL
-                    $placeholders = implode(',', array_fill(0, count($lineasParaEliminar), '?'));
-                    $stmtDelete = $conn->prepare("DELETE FROM linea_pedido WHERE id IN ($placeholders)");
-        
-                    // Ejecutar la eliminación de las líneas de pedido que ya no están asociadas
-                    $stmtDelete->execute($lineasParaEliminar);
-                }
         
                 $conn->commit();
                 return true;

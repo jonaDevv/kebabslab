@@ -84,16 +84,7 @@ switch ($method) {
         if (isset($data[0]['id'])) {
             $id = $data[0]['id']; // ID del usario a actualizar
 
-            // Actualizar un objeto usuario con los datos proporcionados
-            if (isset($data[0]['lineasPedido'])) {
-                $lineasPedido = [];
-                foreach ($data[0]['lineasPedido'] as $lineasPedidoId) {
-                    $lineasPedido[] = ['id' => $lineasPedidoId]; 
-                }
-            }else{
-
-                $lineasPedido = [];
-            }
+            
 
            // Crear el objeto usuario
            if($ped=repoPedido::read($id)){
@@ -102,7 +93,7 @@ switch ($method) {
 
                 $ped->setUsuario_id($data[0]['usuario_id']??$ped->getUsuario_id());
                 $ped->setFecha_hora($data[0]['fecha_hora']??$ped->getFecha_hora());
-                $ped->setLineasPedido($lineasPedido??$ped->getLineasPedido());
+                $ped->setLineasPedido($data[0]['lineasPedido']??$ped->getLineasPedido());
                 $ped->setEstado($data[0]['estado']??$ped->getEstado());
                 $ped->setPrecio_total($data[0]['precio_total']??$ped->getPrecio_total());
                 $ped->setCoordenada($data[0]['coordenada']??$ped->getCoordenada());
@@ -119,6 +110,7 @@ switch ($method) {
             if (repoPedido::update($id, $ped)) {
                 http_response_code(200); // OK
                 echo json_encode(["message" => "Pedido actualizado correctamente"]);
+                echo json_encode($ped);
             } else {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Pedido no encontrado"]);

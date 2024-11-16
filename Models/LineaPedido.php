@@ -90,10 +90,10 @@ Class LineaPedido{
 
     public function __toString(): string {
         return $this->id . " " .
+               $this->pedido_id ." ".
                $this->kebabs . " " .
                $this->cantidad . " " .
-               $this->precio . " " .
-               $this->pedido_id;
+               $this->precio;
        
     }
 
