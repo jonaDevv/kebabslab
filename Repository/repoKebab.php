@@ -10,7 +10,7 @@ use PDOException;
 
 Class repoKebab implements RepoCrud {
     
-    private static $listaKebabs = []; // Array para almacenar los kebabs
+   
 
     // METODOS CRUD
 
@@ -170,11 +170,15 @@ Class repoKebab implements RepoCrud {
             $ingredientes = $kebab->getIngredientes(); // Asegúrate de que esto devuelva un array de ids de ingredientes
 
             foreach ($ingredientes as $ingrediente) {
-                $stmtInsertRelation = $conn->prepare("INSERT INTO kebab_ingrediente (kebab_id, ingrediente_id) VALUES (:kebab_id, :ingrediente_id)");
-                $stmtInsertRelation->execute([
-                    'kebab_id' => $id,
-                    'ingrediente_id' => $ingrediente['id'],
-                ]);
+                if (is_object($ingrediente) && method_exists($ingrediente, 'getId')) {
+                    $stmtInsertRelation = $conn->prepare("INSERT INTO kebab_ingrediente (kebab_id, ingrediente_id) VALUES (:kebab_id, :ingrediente_id)");
+                    $stmtInsertRelation->execute([
+                        'kebab_id' => $id,
+                        'ingrediente_id' => $ingrediente->getId(),
+                    ]);
+                } else {
+                    error_log("Ingrediente inválido encontrado: " . print_r($ingrediente, true));
+                }
             }
 
             // Confirmar la transacción
@@ -259,6 +263,7 @@ Class repoKebab implements RepoCrud {
         
                     // Crear un array para los alérgenos de este ingrediente
                     $alergenosArray = [];
+                    
                     while ($alergenoRow = $stmtAlergenos->fetch(PDO::FETCH_OBJ)) {
                         $alergenosArray[] = $alergenoRow->nombre;
                     }

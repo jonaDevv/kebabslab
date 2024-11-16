@@ -3,7 +3,7 @@ window.addEventListener("load", function() {
     
 
     
-        const url = 'http://www.kebabslab.com/Api/Api_kebab.php'; // URL de la API
+        const url = 'http://www.kebabslab.com/Api/Api_ingrediente.php'; // URL de la API
     
         // Usando el método GET con fetch
         // Crear un objeto Request
@@ -19,19 +19,19 @@ window.addEventListener("load", function() {
         .then(json => {
             console.log(json);  // Añadir este log para ver la respuesta completa
             
-            const cartaContenedor = document.getElementById('carta');
-            cartaContenedor.innerHTML = '';  // Limpiar el contenedor antes de agregar los nuevos elementos
+            const aingredintes = document.getElementById('aIngrediente');
+            aingredintes.innerHTML = '';  // Limpiar el contenedor antes de agregar los nuevos elementos
         
             // Iterar sobre los objetos del JSON
             json.forEach(item => {
-                const cartaDiv = document.createElement('div');
-                cartaDiv.classList.add('carta');
-                cartaDiv.kebab = item;
+                const ingredienteDiv = document.createElement('div');
+                ingredienteDiv.classList.add('asingrediente');
+                ingredienteDiv.ingrediente = item;
                 // Agregar nombre y precio del kebab al contenido del div
-                cartaDiv.textContent = `${item.nombre}  ${item.precio} €`;
+                ingredienteDiv.textContent = `${item.nombre}  ${item.precio} €`;
         
                 // Añadir el div al contenedor
-                cartaContenedor.appendChild(cartaDiv);
+                aingredintes.appendChild(ingredienteDiv);
             });
         })
         .catch(error => {

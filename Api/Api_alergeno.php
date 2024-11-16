@@ -39,13 +39,14 @@ use Repository\repoAlergeno;
 
                     // Verificar si se recibieron todos los datos necesarios
                     if (
-                        isset($data['nombre']) && isset($data['foto'])) 
+                        isset($data[0]['nombre']) && isset($data[0]['foto'])) 
                     {
                         // Crear el objeto Alergeno de forma similar
                         $alergeno = new Alergeno(
+                            
                             null,  
-                            $data['nombre'],
-                            $data['foto'],
+                            $data[0]['nombre'],
+                            $data[0]['foto'],
                            
                         );
 
@@ -75,19 +76,25 @@ use Repository\repoAlergeno;
                     $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
                    
                     // Verificar si se recibió el ID
-                    if (isset($data['id'])) {
-                        $id = $data['id']; // ID del alergeno a actualizar
+                    if (isset($data[0]['id'])) {
+                        $id = $data[0]['id']; // ID del alergeno a actualizar
                 
                         // Crear un nuevo objeto alergeno con los datos proporcionados
-                        $alergeno = new Alergeno(
-                            $data['id'],  // ID del alergeno
-                            $data['nombre'] ?? null,
-                            $data['foto'] ?? null,
-                           
-                        );
+                        if($alerg=repoAlergeno::read($id)){
+
+                            $alerg->setNombre($data[0]['nombre']??$alerg->getNombre());
+                            $alerg->setFoto($data[0]['foto']??$alerg->getFoto());
+                    
+                            
+                        }else{
+                            return false;
+                        }
+
+
+
                         header("Content-Type: application/json");
                         // Llamar al método de actualización del repositorio
-                        if (repoAlergeno::update($id, $alergeno)) {
+                        if (repoAlergeno::update($id, $alerg)) {
                             http_response_code(200); // OK
                             echo json_encode(["message" => "Alergeno actualizado correctamente"]);
                         } else {
@@ -113,7 +120,7 @@ use Repository\repoAlergeno;
 
                         header("Content-Type: application/json");
                         if (repoAlergeno::delete($id)) {
-                            http_response_code(204); // No Content
+                            http_response_code(200); // No Content
                             echo json_encode(["message" => "Alergeno eliminado con éxito"]);
                         } else {
                             http_response_code(404); // Not Found

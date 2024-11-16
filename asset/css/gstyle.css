@@ -114,6 +114,16 @@
     
   }
 
+  #asingrediente {
+   
+    background-color: #a02121;
+    color: blue;
+    padding: 10px;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+    border-radius: 0% 1% 2.4% 0%;
+    
+  }
+
 #alergenos {
   display: flex;
   justify-content: center; /* Centra horizontalmente */
