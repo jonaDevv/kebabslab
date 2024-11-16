@@ -24,14 +24,14 @@ window.addEventListener("load", function() {
         
             // Iterar sobre los objetos del JSON
             json.forEach(item => {
-                const cartaDiv = document.createElement('div');
-                cartaDiv.classList.add('carta');
-                cartaDiv.kebab = item;
+                const kebabDiv = document.createElement('div');
+                kebabDiv.classList.add('kbab');
+                kebabDiv.kebab = item;
                 // Agregar nombre y precio del kebab al contenido del div
-                cartaDiv.textContent = `${item.nombre}  ${item.precio} €`;
+               kebabDiv.textContent = `${item.nombre}  ${item.precio} €`;
         
                 // Añadir el div al contenedor
-                cartaContenedor.appendChild(cartaDiv);
+                cartaContenedor.appendChild(kebabDiv);
             });
         })
         .catch(error => {
