@@ -44,9 +44,9 @@
     
     /* Estilo para el precio */
     #precio {
-      background-color: rgba(255, 0, 0, 0.6); /* Fondo rojo para el precio */
+      
       font-weight: bold;
-      color: white;
+      color:#f39c12;
     }
 
      /* Estilo para el precio */

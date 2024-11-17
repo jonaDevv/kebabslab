@@ -12,7 +12,8 @@ window.addEventListener("load", function() {
 
             // Crear el contenedor del modal
             var contenedor = document.createElement("div");
-            
+
+            contenedor.setAttribute("id", "CModal");
             contenedor.setAttribute("class", "carritomodal");
             document.body.appendChild(contenedor);
         
@@ -29,7 +30,7 @@ window.addEventListener("load", function() {
                     contenedor.appendChild(carrito);
         
                     // Acceder a los elementos después de que estén en el DOM
-                    var modal = document.getElementById("carritoModal");
+                    var modal = document.getElementById("CModal");
                     var closeBtn = document.getElementsByClassName("closeCarrito")[0];
         
                     // Verifica si los elementos existen antes de agregar los eventos
