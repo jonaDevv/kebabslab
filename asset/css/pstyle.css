@@ -1,0 +1,58 @@
+    /* Contenedor principal del producto */
+    .producto-container {
+      display: grid; /* Utilizamos flex para que el contenedor principal esté bien alineado */
+      justify-content: center; /* Centra los productos horizontalmente */
+      align-items: center; /* Centra los productos verticalmente */
+     
+    }
+    
+    /* Estilo para el producto */
+    .producto {
+      display: grid; /* Usamos Grid para organizar las partes del producto */
+      grid-template-columns: 1fr ; /* La imagen tiene un ancho fijo, el resto ocupa el espacio disponible */
+      border-radius: 10px; /* Bordes redondeados */
+    }
+    
+    
+    
+    /* Estilo para cada parte dentro del producto */
+    .part {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 14px;
+      margin:3%;
+      color: white;
+    }
+    
+    /* Estilo específico para cada parte */
+    #foto {
+        border-radius: 30px;
+      /* La imagen ocupa 2 filas */
+      grid-column:1/ 2;
+      justify-content: center;
+    }
+ 
+    #Ingrediente {
+      
+      border-radius: 5px;
+      color: white;
+      grid-column:2;
+    }
+    
+    
+    /* Estilo para el precio */
+    #precio {
+      background-color: rgba(255, 0, 0, 0.6); /* Fondo rojo para el precio */
+      font-weight: bold;
+      color: white;
+    }
+
+     /* Estilo para el precio */
+     #Anadir {
+      background-color: rgba(255, 0, 0, 0.6); /* Fondo rojo para el precio */
+      
+      font-weight: bold;
+      color: white;
+    }

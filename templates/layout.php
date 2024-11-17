@@ -5,7 +5,14 @@
     <title>KEBABSLAB</title>
     <link rel="stylesheet" href="../asset/css/istyle.css">
     <script src="/asset/js/modalLogin.js" defer></script>
+    <script src="/asset/js/modalCarrito.js" defer></script>
+
     <link rel="stylesheet" href="../asset/css/mstyle.css">
+    <link rel="stylesheet" href="../asset/css/carritostyle.css">
+
+
+    
+
     
     
     <link rel="icon" href="../asset/img/favicon1.png" type="image/x-icon">

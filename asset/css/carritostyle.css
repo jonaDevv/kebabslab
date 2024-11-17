@@ -1,0 +1,52 @@
+/* Estilo para el modal */
+.carritomodal {
+    position: fixed;               /* Fija el contenedor en la pantalla */
+    top: 50%;                      /* Centrado vertical */
+    left: 50%;                     /* Centrado horizontal */
+    transform: translate(-50%, -50%); /* Ajuste para centrar exactamente */
+    width: 50vh;                  /* Ancho del modal (ajústalo según necesites) */
+    padding: 1%;                 /* Espacio interno */
+    background-color: white;       /* Fondo blanco para el modal */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+    border-radius: 8px;            /* Bordes redondeados */
+    z-index: 1000;                 /* Prioridad en la pila de elementos para que esté encima */
+   
+}
+
+
+
+.carrito-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    z-index: 999;                         /* Detrás del modal pero encima del contenido */
+}
+
+.modal-carrito {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+
+.closeCarrito {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeCarrito:hover,
+.closeCarrito:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+

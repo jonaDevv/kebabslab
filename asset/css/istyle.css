@@ -149,3 +149,21 @@ header {
   object-fit: cover;
   background-color: #222;
 }
+
+.icono-compra {
+  border-radius: 50%; /* Hace la imagen circular */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+  border: 2px solid #f39c12; /* Borde con color */
+  transition: transform 0.3s ease-in-out; /* Animación al interactuar */
+
+  /* Opcional: Ajusta el tamaño global de la imagen */
+  width: 40px;
+  height: 40px;
+}
+
+/* Efecto hover */
+.icono-compra:hover {
+  transform: scale(1.1); /* Aumenta ligeramente de tamaño al pasar el mouse */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más marcada */
+}
+ 

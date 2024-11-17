@@ -3,62 +3,83 @@
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
-    height: 80vh; /* Establece la altura al 80% de la ventana */
-    background-color: #f39c12;
+    
+    height: 100%; /* Establece la altura al 80% de la ventana */
+    background-color: #ffffff;
+    
 }
 
 /* Contenedor de las cartas */
 #carta {
+    
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajusta las columnas al tamaño de las cartas */
-    column-gap: 20px; /* Espaciado horizontal entre columnas */
-    row-gap: 20px; /* Espaciado vertical entre filas */
+    display: flex;
+     /* Ajusta las columnas al tamaño de las cartas */
+    flex-wrap: wrap;
+    column-gap: 30px; /* Espaciado horizontal entre columnas */
+    row-gap: 30px; /* Espaciado vertical entre filas */
     justify-content: center; /* Centra las columnas en el contenedor */
-    width: 100%; /* Toma todo el ancho del contenedor */
-    height: 100%; /* Toma toda la altura del contenedor */
+    
+     /* Toma todo el ancho del contenedor */
+     /* Toma toda la altura del contenedor */
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
     background-color: #24245c;
-    padding: 20px; /* Espaciado interno del contenedor */
+    padding: 5%; /* Espaciado interno del contenedor */
+    text-align: end;
+    
 }
 
 /* Estilo de cada carta */
 .kbab {
+    white-space: nowrap; /* Impide saltos de línea */
+    
     background-color: #f39c12;
-    display: flex;
+    height: 30%;
+    width: 20%;
+    background-size: cover; /* Asegura que la imagen cubra todo el área del contenedor */
+    background-position: center; /* Centra la imagen dentro del contenedor */
+
+
+    
+    display: grid;
     justify-content: center; /* Centra contenido horizontalmente */
-    align-items: center; /* Centra contenido verticalmente */
-    border: 1px solid black;
+    align-items: end; /* Alinea el contenido verticalmente al fondo */
+    text-align: center; /* Centra el texto */
+    color: white;
+    border: 1px solid rgb(255, 255, 255);
     border-radius: 5px; /* Bordes redondeados */
     padding: 5%; /* Espaciado interno */
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
-    font-weight: 700;
-    transition: transform 0.3s ease-in-out; /* Animación al interactuar */
+    font-weight: bold;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.1s ease-in-out, background-color 0.3s ease-in-out;
 }
 
-.kbab:hover {
-    transform: scale(1.05); /* Aumenta ligeramente de tamaño al pasar el mouse */
-}
+
+
 
 
 
 .kbab:hover {
     background-color:#24245c;
     color: white;
-    background-image: url("/asset/img/kebab1.jpeg");
     background-size: cover;
+    background-position: center; /* Centra la imagen dentro del contenedor */
     cursor: pointer;
     border: 1px solid white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    height: 500px;
-    width: 300px;
+    
     transform: scale(1.1);
     text-size-adjust: 120%;
-
+    
 }
 
 /* Aplica reducción de escala a las demás cartas cuando una esté en hover */
 .kbab > div:not(:hover) {
     transform: scale(1.9); /* Reduce las cartas no seleccionadas */
     opacity: 0.8; /* Reduce opacidad para mayor contraste */
+    overflow: hidden;
+    
 }
+
+

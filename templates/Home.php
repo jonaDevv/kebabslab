@@ -7,6 +7,9 @@
   <div class="header-container">
     <div class="logo">
       <a href="?menu=inicio"><img src="/asset/img/favicon1.png" width="20px" height="30px">KebabsLab</a>
+     <img id="icono-compra" src="/asset/img/compra.png" height="40px" width="40px" />
+     <div id="carrito" display="none">
+     </div>
     </div>
     <div class="menu">
       <nav>
