@@ -1,9 +1,14 @@
+*{
+  box-sizing: border-box;
+  font-family: Jetbrains Mono;
+}
+
 body{
 
     display: grid;
     min-height: 100vh;
     grid-template-rows: auto 1fr auto;
-    font-family: Jetbrains Mono;
+    box-sizing: border-box;
     width: 100%;
     margin: 0;
     cursor: url('/asset/img/favicon1.png'), auto;
@@ -64,10 +69,20 @@ footer {
 
   /* Estilos del header */
 /* Estilos generales del header */
+
+
 header {
+  z-index: 10;
   background-color:#24245c; /* Color de fondo del header */
   color: white;
-  padding: 10px 5px;
+  
+  position: sticky;             /* Fija el contenedor en la pantalla */
+  top: 0%;                      /* Centrado vertical *;                     /* Centrado horizontal */
+  
+  width: 100%;
+
+  padding: 20px;
+  
 }
 
 /* Contenedor principal del header */
@@ -115,6 +130,12 @@ header {
   color: #f39c12;
 }
 
+.menu .nav-admin {
+  display: none;
+  color:#f39c12;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+}
+
 /* Contenedor del video */
 .video-background-container {
   position: relative;
@@ -150,20 +171,20 @@ header {
   background-color: #222;
 }
 
-.icono-compra {
-  border-radius: 50%; /* Hace la imagen circular */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
-  border: 2px solid #f39c12; /* Borde con color */
+#icono-compra {
+  
   transition: transform 0.3s ease-in-out; /* Animación al interactuar */
 
   /* Opcional: Ajusta el tamaño global de la imagen */
   width: 40px;
   height: 40px;
+  
+ 
 }
 
 /* Efecto hover */
-.icono-compra:hover {
+#icono-compra:hover {
   transform: scale(1.1); /* Aumenta ligeramente de tamaño al pasar el mouse */
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más marcada */
+  
 }
  

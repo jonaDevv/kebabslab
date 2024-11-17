@@ -1,12 +1,15 @@
 /* Estilo para el modal */
 .carritomodal {
-     
-    width: 50vh;
-    height: 100%;                  /* Ancho del modal (ajústalo según necesites) */
-    padding: 1%;                 /* Espacio interno */
+    position: fixed;               /* Fija el contenedor en la pantalla */
+    top: 50%;                      /* Centrado vertical */
+    left: 87%;                     /* Centrado horizontal */
+    transform: translate(-50%,-50%); /* Ajuste para centrar exactamente */
+    width: 50vh;  
+    height: 100vh;                /* Ancho del modal (ajústalo según necesites) */
+                    /* Espacio interno */
     background-color: white;       /* Fondo blanco para el modal */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
-    border-radius: 8px;            /* Bordes redondeados */
+              /* Bordes redondeados */
     z-index: 1000;                 /* Prioridad en la pila de elementos para que esté encima */
    
 }

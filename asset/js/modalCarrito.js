@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
         
             var auxiliar = document.createElement("div");
         
-            // Traer la plantilla del login
+            // Traer la plantilla del carrito
             fetch("/vistas/principal/carrito.html")
                 .then(respuesta => respuesta.text())
                 .then(texto => {
@@ -51,6 +51,13 @@ window.addEventListener("load", function() {
                     } else {
                         console.error("No se han encontrado los elementos del modal.");
                     }
+
+
+                    carrito=document.getElementById("carrito");
+                    modal.appendChild(carrito=> ingr.innerHTML +="<br>"+ carrito.nombre + "<br>" + carrito.precio + "<br>" + carrito.descripcion + carrito.precio );
+
+
+
                 })
                 .catch(error => {
                     console.error("Error al cargar la plantilla del login:", error);

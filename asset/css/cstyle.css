@@ -1,8 +1,14 @@
+*{
+    box-sizing: border-box;
+  }
+
+
 /* Contenedor principal */
 .carta-container {
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
+    
     
     height: 100%; /* Establece la altura al 80% de la ventana */
     background-color: #ffffff;
@@ -25,7 +31,7 @@
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
     background-color: #24245c;
     padding: 5%; /* Espaciado interno del contenedor */
-    text-align: end;
+    
     
 }
 
@@ -34,8 +40,8 @@
     white-space: nowrap; /* Impide saltos de línea */
     
     background-color: #f39c12;
-    height: 30%;
-    width: 20%;
+    height: 400px;
+    width: 400px;
     background-size: cover; /* Asegura que la imagen cubra todo el área del contenedor */
     background-position: center; /* Centra la imagen dentro del contenedor */
 
@@ -44,16 +50,23 @@
     display: grid;
     justify-content: center; /* Centra contenido horizontalmente */
     align-items: end; /* Alinea el contenido verticalmente al fondo */
-    text-align: center; /* Centra el texto */
+    vertical-align: bottom;
+   font-size: 30px;
     color: white;
-    border: 1px solid rgb(255, 255, 255);
+    
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 5px; /* Bordes redondeados */
-    padding: 5%; /* Espaciado interno */
+    padding-bottom: 10px;
+    font-family: Jetbrains Mono;
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
     font-weight: bold;
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.1s ease-in-out, background-color 0.3s ease-in-out;
+
+    overflow: hidden;
 }
+
+
 
 
 
@@ -74,12 +87,5 @@
     
 }
 
-/* Aplica reducción de escala a las demás cartas cuando una esté en hover */
-.kbab > div:not(:hover) {
-    transform: scale(1.9); /* Reduce las cartas no seleccionadas */
-    opacity: 0.8; /* Reduce opacidad para mayor contraste */
-    overflow: hidden;
-    
-}
 
 

@@ -7,17 +7,27 @@
   <div class="header-container">
     <div class="logo">
       <a href="?menu=inicio"><img src="/asset/img/favicon1.png" width="20px" height="30px">KebabsLab</a>
-     <img id="icono-compra" src="/asset/img/compra.png" height="40px" width="40px" />
+     <img id="icono-compra" src="/asset/img/compra.png" height="40px" width="40px" /><b class="carrito-count"></b>
      <div id="carrito" display="none">
      </div>
     </div>
     <div class="menu">
-      <nav>
+      <nav class="nav-menu">
         <ul>
           <li><a href="?menu=inicio">Inicio</a></li>
           <li><a href="?menu=gusto">Kebab</a></li>
           <li><a href="?menu=carta">Carta</a></li>
           <li><a id="openModal">Login</a></li>
+        </ul>
+      </nav>
+      <nav class="nav-admin">
+        <ul>
+          <li><a class="admi-crear">Crear</a></li>
+          <li><a href="?menu=Editar">Editar</a></li>
+          <li><a href="?menu=Borrar">Borrar</a></li>
+          <li><a href="?menu=Pedidos">Pedidos</a></li>
+          <li><a href="?menu=Ventas">Ventas</a></li>
+          
         </ul>
       </nav>
     </div>

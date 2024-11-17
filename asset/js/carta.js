@@ -17,7 +17,7 @@ window.addEventListener("load", function() {
         fetch(peticion)
         .then(response => response.json())  // Convierte la respuesta en JSON
         .then(json => {
-            console.log(json);  // Añadir este log para ver la respuesta completa
+            
             
             const cartaContenedor = document.getElementById('carta');
             cartaContenedor.innerHTML = '';  // Limpiar el contenedor antes de agregar los nuevos elementos
@@ -31,7 +31,7 @@ window.addEventListener("load", function() {
                 kebabDiv.style.backgroundImage = `url(/asset/img/pngwing.com.png)`;
                
                kebabDiv.textContent = `${item.nombre.toUpperCase()}`;
-               kebabDiv.style.textAlign = "end";
+               
                 
                
                 // Añadir el div al contenedor
@@ -78,8 +78,8 @@ window.addEventListener("load", function() {
                         // Vacia el contenido del div para mostrar los ingredientes
                         kebabDiv.innerHTML = "";
                         kebabDiv.style.backgroundImage = ``;
-                        kebabDiv.style.height = "30%";
-                        kebabDiv.style.width = "20%";
+                        kebabDiv.style.boxSizing="border-box";
+                        
                     
                         
                         fetch("/vistas/principal/producto.html")
@@ -87,21 +87,27 @@ window.addEventListener("load", function() {
                         .then(texto => {
                             
                             auxiliar1.innerHTML = texto;
+                            auxiliar1.setAttribute("class", "prod-container");
                         
                             kebabDiv.appendChild(auxiliar1);
+                           
+                            auxiliar1.style.height = "100vh";
+                            auxiliar1.style.width = "100vw";
+                            
 
                             nombre=document.getElementById('nombre');
-                            nombre.innerHTML = item.nombre;
+                            nombre.innerHTML = `${item.nombre.toUpperCase()}`;
                             descripcion=document.getElementById('descripcion');
                             descripcion.innerHTML = item.descripcion;
                             precio=document.getElementById('precio');
                             precio.innerHTML = item.precio;
                             
+
                             ingredientes = item.ingredientes;
                             ingr = document.getElementById('ingrediente');
                             ingredientes.forEach(ingrediente => ingr.innerHTML +="<br>"+ ingrediente.nombre );
                             
-                            console.log(ingredientes);
+                            
                             
                             
                         
@@ -113,17 +119,25 @@ window.addEventListener("load", function() {
                                 pedirBtn.addEventListener("click", function() {
     
                                     const carrito = document.getElementById("carrito");
+                                    carrito.style.display="none";
+                                    carrito.innerHTML += item;
+                                    
+                                    const count = document.getElementsByClassName("carrito-count")[0];
+                                    
 
-                                    carrito.innerHTML = item;
 
-                                    console.log(carrito);
+                                    
+                                    
+                                    count.innerHTML = count.innerHTML + 1 - 0;
+
+                                    
                                 });
     
                             } else {
                                 console.error("No se ha encontrado el botón de pedir.");
                             }
                             
-                            console.log(ingredientes);
+                            
 
 
                         })
