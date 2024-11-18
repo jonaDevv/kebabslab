@@ -43,7 +43,7 @@ window.addEventListener("load", function() {
 
                 kebabDiv.addEventListener('dblclick', function() {
                     // Traer la plantilla del login
-                    fetch("/vistas/principal/producto.html")
+                    fetch("/vistas/principal/verKebab.html")
                     .then(respuesta => respuesta.text())
                     .then(texto => {
                         auxiliar.innerHTML = texto;
@@ -52,6 +52,89 @@ window.addEventListener("load", function() {
                         cont.removeChild(cartaContenedor);
                         cont.appendChild(auxiliar);
                         auxiliar.style.display="block";
+
+                            nombre=document.getElementById('nombre');
+                            nombre.innerHTML = `${item.nombre.toUpperCase()}`;
+                            descripcion=document.getElementById('descripcion');
+                            descripcion.innerHTML = item.descripcion;
+                            precio=document.getElementById('precio');
+                            precio.innerHTML = item.precio+"€";
+                            
+
+                            ingredientes = item.ingredientes;
+                            nombreIngrediente = document.getElementById('ingrediente');
+                            nombreAlergenos=document.getElementById('alergenos');
+                            nombreAlergenos.innerHTML = "";
+                            nombreIngrediente.innerHTML = "";
+                            contador=0;
+                            ingredientes.forEach(ingrediente => {
+
+                                
+                                // Agregar el nombre del ingrediente al contenedor de ingredientes
+                                nombreIngrediente.innerHTML += ingrediente.nombre + " " +ingrediente.precio +"€"+ "<br>";
+                            
+                                // Recorrer el array de alérgenos dentro de cada ingrediente
+                                ingrediente.alergenos.forEach(alergeno => {
+                                    // Agregar el nombre de cada alérgeno al contenedor de alérgenos
+                                    nombreAlergenos.innerHTML += alergeno.nombre + "<br>";
+                                });
+
+                                contador++;
+                            });
+                            
+                            fetch("/Api/Api_ingrediente.php",{
+                                method: 'GET',  // Método GET
+                                headers: {
+                                    'Content-Type': 'application/json',  // Si deseas enviar o recibir datos en formato JSON
+                                }
+                            }).then(response => response.json())
+                            .then(json => {
+
+                                json.forEach(item => {
+
+                                    const ingredienteDiv = document.createElement('div');
+                                    ingredienteDiv.classList.add('listaIngrediente');
+                                    ingredienteDiv.ingrediente = item;
+
+                                    // Agregar nombre y precio del kebab al contenido del div
+                                    ingredienteDiv.textContent = `${item.nombre}  ${item.precio} €`;
+                                    
+                                    const aingredientes=document.getElementById("aIngrediente");
+                                    // Añadir el div al contenedor
+                                    aingredientes.appendChild(ingredienteDiv);
+                                });
+                                
+                                console.log(item);
+                               
+                                
+                                
+                            })
+                             
+                            
+                             const pedirBtn = document.getElementById("pedir");
+                             if (pedirBtn) {
+                                 pedirBtn.addEventListener("click", function() {
+     
+                                     const carrito = document.getElementById("carrito");
+                                     carrito.style.display="none";
+                                     carrito.innerHTML += item;
+                                     
+                                     const count = document.getElementsByClassName("carrito-count")[0];
+
+                                    // Convierte count.innerHTML a número y suma 1
+                                    count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
+                                    
+                                     
+                                 });
+
+
+
+                                 
+     
+                             } else {
+                                 console.error("No se ha encontrado el botón de pedir.");
+                             }
+                        
                         
             
                         
@@ -123,12 +206,9 @@ window.addEventListener("load", function() {
                                     carrito.innerHTML += item;
                                     
                                     const count = document.getElementsByClassName("carrito-count")[0];
-                                    
 
-
-                                    
-                                    
-                                    count.innerHTML = count.innerHTML + 1 - 0;
+                                    // Convierte count.innerHTML a número y suma 1
+                                    count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
 
                                     
                                 });

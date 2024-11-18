@@ -32,7 +32,16 @@ window.addEventListener("load", function() {
                     // Acceder a los elementos después de que estén en el DOM
                     var modal = document.getElementById("CModal");
                     var closeBtn = document.getElementsByClassName("closeCarrito")[0];
-        
+                    var vaciarBtn = document.getElementById("vaciarBtn");
+                    var pagarBtn = document.getElementById("pagarBtn");
+
+                    if (vaciarBtn) {
+                        // Vaciar el carrito al hacer clic en el botón
+                        vaciarBtn.addEventListener("click", function() {
+                            carrito.innerHTML = "0";
+                            
+                        });
+                    }
                     // Verifica si los elementos existen antes de agregar los eventos
                     if (closeBtn) {
                         // Cerrar el modal al hacer clic en la "X"
@@ -53,10 +62,7 @@ window.addEventListener("load", function() {
                     }
 
 
-                    carrito=document.getElementById("carrito");
-                    modal.appendChild(carrito=> ingr.innerHTML +="<br>"+ carrito.nombre + "<br>" + carrito.precio + "<br>" + carrito.descripcion + carrito.precio );
-
-
+                    
 
                 })
                 .catch(error => {

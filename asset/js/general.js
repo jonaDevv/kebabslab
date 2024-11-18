@@ -26,6 +26,24 @@ window.addEventListener("load", function() {
             .catch(error => {
                 console.error("Error al cargar", error);
             });
+
+
+
+
+            crearBtn = document.getElementsByClassName("menuKebab");{
+
+                crearBtn.addEventListener("click", function() {
+                    console.log("hover");
+                    alert("hover");
+
+                });
+
+            }
+            
+
+
+
+
         
         
     });

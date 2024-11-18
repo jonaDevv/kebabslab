@@ -101,7 +101,8 @@ Class repoKebab implements RepoCrud {
                 // Crear un array para los alérgenos de este ingrediente
                 $alergenosArray = [];
                 while ($alergenoRow = $stmtAlergenos->fetch(PDO::FETCH_OBJ)) {
-                    $alergenosArray[] = $alergenoRow->nombre;
+                    $alergenosArray[] = new Alergeno($alergenoRow->id, $alergenoRow->nombre, $alergenoRow->foto); // Asumimos que Alergeno tiene un constructor con id y nombre
+
                 }
     
                 // Crear el objeto Ingrediente con alérgenos
@@ -255,7 +256,7 @@ Class repoKebab implements RepoCrud {
                     $stmtAlergenos = $conn->prepare("
                         
     
-                        SELECT a.nombre FROM alergeno a
+                        SELECT a.* FROM alergeno a
                         INNER JOIN ingrediente_alergeno ia ON a.id = ia.alergeno_id
                         WHERE ia.ingrediente_id = :ingrediente_id
                     ");
@@ -265,7 +266,13 @@ Class repoKebab implements RepoCrud {
                     $alergenosArray = [];
                     
                     while ($alergenoRow = $stmtAlergenos->fetch(PDO::FETCH_OBJ)) {
-                        $alergenosArray[] = $alergenoRow->nombre;
+                        
+                        $alergenosArray[] = new Alergeno($alergenoRow->id, $alergenoRow->nombre, $alergenoRow->foto); // Asumimos que Alergeno tiene un constructor con id y nombre
+                        
+
+
+
+
                     }
         
                     // Crear el objeto Ingrediente con alérgenos

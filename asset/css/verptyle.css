@@ -1,0 +1,46 @@
+
+    .verProducto {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f39c12;
+      height: 85vh;
+      width: 100%;
+      overflow: hidden;   
+      box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+      z-index: 1;
+     
+      background-position: center;
+    }
+
+
+
+    /* Estilo para el precio */
+    #precio {
+      
+      font-weight: bold;
+      color:#f39c12;
+    }
+
+     /* Estilo para el precio */
+     #Anadir {
+      background-color: rgba(255, 0, 0, 0.6); /* Fondo rojo para el precio */
+      width:60px;
+      height: 20px;
+      border-radius: 20%;
+      margin: auto;
+      font-weight: bold;
+      align-items: center;
+      color: white;
+    }
+
+    #Editar {
+      background-color: rgba(255, 0, 0, 0.6); /* Fondo rojo para el precio */
+      width:60px;
+      height: 20px;
+      border-radius: 20%;
+      margin: auto;
+      font-weight: bold;
+      align-items: center;
+      color: white;
+    }

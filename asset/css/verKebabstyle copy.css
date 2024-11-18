@@ -1,43 +1,34 @@
 *{
   box-sizing: border-box;
+  font-family: Jetbrains Mono;
 }
 
 
 
-.alGusto {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #24245c;
-    height: 90vh;
-    width: 100%;
-    overflow: hidden;   
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
-    z-index: 1;
-   
-    background-position: center;
-}
+
     
     
 
 
 
 
-.ventana {
+.vistaKebab {
   display: grid;
-  grid-template-columns:40% 30% 18% 10%; /* Dos columnas de igual tamaño */
-  grid-template-rows: 7% 35% 5% 25% 20% 5%; /* Filas para imagen, nombre, descripción, y precio */
+  grid-template-columns: 40% 30% 18% 10%; /* Dos columnas de igual tamaño */
+  grid-template-rows:5% 30% 3% 20% 25% 5% 1fr ; /* Filas para imagen, nombre, descripción, y precio */
   grid-gap:5px 10px; /* Espacio entre las celdas */
-  
-  background-color: white;
-  height:50em; /* Ajusta según tu necesidad */
-  width: 60em;
-  
+  background-color: rgba(36, 36, 92, 0.9);
+  height:700px; /* Ajusta según tu necesidad */
+  width: 800px;
   border-radius: 0% 3% 0% 10%;
   padding: 30px;
   overflow: auto;
   overflow: hidden;
   z-index: 1;
+  border:#ffffff solid 1px;
+  
+  margin:auto;
+  
 }
 
 
@@ -45,6 +36,7 @@
 .part{
 
     overflow: hidden;
+    
     
 }
 
@@ -58,8 +50,8 @@
   text-align: center;
   
   color: black;
-  background-color: #ffffff;
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  
+  
   border-radius: 3% 0% 0% 0%;
   
   
@@ -90,18 +82,59 @@
   justify-content: center; /* Centra horizontalmente */
   align-items: center; 
   text-align: center;
-
+  
   color: black;
   background-color: #ffffff;
   box-shadow: inset 0px 0px 10px rgba(138, 138, 138, 0.6); /* Sombreado interno */
+  backface-visibility: blur;
   border-radius: 0% 0% 0% 0%;
+  
+  
+
+}
+
+#listaIngradientes {
+  grid-column: 3/4; /* Descripción ocupa las dos columnas */
+  grid-row: 2;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: black;
+  
+  
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  color: rgb(255, 255, 255);
+  
+  
+
+}
+
+#ingredientesKebab {
+  grid-column: 2/3; /* Descripción ocupa las dos columnas */
+  grid-row: 2;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: rgb(255, 255, 255);
+  
+ 
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  
   
 
 }
 
 #ingrediente {
     grid-column: 2/3; /* Ingredientes en la primera columna */
-    grid-row: 2/6;
+    grid-row: 3/6;
     background-color: #ffffff;
     color: black;
     padding: 10px;
@@ -111,7 +144,7 @@
   
   #aIngrediente {
     grid-column: 3/5; /* Añadir ingredientes en la segunda columna */
-    grid-row: 2/6;
+    grid-row: 3/6;
     background-color: #ffffff;
     color: black;
     padding: 10px;
@@ -120,15 +153,7 @@
     
   }
 
-  #asingrediente {
-   
-    background-color: #a02121;
-    color: blue;
-    padding: 10px;
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
-    border-radius: 0% 1% 2.4% 0%;
-    
-  }
+  
 
 #alergenos {
   display: flex;
@@ -150,31 +175,50 @@
   display: flex;
   justify-content: center; /* Centra horizontalmente */
   align-items: center;  
+  font-size:50px;
+  grid-column: 1; /* Precio ocupa las dos columnas */
+  grid-row: 7;
+  text-align: center;
+  color: #f39c12;
+  overflow: hidden;
+  padding: auto;
+  border-style: solid 1px;
+  border-color: #f39c12; 
+  border-radius: 10% 10% 10% 10%;
+}
+
+
+
+
+#pedir {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
   
   
 
   grid-column: 4; /* Precio ocupa las dos columnas */
-  grid-row: 6;
+  grid-row: 7;
   text-align: center;
   color: #ffffff;
   overflow: hidden;
-  padding: auto;
-  background-color: #24245c;
+  padding :20px;
+  background-color: #f39c12;
   border-style: solid 1px;
-  border-color: #f39c12;
+  border-color: #ffffff;
   
   
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
   border-radius: 10% 10% 10% 10%;
 }
 
-#precio:hover {
+#pedir:hover {
     
-  color: white;
+  color:#f39c12;
   cursor: pointer;
   transform: scale(1.1);
   text-size-adjust: 120%;
-  background-color: #f39c12;
+  background-color: #ffffff;
   
 
 
@@ -182,16 +226,54 @@
 
 }
 
+#editar {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  
+  
+
+  grid-column: 3; /* Precio ocupa las dos columnas */
+  grid-row: 7;
+  text-align: center;
+  color: #ffffff;
+  overflow: hidden;
+  padding :20px;
+  background-color: #f39c12;
+  border-style: solid 1px;
+  border-color: #ffffff;
+  
+  
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  border-radius: 10% 10% 10% 10%;
+}
+
+#editar:hover {
+    
+  color:#f39c12;
+  cursor: pointer;
+  transform: scale(1.1);
+  text-size-adjust: 120%;
+  background-color: #ffffff;
+  
+  
+
+
+
+
+}
 #plus {
     grid-column: 4; /* Precio ocupa las dos columnas */
     grid-row: 1;
     text-align: center;
     background-image: url("/asset/img/favicon1.png");
     color: white;
-    height: 100%;
-    width: 70%;
-    margin:0 auto;
-    padding: 0;
+    height: 50px;
+    width: 40px;
+    margin-top: -15px;
+    
+    padding-bottom: 10px;
+    
     
 }
 

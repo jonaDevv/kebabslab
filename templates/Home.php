@@ -15,14 +15,14 @@
       <nav class="nav-menu">
         <ul>
           <li><a href="?menu=inicio">Inicio</a></li>
-          <li><a href="?menu=gusto">Kebab</a></li>
+          <li><a href="?menu=gusto" class="menuKebab">Kebab</a></li>
           <li><a href="?menu=carta">Carta</a></li>
           <li><a id="openModal">Login</a></li>
         </ul>
       </nav>
       <nav class="nav-admin">
         <ul>
-          <li><a class="admi-crear">Crear</a></li>
+          <li><a class="admi-crear" >Crear</a></li>
           <li><a href="?menu=Editar">Editar</a></li>
           <li><a href="?menu=Borrar">Borrar</a></li>
           <li><a href="?menu=Pedidos">Pedidos</a></li>
