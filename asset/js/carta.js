@@ -13,6 +13,7 @@ window.addEventListener("load", function() {
                 'Content-Type': 'application/json',  // Si deseas enviar o recibir datos en formato JSON
             }
         });
+        
 
         fetch(peticion)
         .then(response => response.json())  // Convierte la respuesta en JSON
@@ -93,6 +94,11 @@ window.addEventListener("load", function() {
                                 json.forEach(item => {
 
                                     const ingredienteDiv = document.createElement('div');
+                                    ingredienteDiv.style.padding = "5px";
+                                    ingredienteDiv.style.margin = "0px";
+                                    ingredienteDiv.style.borderRadius = "10px";
+                                    ingredienteDiv.style.border = "1px solid black";
+                                    
                                     ingredienteDiv.classList.add('listaIngrediente');
                                     ingredienteDiv.ingrediente = item;
 
@@ -134,7 +140,24 @@ window.addEventListener("load", function() {
                              } else {
                                  console.error("No se ha encontrado el botón de pedir.");
                              }
-                        
+
+
+
+                            //Ahora cogemos el boton editar y le asignamos un evento click para editar el elemento
+                            const editarBtn = document.getElementById("editar");
+                            if (editarBtn) {
+                                editarBtn.addEventListener("click", function() {
+                                    
+                                    listaIngredientes = document.getElementById("aIngrediente");
+                                    console.log (listaIngredientes);
+
+                                    
+                                });
+                            
+                            } else {
+                                console.error("No se ha encontrado el botón de editar.");
+                            }
+                                            
                         
             
                         

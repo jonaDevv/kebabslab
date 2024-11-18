@@ -2,38 +2,46 @@ window.addEventListener("load", function() {
     
     
 
-    
-        const url = 'http://www.kebabslab.com/Api/Api_kebab.php'; // URL de la API
-    
-        // Usando el método GET con fetch
-        // Crear un objeto Request
-        const peticion = new Request(url, {
-            method: 'GET',  // Método GET
-            headers: {
-                'Content-Type': 'application/json',  // Si deseas enviar o recibir datos en formato JSON
-            }
-        });
+        //Cogemos el boton pedir t le asignamos un evento click para añadir elementos al carrito
+        contenedorVista = document.getElementsByClassName('vistaKebab');
 
-        fetch(peticion)
-        .then(response => response.json())  // Convierte la respuesta en JSON
-        .then(json => {
-            
-            
-            // Iterar sobre los objetos del JSON
-            json.forEach(item => {
-                const ingredienteDiv = document.createElement('div');
-                ingredienteDiv.classList.add('asingrediente');
-                ingredienteDiv.ingrediente = item;
-                // Agregar nombre y precio del kebab al contenido del div
-                ingredienteDiv.textContent = `${item.nombre}  ${item.precio} €`;
-        
-                // Añadir el div al contenedor
-                aingredintes.appendChild(ingredienteDiv);
+        const pedirBtn = document.getElementsByClassName("pedir")[0];
+        if (pedirBtn) {
+            pedirBtn.addEventListener("click", function() {
+    
+                const carrito = document.getElementById("carrito");
+                carrito.style.display="none";
+                carrito.innerHTML += item;
+                                    
+                const count = document.getElementsByClassName("carrito-count")[0];
+
+                // Convierte count.innerHTML a número y suma 1
+                count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
+
+                
             });
-        })
-        .catch(error => {
-            console.error('Hubo un error con la solicitud fetch:', error);
-        });
+
+        } else {
+            console.error("No se ha encontrado el botón de pedir.");
+        }
+
+        console.log(contenedorVista);
+
+        //Ahora cogemos el boton editar y le asignamos un evento click para editar el elemento
+        const editarBtn = document.getElementById("editar");
+        if (editarBtn) {
+            editarBtn.addEventListener("click", function() {
+                
+                listaIngredientes = document.getElementById("aIngrediente");
+                console.log (listaIngredientes);
+
+                
+            });
+        
+        } else {
+            console.error("No se ha encontrado el botón de editar.");
+        }
+
 
 
 
