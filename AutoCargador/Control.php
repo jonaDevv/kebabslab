@@ -14,7 +14,7 @@ class Control {
 
     // En "controllers/alGusto.php"
     public static function gusto() {
-        include __DIR__ . '/../vistas/principal/crearKebab.html';
+        include __DIR__ . '/../vistas/principal/verKebabGusto.html';
     }
 
     // En "controllers/carta.php"
@@ -46,8 +46,8 @@ class Control {
         require_once './Vistas/mantenimiento/mantenimiento.php';
     }
 
-    public static function listadoAnimales() {
-        require_once './Vistas/Mantenimiento/listadoanimales.php';
+    public static function pedidos() {
+        require_once './vistas/principal/gestionPedidos.html';
     }
 
     public static function listadoVacunas() {

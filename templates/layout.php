@@ -8,6 +8,8 @@
     <script src="/asset/js/modalCarrito.js" defer></script>
     <script src="/asset/js/menuAdmi.js" defer></script>
     <script src="/asset/js/general.js" defer></script>
+    <script src="/asset/js/gestionPedidos.js" defer></script>
+
     
 
 

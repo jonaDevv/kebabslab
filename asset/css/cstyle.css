@@ -12,6 +12,7 @@
     
     height: 100%; /* Establece la altura al 80% de la ventana */
     background-color: #ffffff;
+    margin: 0;
     
 }
 
@@ -30,7 +31,6 @@
      /* Toma toda la altura del contenedor */
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
     background-color: #24245c;
-    padding: 5%; /* Espaciado interno del contenedor */
     
     
 }

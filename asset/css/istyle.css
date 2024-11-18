@@ -86,7 +86,7 @@ header {
 }
 
 /* Contenedor principal del header */
-.header-container {
+.header-container:not(#icono-compra) {
   display: flex;
   flex-direction: column; /* Organiza los elementos en una columna (titulo arriba y menú abajo) */
   align-items: center; /* Centra los elementos horizontalmente */
@@ -94,11 +94,14 @@ header {
 
 /* Estilo para el logo */
 .logo a {
+  text-align: center;
+  justify-content: center;
   font-size: 36px;
   color: white;
   text-decoration: none;
   font-weight: bold;
-  margin-bottom: 10px; /* Espacio debajo del título */
+  margin-bottom: 10px;
+  height: 50px; /* Ajusta según el tamaño que desees */
 }
 
 /* Estilo para el menú */
@@ -172,21 +175,99 @@ header {
 }
 
 #icono-compra {
+  position: absolute;  /* Cambia a posición absoluta */
+  right: 60px; 
+  bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
+  top: 50%;            /* Centrado verticalmente respecto al contenedor */
+  transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
   
-  transition: transform 0.3s ease-in-out; /* Animación al interactuar */
+  
 
-  /* Opcional: Ajusta el tamaño global de la imagen */
   width: 40px;
   height: 40px;
+
+
   
  
 }
 
-/* Efecto hover */
-#icono-compra:hover {
-  transform: scale(1.1); /* Aumenta ligeramente de tamaño al pasar el mouse */
+
+
+
+/* Estilos del menú, inicialmente oculto */
+.nav-kebab {
+  display: none;
+  position: absolute;  /* Posicionamiento absoluto */
+         /* Justo debajo del botón */
+  
+              /* Alineado a la izquierda del botón */
+  background-color:  #222; /* Fondo blanco para el menú */
+  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle efecto de profundidad */
+  z-index: 1000;        /* Aseguramos que se muestre encima de otros elementos */
+  top:100%;
+  left:0%;
+
+ 
+        /* Se ajusta 10px desde el borde derecho del contenedor */
+           /* Centrado verticalmente respecto al contenedor */
+
+           width:100%;
+  
+ 
   
 }
+
+.nav-kebab ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-kebab li {
+  padding: 10px;
+}
+
+.nav-kebab li a {
+  text-decoration: none;
+  color: #b81515;
+  padding: 5px 20px;
+  display: block;
+}
+
+.nav-kebab li a:hover {
+  
+  color:white;
+}
+
+#openModal {
+  position: absolute;
+  right: 200px;
+  top: 50px;
+  width: 100px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap; /* Impide saltos de línea */
+  font-weight: bold;
+}
+
+.carrito-count{
+
+  position: absolute;  /* Cambia a posición absoluta */
+  right: 44px; 
+  bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
+  top: 40%;            /* Centrado verticalmente respecto al contenedor */
+  transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
+  
+  
+
+  width: 40px;
+  height: 40px;
+
+}
+
 
 
 

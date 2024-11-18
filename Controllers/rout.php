@@ -19,7 +19,7 @@ class rout{
                 "mantenimiento" => (Control::mantenimiento()),
                 "gusto" => (Control::gusto()),
                 "carta" => (Control::carta()),
-                "listadovacunas" => (Control::listadoVacunas()),
+                "pedidos" => (Control::pedidos()),
                 default => (Control::notFound()) // Controlador de error si no se encuentra el menú
             };
             

@@ -146,14 +146,36 @@ window.addEventListener("load", function() {
                             //Ahora cogemos el boton editar y le asignamos un evento click para editar el elemento
                             const editarBtn = document.getElementById("editar");
                             if (editarBtn) {
+
+
+
                                 editarBtn.addEventListener("click", function() {
                                     
-                                    listaIngredientes = document.getElementById("aIngrediente");
-                                    console.log (listaIngredientes);
-
                                     
+                                    
+
+                                 
+                                    
+
+
+
+
+
+
+
                                 });
                             
+
+
+
+
+
+
+
+
+
+
+
                             } else {
                                 console.error("No se ha encontrado el botón de editar.");
                             }
@@ -206,7 +228,7 @@ window.addEventListener("load", function() {
                             descripcion=document.getElementById('descripcion');
                             descripcion.innerHTML = item.descripcion;
                             precio=document.getElementById('precio');
-                            precio.innerHTML = item.precio;
+                            precio.innerHTML = item.precio + "€";
                             
 
                             ingredientes = item.ingredientes;
@@ -239,8 +261,110 @@ window.addEventListener("load", function() {
                             } else {
                                 console.error("No se ha encontrado el botón de pedir.");
                             }
-                            
-                            
+
+                            //Ahora cogemos el boton editar y le asignamos un evento click para editar el elemento
+                            const editarBtn = document.getElementById("editar");
+                            if (editarBtn) {
+
+                                    editarBtn.addEventListener("click", function() {
+                                        
+                                    listaIngredientes = document.getElementById("aIngrediente");
+                                    console.log (listaIngredientes);
+
+
+                                                    
+                                        fetch("/vistas/principal/verKebab.html")
+                                        .then(respuesta => respuesta.text())
+                                        .then(texto => {
+                                            auxiliar.innerHTML = texto;
+
+                                            cont=document.getElementsByClassName("carta-container")[0];
+                                            cont.removeChild(cartaContenedor);
+                                            cont.appendChild(auxiliar);
+                                            auxiliar.style.display="block";
+
+                                                nombre=document.getElementById('nombre');
+                                                nombre.innerHTML = `${item.nombre.toUpperCase()}`;
+                                                descripcion=document.getElementById('descripcion');
+                                                descripcion.innerHTML = item.descripcion;
+                                                precio=document.getElementById('precio');
+                                                precio.innerHTML = item.precio+"€";
+                                                
+
+                                                ingredientes = item.ingredientes;
+                                                nombreIngrediente = document.getElementById('ingrediente');
+                                                nombreAlergenos=document.getElementById('alergenos');
+                                                nombreAlergenos.innerHTML = "";
+                                                nombreIngrediente.innerHTML = "";
+                                                contador=0;
+                                                ingredientes.forEach(ingrediente => {
+
+                                                    
+                                                    // Agregar el nombre del ingrediente al contenedor de ingredientes
+                                                    nombreIngrediente.innerHTML += ingrediente.nombre + " " +ingrediente.precio +"€"+ "<br>";
+                                                
+                                                    // Recorrer el array de alérgenos dentro de cada ingrediente
+                                                    ingrediente.alergenos.forEach(alergeno => {
+                                                        // Agregar el nombre de cada alérgeno al contenedor de alérgenos
+                                                        nombreAlergenos.innerHTML += alergeno.nombre + "<br>";
+                                                    });
+
+                                                    contador++;
+                                                });
+
+
+
+                                                //Lleno la lista de ingredientes
+                                                
+                                                fetch("/Api/Api_ingrediente.php",{
+                                                    method: 'GET',  // Método GET
+                                                    headers: {
+                                                        'Content-Type': 'application/json',  // Si deseas enviar o recibir datos en formato JSON
+                                                    }
+                                                }).then(response => response.json())
+                                                .then(json => {
+
+                                                    json.forEach(item => {
+
+                                                        const ingredienteDiv = document.createElement('div');
+                                                        ingredienteDiv.style.padding = "5px";
+                                                        ingredienteDiv.style.margin = "0px";
+                                                        ingredienteDiv.style.borderRadius = "10px";
+                                                        ingredienteDiv.style.border = "1px solid black";
+                                                        
+                                                        ingredienteDiv.classList.add('listaIngrediente');
+                                                        ingredienteDiv.ingrediente = item;
+
+                                                        // Agregar nombre y precio del kebab al contenido del div
+                                                        ingredienteDiv.textContent = `${item.nombre}  ${item.precio} €`;
+                                                        
+                                                        const aingredientes=document.getElementById("aIngrediente");
+                                                        // Añadir el div al contenedor
+                                                        aingredientes.appendChild(ingredienteDiv);
+                                                    });
+                                                    
+                                                    console.log(item);
+                                                
+                                                    
+                                                    
+                                                })
+                                
+                                        
+                                        })
+                                        .catch(error => {
+                                            console.error("Error al cargar", error);
+                                        });
+
+                                                        
+                                        });
+
+                                
+                                } else {
+                                    console.error("No se ha encontrado el botón de editar.");
+                                }
+                                        
+                                
+                                
 
 
                         })

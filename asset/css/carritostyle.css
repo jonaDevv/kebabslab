@@ -2,7 +2,7 @@
 .carritomodal {
     position: fixed;               /* Fija el contenedor en la pantalla */
     top: 50%;                      /* Centrado vertical */
-    left: 87%;                     /* Centrado horizontal */
+    right: -13%;                    /* Centrado horizontal */
     transform: translate(-50%,-50%); /* Ajuste para centrar exactamente */
     width: 50vh;  
     height: 100vh;                /* Ancho del modal (ajústalo según necesites) */
@@ -13,6 +13,7 @@
     z-index: 1000;                 /* Prioridad en la pila de elementos para que esté encima */
    
 }
+
 
 
 
@@ -41,6 +42,7 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    padding:20px;
 }
 
 .closeCarrito:hover,
