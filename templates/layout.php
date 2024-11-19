@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>KEBABSLAB</title>
-    <link rel="stylesheet" href="../asset/css/istyle.css">
     <script src="/asset/js/modalLogin.js" defer></script>
     <script src="/asset/js/modalCarrito.js" defer></script>
+    <script src="/ApiJs/Api.js" defer></script>
     <script src="/asset/js/menuAdmi.js" defer></script>
     <script src="/asset/js/general.js" defer></script>
     <script src="/asset/js/gestionPedidos.js" defer></script>
+    <script src="/asset/js/kebabGusto.js" defer></script>
+    <script src="/asset/js/rellenar.js"></script> 
+    <script src="/asset/js/carta.js"></script>
 
     
-
-
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="../asset/css/istyle.css">
     <link rel="stylesheet" href="../asset/css/mstyle.css">
     <link rel="stylesheet" href="../asset/css/carritostyle.css">
+    <link rel="stylesheet" href="../asset/css/menuGestion.css">
     
 
 

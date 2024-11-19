@@ -22,12 +22,10 @@
       </nav>
       <nav class="nav-admin">
         <ul>
-          <li><a class="admi-crear" >Crear</a></li>
-          <li><a href="?menu=Editar">Editar</a></li>
-          <li><a href="?menu=Borrar">Borrar</a></li>
-          <li><a href="?menu=pedidos">Pedidos</a></li>
-          <li><a href="?menu=Ventas">Ventas</a></li>
-          
+          <li><a href="?menu=gProducto" >Productos</a></li>
+          <li><a href="?menu=gUsuario">Usuarios</a></li>
+          <li><a href="?menu=gPedido">Pedidos</a></li>
+          <li><a href="?menu=gVenta">Ventas</a></li>
         </ul>
       </nav>
     </div>

@@ -46,13 +46,25 @@ class Control {
         require_once './Vistas/mantenimiento/mantenimiento.php';
     }
 
-    public static function pedidos() {
-        require_once './vistas/principal/gestionPedidos.html';
+    public static function gProducto() {
+        require_once './Vistas/mantenimiento/gProducto.php';
     }
 
-    public static function listadoVacunas() {
-        require_once './Vistas/Mantenimiento/listadovacunas.php';
+    public static function gUsuario() {
+        require_once './Vistas/mantenimiento/gUsuario.php';
     }
+
+    public static function gPedido() {
+        require_once './Vistas/mantenimiento/gPedido.php';
+    }
+
+    public static function gVenta() {
+        require_once './Vistas/mantenimiento/gVenta.php';
+    }
+    
+    // En "controllers/pedidos.php"
+
+   
 
     // En "controllers/ErrorController.php"
     public static function notFound() {

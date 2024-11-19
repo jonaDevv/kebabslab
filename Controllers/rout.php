@@ -19,7 +19,10 @@ class rout{
                 "mantenimiento" => (Control::mantenimiento()),
                 "gusto" => (Control::gusto()),
                 "carta" => (Control::carta()),
-                "pedidos" => (Control::pedidos()),
+                "gProducto" => (Control::gProducto()),
+                "gUsuario" => (Control::gUsuario()),
+                "gPedido" => (Control::gPedido()),
+                "gVenta" => (Control::gVenta()),
                 default => (Control::notFound()) // Controlador de error si no se encuentra el menú
             };
             
