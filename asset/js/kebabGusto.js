@@ -8,6 +8,8 @@ window.addEventListener("load", function() {
 
        
 
+
+
         const pedirBtn = document.getElementById("pedir");
         
         if (pedirBtn) {
@@ -21,6 +23,8 @@ window.addEventListener("load", function() {
 
                 // Convierte count.innerHTML a número y suma 1
                 count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
+
+                console.log("hola");
 
                 
             });
@@ -51,6 +55,7 @@ window.addEventListener("load", function() {
 
 function listaIngredientes(){
 
+   
     fetch("/Api/Api_ingrediente.php",{
         method: "GET",
         headers: {
@@ -83,7 +88,7 @@ function listaIngredientes(){
             ingredienteDiv.ingrediente = item;
 
             // Agregar nombre y precio del kebab al contenido del div
-            ingredienteDiv.textContent = `${item.nombre}  ${item.precio} €`;
+            ingredienteDiv.textContent = `${ingredienteDiv.ingrediente.nombre}  ${ingredienteDiv.ingrediente.precio} €`;
             
             const aingredientes=document.getElementById("aIngrediente");
             const ingredientesKebab=document.getElementById("ingrediente");
@@ -94,21 +99,28 @@ function listaIngredientes(){
             aingredientes.appendChild(ingredienteDiv);
 
 
-            ingredienteDiv.addEventListener("click",function(){
-
-
-                console.log(item.nombre);
-
-                ingredientesKebab.appendChild(ingredienteDiv);
-                
-
-               ingredientesKebab.appendChild(ingredienteDiv);
-                
-                
+            ingredienteDiv.addEventListener("click",function(ev){
 
                 
 
-                // Iteramos sobre los alérgenos del item
+
+                if (ingredienteDiv.parentNode.id=="aIngrediente") {
+                    
+                    ingredientesKebab.appendChild(ingredienteDiv);
+                    ingredientesKebab.appendChild(ingredienteDiv);
+
+                    
+                    precioKebab.innerHTML = (parseFloat(precioKebab.innerHTML)) + ingredienteDiv.ingrediente.precio + " €";
+                }else{
+                    
+                    ingredienteDiv.parentNode.removeChild(ingredienteDiv);
+                    aingredientes.appendChild(ingredienteDiv);
+                    precioKebab.innerHTML = (parseFloat(precioKebab.innerHTML)) - ingredienteDiv.ingrediente.precio + " €";
+
+                }
+                
+                
+                // Iteramos sobre los alérgenos del ingrdiente para ir actualizando los alergenos
                 item.alergenos.forEach(alergeno => {
                     // Verificamos si el alérgeno ya existe en el Map
                     if (!alerge.grupoAlergenos.has(alergeno.nombre)) {
@@ -119,47 +131,52 @@ function listaIngredientes(){
                     }
                 });
                                 
+                precioTotal = 0;  // Inicializamos el total de precio
+               
                 
                 
-
                 
-                //Sumamos el precio de cada ingrediente
-                precioKebab.innerHTML = (parseInt(precioKebab.innerHTML) || 0) + item.precio + " €";
+                
+                  // Mostramos el precio total en el DOM
 
-
-
-
+                 
+                console.log(ingredientesKebab);
+                
+                
 
 
 
             });
 
 
-            ingredientesKebab.addEventListener("click",function(){
+            // ingredientesKebab.addEventListener("click",function(){
 
-                    // Iteramos sobre los alérgenos del item
-                    item.alergenos.forEach(alergeno => {
-                        // Verificamos si el alérgeno ya existe en el Map
-                        if (alerge.grupoAlergenos.has(alergeno.nombre)) {
-                            alerge.grupoAlergenos.delete(alergeno.nombre);
+            //         // Iteramos sobre los alérgenos del item
+            //         item.alergenos.forEach(alergeno => {
+            //             // Verificamos si el alérgeno ya existe en el Map
+            //             if (alerge.grupoAlergenos.has(alergeno.nombre)) {
+            //                 alerge.grupoAlergenos.delete(alergeno.nombre);
     
-                            // Ahora eliminamos el nombre del alérgeno de innerHTML
-                            // Necesitamos eliminar la línea correspondiente en innerHTML
-                            alerge.innerHTML = alerge.innerHTML.replace(alergeno.nombre + "<br>", "");
-                        }
-                    });
+            //                 // Ahora eliminamos el nombre del alérgeno de innerHTML
+            //                 // Necesitamos eliminar la línea correspondiente en innerHTML
+            //                 alerge.innerHTML = alerge.innerHTML.replace(alergeno.nombre + "<br>", "");
+            //             }
+            //         });
                         
-                     // Asegurarse de que el precio en precioKebab es un número
-                let currentPrice = parseFloat(precioKebab.innerHTML.replace(' €', '')) || 0; // Limpiar símbolo €
+            //     //      // Asegurarse de que el precio en precioKebab es un número
+            //     // let currentPrice = parseFloat(precioKebab.innerHTML.replace(' €', '')) || 0; // Limpiar símbolo €
                 
-                // Restamos el precio del ingrediente
+            //     // // Restamos el precio del ingrediente
                 
-                precioKebab.innerHTML = (currentPrice - currentPrice) + " €";
+            //     // precioKebab.innerHTML = (currentPrice - currentPrice) + " €";
+                
+                
+            //     precioKebab.innerHTML = (parseFloat(precioKebab.innerHTML) || 0) - item.precio + " €";
                 
                     
                 
                 
-            });
+            // });
 
 
 
@@ -174,4 +191,57 @@ function listaIngredientes(){
 
 
 
+
+    
+
+
+
 }
+
+function cobrarATuGusto(kebab){
+
+
+    kebab.ingredientes.sort((a, b) => b.precio - a.precio);
+
+    for(let i=0;i<kebab.ingredientes.length-3;i++){
+
+        total += kebab.ingredientes[i].precio;
+
+
+    }
+
+
+    return total;
+
+
+
+}
+
+
+async function obtenerKebab(kebab) {
+    try {
+        // Realizar el fetch y esperar la respuesta
+        const respuesta = await fetch('Api/Api_kebab.php?id=' + kebab.id,);
+        
+        // Verificar si la respuesta es exitosa (HTTP status 200-299)
+        if (!respuesta.ok) {
+            throw new Error(`Error en la petición: ${respuesta.status} - ${respuesta.statusText}`);
+        }
+
+        // Convertir la respuesta a JSON
+        const datos = await respuesta.json();
+
+        // Mostrar los datos obtenidos
+        console.log("Datos del kebab:", datos);
+        return datos; // Devolver los datos si los necesitas
+
+
+
+
+    } catch (error) {
+        // Manejo de errores
+        console.error("Error al obtener el kebab:", error);
+    }
+}
+
+

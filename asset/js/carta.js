@@ -94,10 +94,19 @@ window.addEventListener("load", function() {
                                 json.forEach(item => {
 
                                     const ingredienteDiv = document.createElement('div');
-                                    ingredienteDiv.style.padding = "5px";
+
                                     ingredienteDiv.style.margin = "0px";
                                     ingredienteDiv.style.borderRadius = "10px";
                                     ingredienteDiv.style.border = "1px solid black";
+                                    ingredienteDiv.style.boxSizing = "border-box";
+                                    ingredienteDiv.style.backgroundColor="#f39c12";
+                                    ingredienteDiv.style.color="white";
+                                    ingredienteDiv.style.fontWeight="bold";
+                                    ingredienteDiv.style.width="100%";
+                                    ingredienteDiv.style.height="10%";
+                                    ingredienteDiv.style.textAlign="center";
+                                    ingredienteDiv.style.marginBottom="5px";
+                                    
                                     
                                     ingredienteDiv.classList.add('listaIngrediente');
                                     ingredienteDiv.ingrediente = item;
