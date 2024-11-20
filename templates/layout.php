@@ -12,6 +12,7 @@
     <script src="/asset/js/kebabGusto.js" defer></script>
     <script src="/asset/js/rellenar.js"></script> 
     <script src="/asset/js/carta.js"></script>
+    <script src="/asset/js/herramientas/validation.js"></script>
 
     
     

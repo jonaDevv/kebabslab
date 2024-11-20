@@ -49,10 +49,16 @@ window.addEventListener("load", function() {
                         
                         var logeoBtn = document.getElementById("logeo");
                         logeoBtn.addEventListener("click", function() {
-                            var username = document.getElementById("username").value;
-                            var password = document.getElementById("password").value;
+
+                            var usernameC=document.getElementById("username");
+                            var passwordC=document.getElementById("password");
                             
-                            if (username && password) {
+                            if (validarLogin(usernameC, passwordC)){
+
+                                var username = document.getElementById("username").value;
+                                var password = document.getElementById("password").value;
+                            }
+                            //if (username && password) {
                                 // Enviar datos al servidor
                                 fetch("/Api/autentifica", {
                                     method: "POST",
@@ -92,10 +98,13 @@ window.addEventListener("load", function() {
                                         console.error("Error al enviar datos al servidor:", error);
                                     })
                                 })
-                            } else {
-                                // Mostrar mensaje de error
-                                var errorMsg = document.getElementById("errorMsg"); 
-                            }
+
+                            // } else {
+                            //     // Mostrar mensaje de error
+                            //     var errorMsg = document.getElementById("errorMsg"); 
+                            // }
+
+                            
                         });
                         // Mostrar el modal y el fondo oscuro
                         modal.style.display = "block";

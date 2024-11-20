@@ -7,6 +7,7 @@ require ("../vendor/autoload.php");
 
 use Models\Usuario;
 use Repository\repoUsuario;
+use Helper\Login;
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -24,28 +25,34 @@ switch ($method) {
            
         ) {
            
+            //Buscar en la base de datos si existe el usuario
+            $usuario = repoUsuario::findByUsername($data[0]['username']);
+            
+            if ($usuario) {
 
-            // // Crear el objeto Kebab
-            // $kebab = new Kebab(
-            //     null,  // ID se generará automáticamente
-            //     $data[0]['nombre'],
-            //     $data[0]['foto'],
-            //     $data[0]['precio'],
-            //     $data[0]['ingredientes']// Lista de ingredientes
-            // );
+                $existe=Login::existeUsuario($usuario, $data[0]['password']);
 
-            // // Intentar crear el kebab
-            // if (repoKebab::create($kebab)) {
-            //     http_response_code(201); // Kebab creado
-            //     echo json_encode(["message" => "Kebab creado con éxito"]);
-            // } else {
-            //     http_response_code(500); // Error en la creación
-            //     echo json_encode(["message" => "Error al crear el kebab"]);
-            // }
+                if($existe){
+
+                    
+
+
+
+                }
+                
+               
+                
+               
+            } else {
+                http_response_code(404); // Not Found
+                echo json_encode(["message" => "Usuario no encontrado"]);
+            }
+
+           
             
         } else {
             http_response_code(400); // Bad Request
-            echo json_encode(["message" => "Datos de kebab inválidos"]);
+            echo json_encode(["message" => "Datos de usuario inválidos"]);
         }
         break;
 

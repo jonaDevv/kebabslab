@@ -33,7 +33,7 @@ window.addEventListener("load", function() {
            
            kebabDiv.textContent = `${item.nombre.toUpperCase()}`;
 
-           console.log(kebabDiv.kebab)
+          
            
            
             
@@ -124,7 +124,7 @@ window.addEventListener("load", function() {
                                 aingredientes.appendChild(ingredienteDiv);
                             });
                             
-                            console.log(item);
+                            
                            
                             
                             
@@ -283,7 +283,7 @@ window.addEventListener("load", function() {
                                 editarBtn.addEventListener("click", function() {
                                     
                                 listaIngredientes = document.getElementById("aIngrediente");
-                                console.log (listaIngredientes);
+                                
 
 
                                                 
