@@ -34,8 +34,8 @@ window.addEventListener("load", function() {
                         // Cerrar el modal al hacer clic en la "X"
                         closeBtn.addEventListener("click", function() {
                             modal.style.display = "none";
-                            overlay.style.display = "none"; // Ocultar el fondo oscuro
-                            contenedor.remove();
+                            overlay.style.display = "none";
+                            contenedor.remove(); // Elimina el modal del DOM
                         });
         
                         // Cerrar el modal al hacer clic fuera de su contenido
@@ -48,57 +48,53 @@ window.addEventListener("load", function() {
                         });
                         
                         var logeoBtn = document.getElementById("logeo");
-                        logeoBtn.addEventListener("click", function() {
+                        logeoBtn.addEventListener("click", function(event) {
 
+                            event.preventDefault();
+
+                            console.log("click");
                             var usernameC=document.getElementById("username");
                             var passwordC=document.getElementById("password");
-                            
-                            if (validarLogin(usernameC, passwordC)){
+                           
 
+                            if (validarLogin(usernameC, passwordC)){
+                                
                                 var username = document.getElementById("username").value;
                                 var password = document.getElementById("password").value;
-                            }
-                            //if (username && password) {
+                            
+                                 //if (username && password) {
                                 // Enviar datos al servidor
-                                fetch("/Api/autentifica", {
+                                fetch("/Api/Api_login.php", {
                                     method: "POST",
                                     headers: {
                                         "Content-Type": "application/json"
                                     },
-                                    body: JSON.stringify({
-                                        username: username,
+                                    body: JSON.stringify([{
+                                        nombre: username,
                                         password: password
-                                    })
-                                
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.success) {
-                                            // Mostrar el modal de inicio de sesión
-                                            modal.style.display = "block";
-                                            overlay.style.display = "block";
-                                            
-                                            // Mostrar mensaje de login exitoso
-                                            var successMsg = document.getElementById("successMsg");
-                                            successMsg.style.display = "block";
-                                            
-                                            // Mostrar mensaje de error
-                                            var errorMsg = document.getElementById("errorMsg");
-                                            errorMsg.style.display = "none";
-                                        } else {
-                                            // Mostrar mensaje de error
-                                            var errorMsg = document.getElementById("errorMsg");
-                                            errorMsg.style.display = "block";
-                                            
-                                            // Mostrar mensaje de login exitoso
-                                            var successMsg = document.getElementById("successMsg");
-                                            successMsg.style.display = "none";
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error("Error al enviar datos al servidor:", error);
-                                    })
+                                    }])
                                 })
+                                .then(response => {
+                                    // if (!response.ok) {
+                                    //     throw new Error('Error en la solicitud');
+                                    // }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.success) {
+                                        window.location.href = "/inicio";
+                                     } else {
 
+                                        alert("Usuario o contraseña incorrectos");
+                                     }
+                                })
+                                .catch(error => {
+                                    console.error("Error al enviar datos al servidor:", error);
+                                });
+                                
+
+                            
+                            } 
                             // } else {
                             //     // Mostrar mensaje de error
                             //     var errorMsg = document.getElementById("errorMsg"); 
@@ -109,6 +105,7 @@ window.addEventListener("load", function() {
                         // Mostrar el modal y el fondo oscuro
                         modal.style.display = "block";
                         overlay.style.display = "block";
+
                     } else {
                         console.error("No se han encontrado los elementos del modal.");
                     }

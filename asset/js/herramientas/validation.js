@@ -15,19 +15,19 @@ function validarLogin(username, password) {
     const errores = []; // Array para almacenar los mensajes de error
 
     // Validaciones
-    const isUsernameEmpty = validarCampoVacio(usernameV);
-    const isPasswordEmpty = validarCampoVacio(passwordV);
+    // const isUsernameEmpty = validarCampoVacio(usernameV);
+    // const isPasswordEmpty = validarCampoVacio(passwordV);
     const userValidation = validateUser(usernameV, passwordV);
 
-    test.push(isUsernameEmpty); // Valida si el nombre de usuario está vacío
-    if (!isUsernameEmpty) {
-        errores.push("El campo de usuario no puede estar vacío.");
-    }
+    // test.push(isUsernameEmpty); // Valida si el nombre de usuario está vacío
+    // if (!isUsernameEmpty) {
+    //     errores.push("El campo de usuario no puede estar vacío.");
+    // }
 
-    test.push(isPasswordEmpty); // Valida si la contraseña está vacía
-    if (!isPasswordEmpty) {
-       // errores.push("El campo de contraseña no puede estar vacío.");
-    }
+    // test.push(isPasswordEmpty); // Valida si la contraseña está vacía
+    // if (!isPasswordEmpty) {
+    //    // errores.push("El campo de contraseña no puede estar vacío.");
+    // }
 
     // Valida el contenido del nombre de usuario y la contraseña
     test.push(userValidation.isValid);
@@ -46,7 +46,9 @@ function validarLogin(username, password) {
         return false;
     }
 
-    return true; // Si todo pasa, retorna `true`
+    // Si todo pasa, retorna `true`
+
+    return true;
 }
 
 
@@ -111,7 +113,8 @@ function validarCampoVacio(campo) {
  */
 function validateUser(username, password) {
     const usernameRegex = /^[a-zA-Z0-9]{8,}$/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^[A-Z][A-Za-z0-9]+[.!?@#$%^&*()_+=[\]{}|;:'",.<>?/-]$/;
+
 
     const errors = {
         username: null,
@@ -121,13 +124,17 @@ function validateUser(username, password) {
     // Validar nombre de usuario
     if (!usernameRegex.test(username)) {
         errors.username = "El nombre de usuario debe tener al menos 8 caracteres y solo puede contener letras y números.";
+    }else{
+
+
+        // Validar contraseña
+        if (!passwordRegex.test(password)) {
+            errors.password = "La contraseña debe comenzar con una letra mayúscula, seguida de caracteres alfanuméricos, y debe terminar con un punto (.) o un signo de puntuación especial.";
+        }
+
     }
 
-    // Validar contraseña
-    if (!passwordRegex.test(password)) {
-        errors.password = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo especial.";
-    }
-
+    
     return {
         isValid: !errors.username && !errors.password,
         errors

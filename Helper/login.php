@@ -30,7 +30,7 @@ class Login
     public static function existeUsuario($usuario,string $contrasena=null)
     {
         //
-        $passUser = $usuario->password;
+        $passUser = $usuario['password'];
 
         if ($passUser == $contrasena){
 

@@ -205,14 +205,14 @@
                 
                 
 
-                $sql = "SELECT * FROM usuario WHERE username = :username";
+                $sql = "SELECT * FROM usuario WHERE nombre = :username";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':username', $username);
                 $stmt->execute();
 
                 $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+                return get_object_vars($usuario);
 
-                return $usuario;
             } catch (PDOException $e) {
                 header('Content-Type: application/json');
                 http_response_code(500);
