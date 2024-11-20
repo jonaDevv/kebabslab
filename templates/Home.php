@@ -3,7 +3,7 @@
 
 
 <?php $this->start('header')?>
-<header>
+<!-- <header>
   <div class="header-container">
     <div class="logo">
       <a href="?menu=inicio"><img src="/asset/img/favicon1.png" width="20px" height="30px">KebabsLab</a>
@@ -32,9 +32,17 @@
     
   </div>
   
-</header>
+</header> -->
 
+<div id="head">
+        <?php
+          
+          use Controllers\routHead;
+          routHead::routHead();
+        ?>
+        
 
+        </div>
 
 <?php $this->stop('header')?>
 

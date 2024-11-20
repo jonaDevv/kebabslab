@@ -1,15 +1,14 @@
 <?php
 
-    
-
 require ("../MIautocargador.php");
 require ("../vendor/autoload.php");
 
-use Models\Usuario;
+
 use Repository\repoUsuario;
 use Helper\Login;
 
 $method = $_SERVER['REQUEST_METHOD'];
+
 
 switch ($method) {
   
@@ -35,7 +34,10 @@ switch ($method) {
                 if($existe){
 
                     
+                    Login::login($usuario);
+                    echo json_encode(["message" => "Usuario logueado"]);
 
+                    
 
 
                 }

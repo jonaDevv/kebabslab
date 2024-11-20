@@ -52,7 +52,7 @@ class Login
 
 
 
-    function login($nombre){ //Solo para USERRR
+    public static function login($nombre){ //Solo para USERRR
 
         Sesion::iniciaSesion();
         $_SESSION['user']=$nombre;
@@ -60,17 +60,17 @@ class Login
     }
 
 
-    function logout(){
+   public static function logout(){
 
         
-        $_SESSION['USER']="";
+        $_SESSION['user']="";
         session_unset(); 
         Sesion::finalizaSesion();
 
     }
 
 
-    function estaLogeado() {
+    public static function leerUsuario(){
         return isset($_SESSION['user']);
     }
 

@@ -77,21 +77,44 @@ function listaIngredientes() {
 
 
 
-function cobrarATuGusto(ingredientes) {
-    if (!Array.isArray(ingredientes)) {
-        console.error("El parámetro 'ingredientes' no es un array válido.");
-        return 0; // Retorna 0 si el parámetro no es un array
+// function cobrarATuGusto(ingredientes) {
+//     if (!Array.isArray(ingredientes)) {
+//         console.error("El parámetro 'ingredientes' no es un array válido.");
+//         return 0; // Retorna 0 si el parámetro no es un array
+//     }
+
+//     let total = 0;
+
+//     ingredientes.sort((a, b) => b.precio - a.precio); // Invertir 
+
+//     for (let i = 0; i < ingredientes.length; i++) {
+//         total += ingredientes[i].precio;
+//     }
+
+//     return total;
+// }
+
+
+// Función para actualizar el precio total
+function cobrarATuGusto() {
+    let total = 3.50; // Precio base que incluye los tres ingredientes más baratos
+
+    if (selectedIngredients.length > 3) {
+        // Ordenar los precios de los ingredientes seleccionados de menor a mayor
+        const sortedPrices = selectedIngredients
+            .map(id => ingredientPrices[id])
+            .sort((a, b) => a - b);
+
+        // Calcular el costo de los ingredientes adicionales
+        const extraIngredients = sortedPrices.slice(3); // Ingredientes a partir del cuarto
+        total += extraIngredients.reduce((sum, price) => sum + price, 0);
     }
 
-    let total = 0;
+    // Mostrar el precio total actualizado
+    document.getElementById("total-price").innerText = total.toFixed(2);
 
-    ingredientes.sort((a, b) => b.precio - a.precio);
-
-    for (let i = 0; i < ingredientes.length; i++) {
-        total += ingredientes[i].precio;
-    }
-
-    return total;
+    // Habilitar o deshabilitar el botón según el número de ingredientes
+    document.getElementById("create-kebab-btn").disabled = selectedIngredients.length < 1;
 }
 
 

@@ -26,7 +26,7 @@ function validarLogin(username, password) {
 
     test.push(isPasswordEmpty); // Valida si la contraseña está vacía
     if (!isPasswordEmpty) {
-        errores.push("El campo de contraseña no puede estar vacío.");
+       // errores.push("El campo de contraseña no puede estar vacío.");
     }
 
     // Valida el contenido del nombre de usuario y la contraseña
