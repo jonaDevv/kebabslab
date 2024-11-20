@@ -52,10 +52,12 @@ class Login
 
 
 
-    public static function login($nombre){ //Solo para USERRR
+    public static function login($usuario){ //Solo para USERRR
 
         Sesion::iniciaSesion();
-        $_SESSION['user']=$nombre;
+        unset($usuario['password']);
+        $_SESSION['user']=$usuario;
+       
 
     }
 

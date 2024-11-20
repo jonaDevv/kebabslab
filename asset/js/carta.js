@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
     .then(response => response.json())  // Convierte la respuesta en JSON
     .then(json => {
         
-        
+        console.log(json)
         const cartaContenedor = document.getElementById('carta');
         cartaContenedor.innerHTML = '';  // Limpiar el contenedor antes de agregar los nuevos elementos
     

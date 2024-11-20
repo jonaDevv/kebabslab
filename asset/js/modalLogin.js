@@ -48,57 +48,26 @@ window.addEventListener("load", function() {
                         });
                         
                         var logeoBtn = document.getElementById("logeo");
+                        
                         logeoBtn.addEventListener("click", function(event) {
-
-                            event.preventDefault();
-
-                            console.log("click");
-                            var usernameC=document.getElementById("username");
-                            var passwordC=document.getElementById("password");
-                           
-
-                            if (validarLogin(usernameC, passwordC)){
-                                
-                                var username = document.getElementById("username").value;
-                                var password = document.getElementById("password").value;
-                            
-                                 //if (username && password) {
-                                // Enviar datos al servidor
-                                fetch("/Api/Api_login.php", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify([{
-                                        nombre: username,
-                                        password: password
-                                    }])
-                                })
-                                .then(response => {
-                                    // if (!response.ok) {
-                                    //     throw new Error('Error en la solicitud');
-                                    // }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    if (data.success) {
-                                        window.location.href = "/inicio";
-                                     } else {
-
-                                        alert("Usuario o contraseña incorrectos");
-                                     }
-                                })
-                                .catch(error => {
-                                    console.error("Error al enviar datos al servidor:", error);
-                                });
-                                
-
-                            
-                            } 
-                            // } else {
-                            //     // Mostrar mensaje de error
-                            //     var errorMsg = document.getElementById("errorMsg"); 
-                            // }
+                            var loginForm = document.getElementById("loginForm");
+                            loginForm.addEventListener("submit", function(event) {
+                                event.preventDefault(); // Evitar el envío inmediato del formulario
+    
+                                // Obtener los datos del formulario
+                                var username = document.getElementById("username");
+                                var password = document.getElementById("password");
+    
+                                // Validación de los campos
+                                if (validarLogin(username, password)) {
+    
+                                    // Si los campos son válidos, enviamos el formulario
+                                    loginForm.submit(); // Enviar el formulario normalmente con el método POST
+    
+                                } else {
+                                    alert("Por favor, completa todos los campos correctamente.");
+                                }
+                            });
 
                             
                         });
