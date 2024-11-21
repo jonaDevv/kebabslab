@@ -15,19 +15,9 @@ function validarLogin(username, password) {
     const errores = []; // Array para almacenar los mensajes de error
 
     // Validaciones
-    // const isUsernameEmpty = validarCampoVacio(usernameV);
-    // const isPasswordEmpty = validarCampoVacio(passwordV);
     const userValidation = validateUser(usernameV, passwordV);
 
-    // test.push(isUsernameEmpty); // Valida si el nombre de usuario está vacío
-    // if (!isUsernameEmpty) {
-    //     errores.push("El campo de usuario no puede estar vacío.");
-    // }
 
-    // test.push(isPasswordEmpty); // Valida si la contraseña está vacía
-    // if (!isPasswordEmpty) {
-    //    // errores.push("El campo de contraseña no puede estar vacío.");
-    // }
 
     // Valida el contenido del nombre de usuario y la contraseña
     test.push(userValidation.isValid);
@@ -54,18 +44,24 @@ function validarLogin(username, password) {
 
 
 
+/**
+ * 
+ * @param {*} username 
+ * @param {*} password 
+ * @param {*} email 
+ * @returns 
+ */
 function validarRegistro(username, password, email) {
     
-    const usernameV = username.value;
-    const passwordV = password.value;
-    const emailV = email.value;
+    const usernameV = username;
+    const passwordV = password;
+    const emailV = email;
 
+   
     const test = [];
     const errores = []; // Array para almacenar los mensajes de error
 
-    // Validaciones
-    // const isUsernameEmpty = validarCampoVacio(usernameV);
-    // const isPasswordEmpty = validarCampoVacio(passwordV);
+    
     const registroValidation = validateRegistro(usernameV, passwordV, emailV);
 
 

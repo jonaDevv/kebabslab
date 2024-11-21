@@ -63,8 +63,10 @@ function openMenuKebab() {
         // Verificar si el ratón está fuera del contenedor
         setTimeout(() => { // Usamos un timeout para asegurarnos que no se borre el menú antes de movernos al contenido del menú
             if (!kebabContainer.matches(":hover")) {
+                if(navkebab){
                 navkebab.remove();
                 navkebab = null;
+                }
             }
         }, 100);
     });

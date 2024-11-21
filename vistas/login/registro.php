@@ -8,26 +8,25 @@
 </head>
 <body>
     <div class="contenedorRegistro">
-        <form action="registro.php" method="post">
+        <form  id="registroForm">
 
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre" required>
-            <br>
-
-            
+            <br>           
             <label for="password">Contraseña:</label>
             <input type="password" name="password" id="password" required>
             <br>
             
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="correo" id="email" required>
             <br>
             <label for="direccion">Dirección:</label>
             <input type="text" name="direccion" id="direccion" required>
             <br>
 
-            <input id="registro" type="submit" value="Registrar">
+            <input  type="submit" value="Registrar">
         </form>
+        <div id="errores"></div>
     </div>
 
     

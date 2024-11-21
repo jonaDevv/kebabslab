@@ -21,8 +21,9 @@ window.addEventListener("load", function() {
         
         console.log(json)
         const cartaContenedor = document.getElementById('carta');
+        if(cartaContenedor){
         cartaContenedor.innerHTML = '';  // Limpiar el contenedor antes de agregar los nuevos elementos
-    
+        }
         // Iterar sobre los objetos del JSON
         json.forEach(item => {
             const kebabDiv = document.createElement('div');
