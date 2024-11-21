@@ -49,7 +49,7 @@ switch ($method) {
                 null,  // ID se generará automáticamente
                 $data[0]['usuario_id'],
                 $data[0]['fecha_hora'],
-                $data[0]['estado'],
+                $data[0]['estado']??"recibido",
                 $data[0]['precio_total']??0.0,
                 $data[0]['direccion'],
                 $data[0]['coordenada']??$data[0]['coordenada']="",

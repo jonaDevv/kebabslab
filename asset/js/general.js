@@ -74,22 +74,3 @@ function openMenuKebab() {
 
 
 
-const pedirBtn = document.getElementById("pedir");
-                        if (pedirBtn) {
-                            pedirBtn.addEventListener("click", function() {
-
-                                const carrito = document.getElementById("carrito");
-                                carrito.style.display="none";
-                                carrito.innerHTML += item;
-                                
-                                const count = document.getElementsByClassName("carrito-count")[0];
-
-                                // Convierte count.innerHTML a número y suma 1
-                                count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
-
-                                
-                            });
-
-                        } else {
-                            console.error("No se ha encontrado el botón de pedir.");
-                        }

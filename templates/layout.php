@@ -11,8 +11,9 @@ Sesion::iniciaSesion();
     <title>KEBABSLAB</title>
     <script src="/asset/js/modalLogin.js" defer></script>
     <script src="/asset/js/modalCarrito.js" defer></script>
-    <script src="/ApiJs/Api.js" defer></script>
-    <script src="/asset/js/menuAdmi.js" defer></script>
+    <script src="/ApiJs/Api_kebab.js" defer></script>
+    <script src="/ApiJs/Api_ingrediente.js" defer></script>
+    
     <script src="/asset/js/general.js" defer></script>
     <script src="/asset/js/gestionPedidos.js" defer></script>
     <script src="/asset/js/kebabGusto.js" defer></script>

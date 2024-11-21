@@ -92,7 +92,7 @@ Class repoKebab implements RepoCrud {
                 $stmtAlergenos = $conn->prepare("
                     
 
-                    SELECT a.nombre FROM alergeno a
+                    SELECT a.* FROM alergeno a
                     INNER JOIN ingrediente_alergeno ia ON a.id = ia.alergeno_id
                     WHERE ia.ingrediente_id = :ingrediente_id
                 ");

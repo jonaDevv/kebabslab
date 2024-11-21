@@ -14,7 +14,7 @@ class ControlHead {
 
     // En "controllers/alGusto.php"
     public static function usuario() {
-        include __DIR__ . '/../vistas/principal/verKebabGusto.html';
+        include __DIR__ . '/../vistas/header/headerUsuario.html';
     }
 
     // En "controllers/carta.php"
