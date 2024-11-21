@@ -1,0 +1,21 @@
+
+.perfilUsuario:not(saludo) {
+    position: absolute;
+    top: 50px; /* Ajusta la distancia desde la parte superior de la página */
+    right: 10px; /* Lo coloca en el extremo derecho */
+    color: #f39c12;
+    font-weight: bold;
+    padding-right: 20px; /* Añade un poco de espacio a la derecha */
+}
+
+
+.cerrarsesion{
+
+    position: absolute;
+    top: 70px; /* Ajusta la distancia desde la parte superior de la página */
+    right: 0; /* Lo coloca en el extremo derecho */
+    color: white;
+  
+    padding-right: 20px; /* Añade un poco de espacio a la derecha */
+    font-size:14px;
+}

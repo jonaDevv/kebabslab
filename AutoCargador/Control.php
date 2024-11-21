@@ -1,6 +1,8 @@
 <?php
 namespace AutoCargador;
 
+use Helper\Login;
+
 error_reporting(E_ALL); // Reporta todos los tipos de errores
 ini_set('display_errors', 1); // Muestra errores en la salida
 ini_set('display_startup_errors', 1); // Muestra errores en el inicio
@@ -38,7 +40,10 @@ class Control {
     }
 
     public static function cerrarSesion() {
-        require_once './Vistas/Login/cerrarsesion.php';
+        
+        Login::logout();
+        header("Location:/?menu=inicio");
+        exit();
     }
 
     // En "controllers/MantenimientoController.php"
@@ -62,6 +67,7 @@ class Control {
         require_once './Vistas/mantenimiento/gVenta.php';
     }
     
+   
     // En "controllers/pedidos.php"
 
    

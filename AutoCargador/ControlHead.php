@@ -19,7 +19,7 @@ class ControlHead {
 
     // En "controllers/carta.php"
     public static function administrador() {
-        include __DIR__ . '/../vistas/principal/carta.html';
+        include __DIR__ . '/../vistas/header/headerAdministrador.html';
     }
 
     // En "controllers/login.php"

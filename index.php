@@ -1,5 +1,5 @@
 <?php
-
+require_once("Helper/Sesion.php");
 require ("MIautocargador.php");
 require ("./vendor/autoload.php");
 

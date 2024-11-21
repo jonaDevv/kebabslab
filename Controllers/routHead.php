@@ -7,8 +7,8 @@ use AutoCargador\ControlHead;
 class routHead{
 
     public static function routHead(){
-        if (isset($_SESSION['rol'])) {
-            $rol = $_SESSION['rol'];
+        if (isset($_SESSION['user']['rol'])) {
+            $rol = $_SESSION['user']['rol'];
 
             // Usamos match para determinar qué clase instanciar
             match ($rol) {

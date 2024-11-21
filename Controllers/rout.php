@@ -23,6 +23,9 @@ class rout{
                 "gUsuario" => (Control::gUsuario()),
                 "gPedido" => (Control::gPedido()),
                 "gVenta" => (Control::gVenta()),
+                "cerrarSesion" => (Control::cerrarSesion()),
+
+                
                 default => (Control::notFound()) // Controlador de error si no se encuentra el menú
             };
             

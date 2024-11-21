@@ -35,8 +35,9 @@ use Helper\Login;
 
                     Login::login($usuario);
                     if (isset($_SESSION['user'])) {
+                        var_dump($_SESSION);
                     // Redirigir a otra página
-                        header("Location:/index.php?menu=inicio");
+                        header("Location:/?menu=inicio");
                         exit();
                     }
                     else {

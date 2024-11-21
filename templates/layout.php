@@ -1,3 +1,9 @@
+<?php
+use Helper\Sesion;
+
+Sesion::iniciaSesion();
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,6 +30,7 @@
     <link rel="stylesheet" href="../asset/css/mstyle.css">
     <link rel="stylesheet" href="../asset/css/carritostyle.css">
     <link rel="stylesheet" href="../asset/css/menuGestion.css">
+    <link rel="stylesheet" href="../asset/css/usuarioLogeado.css">
     
 
 
