@@ -26,7 +26,7 @@
             <input type="text" name="direccion" id="direccion" required>
             <br>
 
-            <input type="submit" value="Registrar">
+            <input id="registro" type="submit" value="Registrar">
         </form>
     </div>
 

@@ -19,6 +19,7 @@ Sesion::iniciaSesion();
     <script src="/asset/js/rellenar.js"></script> 
     <script src="/asset/js/carta.js"></script>
     <script src="/asset/js/herramientas/validation.js"></script>
+    <script src="/asset/js/registro.js"></script>
 
     
     
