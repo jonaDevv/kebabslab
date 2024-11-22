@@ -1,7 +1,7 @@
 window.addEventListener("load", function() {
         
 
-        getKebabId(2).then(json=>{
+        getKebabId(29).then(json=>{
 
              editarKebab(json);
 
@@ -14,24 +14,6 @@ window.addEventListener("load", function() {
         contenedorVista = document.getElementsByClassName('vistaKebab');
 
        
-        
-        
-        
-
-
-        
-
-        
-       
-
-
-
-
-
-
-
-
-
 
 });
 

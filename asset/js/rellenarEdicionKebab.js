@@ -18,8 +18,7 @@ function editarKebab(kebab) {
     
     //Meto los ingredientes del kebab en un array
     ingredientes = kebab.ingredientes;
-    console.log(ingredientes);
-    //
+   
     const ingredientesKebab = document.getElementById('ingrediente');
     const aingredientes = document.getElementById("aIngrediente");
     nombreAlergenos=document.getElementById('alergenos');
@@ -162,17 +161,28 @@ function editarKebab(kebab) {
         })
         .catch(error => console.log(error));
 
+    
+    return kebab;
 
-       pedirBtn=document.getElementById("pedir");
-        pedirBtn.addEventListener("click", function () {
-            console.log(kebab);
-        
-        });
+
+     
 }
 
 
 
-// Método para actualizar los alérgenos
+
+
+
+
+
+/**
+ * 
+ * @param {*} ingredientes
+ * @param {*} alerge
+ * @param {*} action
+ * @param {*} parentID
+ * @returns
+ */
 function actualizarAlergenos(ingredientes, alerge, action, parentID) {
     // Acción puede ser "añadir" o "eliminar"
     ingredientes.forEach(item => {
@@ -195,7 +205,15 @@ function actualizarAlergenos(ingredientes, alerge, action, parentID) {
         .join("");
 }
 
-// Función para calcular el precio total
+
+
+/**
+ * 
+ * @param {*} ingredientes 
+ * @param {*} precio 
+ * @param {*} nombre 
+ * @returns 
+ */
 function cobrarATuGusto(ingredientes,precio,nombre) {
     if (!Array.isArray(ingredientes)) {
         console.error("El parámetro 'ingredientes' no es un array válido.");

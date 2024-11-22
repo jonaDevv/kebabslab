@@ -109,32 +109,37 @@ window.addEventListener("load", function() {
 
                                     editarBtn.addEventListener("click", function() {
                                         
-                                    listaIngredientes = document.getElementById("aIngrediente");
-                                    
-
-
-                                                    
-                                        fetch("/vistas/principal/verKebabGusto.html")
-                                        .then(respuesta => respuesta.text())
-                                        .then(texto => {
-                                            auxiliar.innerHTML = texto;
-
-                                            cont=document.getElementsByClassName("carta-container")[0];
-                                            cont.removeChild(cartaContenedor);
-                                            cont.appendChild(auxiliar);
-                                            auxiliar.style.display="block";
-
-                                                editarKebab(kebabDiv.kebab);
-
-                                
+                                        listaIngredientes = document.getElementById("aIngrediente");
                                         
-                                        })
-                                        .catch(error => {
-                                            console.error("Error al cargar", error);
-                                        });
+
 
                                                         
-                                        });
+                                            fetch("/vistas/principal/verKebabGusto.html")
+                                            .then(respuesta => respuesta.text())
+                                            .then(texto => {
+                                                auxiliar.innerHTML = texto;
+
+                                                cont=document.getElementsByClassName("carta-container")[0];
+                                                cont.removeChild(cartaContenedor);
+                                                cont.appendChild(auxiliar);
+                                                auxiliar.style.display="block";
+
+                                                
+                                                const kebabEditado=editarKebab(kebabDiv.kebab);
+
+                                                console.log(kebabEditado);
+
+
+                                                
+                                    
+                                            
+                                            })
+                                            .catch(error => {
+                                                console.error("Error al cargar", error);
+                                            });
+
+                                                        
+                                    });
 
                                 
                                 } else {

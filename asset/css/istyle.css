@@ -253,20 +253,7 @@ header {
   font-weight: bold;
 }
 
-.carrito-count{
 
-  position: absolute;  /* Cambia a posición absoluta */
-  right: 44px; 
-  bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
-  top: 40%;            /* Centrado verticalmente respecto al contenedor */
-  transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
-  
-  
-
-  width: 40px;
-  height: 40px;
-
-}
 
 
 

@@ -17,10 +17,11 @@ Sesion::iniciaSesion();
     <script src="/asset/js/general.js" defer></script>
     <script src="/asset/js/gestionPedidos.js" defer></script>
     <script src="/asset/js/kebabGusto.js" defer></script>
-    <script src="/asset/js/rellenar.js"></script> 
+    <script src="/asset/js/rellenarEdicionKebab.js"></script> 
     <script src="/asset/js/carta.js"></script>
     <script src="/asset/js/herramientas/validation.js"></script>
     <script src="/asset/js/registro.js"></script>
+    <script src="/asset/ApiJs/Api_carrito.js"></script>
 
     
     

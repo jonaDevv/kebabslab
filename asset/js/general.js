@@ -6,15 +6,7 @@ window.addEventListener("load", function() {
     
 
 
-
-
-
-
-
     
-
-
-
 
 });
   
@@ -71,6 +63,8 @@ function openMenuKebab() {
         }, 100);
     });
 }
+
+
 
 
 

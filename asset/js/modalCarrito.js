@@ -1,9 +1,9 @@
 window.addEventListener("load", function() {
 
-    const openModal = document.getElementById("icono-compra");
+    const openCarrito = document.getElementById("icono-compra");
 
-    if (openModal) {
-        openModal.addEventListener("click", function() {
+    if (openCarrito) {
+        openCarrito.addEventListener("click", function() {
 
             // Crear el fondo oscuro detrás del modal
             var overlay = document.createElement("div");
@@ -33,12 +33,13 @@ window.addEventListener("load", function() {
                     var modal = document.getElementById("CModal");
                     var closeBtn = document.getElementsByClassName("closeCarrito")[0];
                     var vaciarBtn = document.getElementById("vaciarBtn");
-                    var pagarBtn = document.getElementById("pagarBtn");
+                    const pagarBtn = document.getElementById("pagarBtn");
 
                     if (vaciarBtn) {
                         // Vaciar el carrito al hacer clic en el botón
                         vaciarBtn.addEventListener("click", function() {
-                            carrito.innerHTML = "0";
+                           
+                            alert("vaciar carrito")
                             
                         });
                     }
@@ -61,6 +62,11 @@ window.addEventListener("load", function() {
                         console.error("No se han encontrado los elementos del modal.");
                     }
 
+                    pagarBtn.addEventListener("click",function(){
+
+                        alert("pagar")
+                    })
+
 
                     
 
@@ -76,7 +82,6 @@ window.addEventListener("load", function() {
         });
 
 
-    } else {
-        console.error("Los elementos no están disponibles.");
+    
     }
 });

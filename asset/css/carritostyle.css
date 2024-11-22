@@ -53,3 +53,26 @@
 }
 
 
+.carrito-count{
+
+    position: absolute;  /* Cambia a posición absoluta */
+    right: 24px; 
+    bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
+    top: 40%;            /* Centrado verticalmente respecto al contenedor */
+    transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
+    
+    margin:0;
+    padding:0;
+  
+    width: 20px;
+    height: 20px;
+  
+  }
+
+  .BtnsCarrito{
+    
+    text-align: center;
+  
+  }
+
+

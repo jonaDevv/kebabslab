@@ -90,7 +90,5 @@ window.addEventListener("load", function() {
         });
 
 
-    } else {
-        console.error("Los elementos no están disponibles.");
     }
 });

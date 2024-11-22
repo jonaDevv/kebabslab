@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 require ("../MIautocargador.php");
 require ("../vendor/autoload.php");
 
-use Models\Ingrediente;
+
 use Models\Kebab; // Usar el modelo Kebab
 use Repository\repoKebab; // Cambiar al repositorio de Kebabs
 
