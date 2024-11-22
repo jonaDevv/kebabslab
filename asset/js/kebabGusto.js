@@ -5,6 +5,8 @@ window.addEventListener("load", function() {
 
              editarKebab(json);
 
+             
+
 
         });
        
@@ -12,6 +14,8 @@ window.addEventListener("load", function() {
         //Cogemos el boton pedir t le asignamos un evento click para añadir elementos al carrito
         
         contenedorVista = document.getElementsByClassName('vistaKebab');
+
+        
 
        
 

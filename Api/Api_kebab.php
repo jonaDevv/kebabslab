@@ -12,6 +12,13 @@ use Repository\repoKebab; // Cambiar al repositorio de Kebabs
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+
+//AÑADIR TODAS LAS VALIDACIONESS  E INICIAR SESION
+
+
+
+
+
 switch ($method) {
     case 'GET':
         // Lógica para manejar GET (obtener uno o varios kebabs)

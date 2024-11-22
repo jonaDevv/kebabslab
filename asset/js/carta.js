@@ -64,16 +64,16 @@ window.addEventListener("load", function() {
                             auxiliar1.style.width = "100vw";
                             
 
-                            nombre=document.getElementById('nombre');
+                            nombre=document.getElementById('name');
                             nombre.innerHTML = `${item.nombre.toUpperCase()}`;
-                            descripcion=document.getElementById('descripcion');
+                            descripcion=document.getElementById('description');
                             descripcion.innerHTML = item.descripcion;
-                            precio=document.getElementById('precio');
+                            precio=document.getElementById('price');
                             precio.innerHTML = item.precio + "€";
                             
 
                             ingredientes = item.ingredientes;
-                            ingr = document.getElementById('ingrediente');
+                            ingr = document.getElementById('ingredient');
                             ingredientes.forEach(ingrediente => ingr.innerHTML +="<br>"+ ingrediente.nombre );
                             
                             
@@ -83,7 +83,7 @@ window.addEventListener("load", function() {
                             
                             
                             
-                            const pedirBtn = document.getElementById("Anadir");
+                            const pedirBtn = document.getElementById("add");
                             if (pedirBtn) {
                                 pedirBtn.addEventListener("click", function() {
 
@@ -103,40 +103,85 @@ window.addEventListener("load", function() {
                                 console.error("No se ha encontrado el botón de pedir.");
                             }
 
+                            
+
                             //Ahora cogemos el boton editar y le asignamos un evento click para editar el elemento
-                            const editarBtn = document.getElementById("editar");
+                            const editarBtn = document.getElementById("edit");
                             if (editarBtn) {
 
                                     editarBtn.addEventListener("click", function() {
-                                        
-                                        listaIngredientes = document.getElementById("aIngrediente");
-                                        
 
 
-                                                        
+                                                                    // Verificar si ya existe el modal y el overlay
+                                        let overlay = document.querySelector(".kebab-overlay");
+                                        let contenedor = document.querySelector("#CModal");
+
+                                        if (!overlay) {
+                                            // Crear el fondo oscuro detrás del modal si no existe
+                                            overlay = document.createElement("div");
+                                            overlay.setAttribute("class", "kebab-overlay");
+                                            document.body.appendChild(overlay);
+                                        } else {
+                                            overlay.style.display = "block"; // Mostrar si ya existe
+                                        }
+
+                                        
+                                        if (!contenedor) {
+                                            // Crear el contenedor del modal si no existe
+                                            contenedor = document.createElement("div");
+                                            contenedor.setAttribute("id", "CModal");
+                                            contenedor.setAttribute("class", "kebabmodal");
+                                            document.body.appendChild(contenedor);
+                            
+                                            // Crear contenido del carrito
                                             fetch("/vistas/principal/verKebabGusto.html")
-                                            .then(respuesta => respuesta.text())
-                                            .then(texto => {
-                                                auxiliar.innerHTML = texto;
+                                                .then((respuesta) => respuesta.text())
+                                                .then((texto) => {
+                                                    contenedor.innerHTML = texto;
+                                                    editarKebab(kebabDiv.kebab);
+                                                    // Acceder a los elementos después de que estén en el DOM
+                                                    const closeBtn = contenedor.querySelector(".closeKebab");
+                                                    const pideBtn = contenedor.querySelector("#pedir");
+                                                    
+                            
+                                                    
+                            
+                                                    // Cerrar el modal al hacer clic en la "X"
+                                                    if (closeBtn) {
+                                                        closeBtn.addEventListener("click", function () {
+                                                            contenedor.style.display = "none";
+                                                            overlay.style.display = "none";
+                                                            window.location.reload();
+                                                            
+                                                        });
+                                                    }
 
-                                                cont=document.getElementsByClassName("carta-container")[0];
-                                                cont.removeChild(cartaContenedor);
-                                                cont.appendChild(auxiliar);
-                                                auxiliar.style.display="block";
+                                                    carro.
+                                                    if (pideBtn) {
 
-                                                
-                                                const kebabEditado=editarKebab(kebabDiv.kebab);
+                                                        pideBtn.addEventListener("click", function () {
+                                                        alert("pedir");
 
-                                                console.log(kebabEditado);
+                                                            contenedor.style.display = "none";
+                                                            overlay.style.display = "none";
+                                                            anadirCarrito(kebabDiv.kebab);
+                                                            
 
 
-                                                
-                                    
-                                            
-                                            })
-                                            .catch(error => {
-                                                console.error("Error al cargar", error);
-                                            });
+                                                        });
+                                                    }
+
+
+
+                            
+                                                    
+                                                })
+                                                .catch((error) => {
+                                                    console.error("Error al cargar la plantilla del carrito:", error);
+                                                });
+                                        } else {
+                                            contenedor.style.display = "block"; // Mostrar si ya existe
+                                        }
 
                                                         
                                     });

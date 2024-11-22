@@ -1,22 +1,18 @@
 /* Estilo para el modal */
 .carritomodal {
     position: fixed;               /* Fija el contenedor en la pantalla */
-    top: 50%;                      /* Centrado vertical */
-    right: -13%;                    /* Centrado horizontal */
-    transform: translate(-50%,-50%); /* Ajuste para centrar exactamente */
-    width: 50vh;  
-    height: 100vh;                /* Ancho del modal (ajústalo según necesites) */
-                    /* Espacio interno */
-    background-color: white;       /* Fondo blanco para el modal */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
-              /* Bordes redondeados */
-    z-index: 1000;                 /* Prioridad en la pila de elementos para que esté encima */
-   
+    top: 0;                        /* Alinea con el borde superior */
+    right: 0;                      /* Alinea con el borde derecho */
+    width: 50vh;                   /* Ancho del modal */
+    height: 100vh;                 /* Altura completa de la pantalla */
+    padding: 20px;                 /* Espacio interno */
+    background-color: white;       /* Fondo blanco */
+    box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.3); /* Sombra en el lado izquierdo */
+    z-index: 1000;                 /* Asegura que esté encima */
+    overflow-y: auto;              /* Habilita el desplazamiento si el contenido excede la altura */
 }
 
-
-
-
+/* Fondo oscuro detrás del modal */
 .carrito-overlay {
     position: fixed;
     top: 0;
@@ -27,6 +23,42 @@
     z-index: 999;                         /* Detrás del modal pero encima del contenido */
 }
 
+/* Botón de cierre */
+.closeCarrito {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.closeCarrito:hover,
+.closeCarrito:focus {
+    color: black;
+}
+
+/* Indicador de cantidad en el carrito */
+.carrito-count {
+    position: absolute; 
+    right: 10px;          /* Alineado con el borde derecho del ícono */
+    top: 10px;            /* Ajustado verticalmente */
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    color: white;          /* Texto blanco */
+    text-align: center;
+    line-height: 20px;     /* Centrar el texto verticalmente */
+    border-radius: 50%;    /* Forma circular */
+    font-size: 12px;
+}
+
+.BtnsCarrito {
+    text-align: center;
+}
+
+
 .modal-carrito {
     background-color: #fefefe;
     margin: 15% auto;
@@ -35,44 +67,5 @@
     width: 80%;
     text-align: center;
 }
-
-
-.closeCarrito {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    padding:20px;
-}
-
-.closeCarrito:hover,
-.closeCarrito:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
-.carrito-count{
-
-    position: absolute;  /* Cambia a posición absoluta */
-    right: 24px; 
-    bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
-    top: 40%;            /* Centrado verticalmente respecto al contenedor */
-    transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
-    
-    margin:0;
-    padding:0;
-  
-    width: 20px;
-    height: 20px;
-  
-  }
-
-  .BtnsCarrito{
-    
-    text-align: center;
-  
-  }
 
 

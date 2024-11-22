@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 /**
  * 
  * @returns Devuelve todos los ingredientesen el sistema
