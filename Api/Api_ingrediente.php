@@ -41,7 +41,7 @@ switch ($method) {
                 null,  // ID se generará automáticamente
                 $data[0]['nombre'],
                 $data[0]['foto'],
-                $data[0]['precio'],
+                floatval($data[0]['precio']),
                 $data[0]['estado'],
                 $data[0]['alergenos']??$data[0]['alergenos']=[] // Debes asegurarte que este sea un array de IDs de alérgenos
             );

@@ -1,13 +1,19 @@
+*{
+  box-sizing: border-box;
+}
+
+
+
 .alGusto {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f39c12;
-    height: 85vh;
+    background-color: #24245c;
+    height: 90vh;
     width: 100%;
     overflow: hidden;   
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
-
+    z-index: 1;
    
     background-position: center;
 }
@@ -24,8 +30,8 @@
   grid-gap:5px 10px; /* Espacio entre las celdas */
   
   background-color: white;
-  height: 82%; /* Ajusta según tu necesidad */
-  width: 40%;
+  height:50em; /* Ajusta según tu necesidad */
+  width: 60em;
   
   border-radius: 0% 3% 0% 10%;
   padding: 30px;
@@ -200,5 +206,17 @@
 
 
 
+}
+
+
+
+.fotoKebab {
+  background-image: url("/asset/img/kebab1.jpeg"); /* URL de la imagen */
+  width: 100%;              /* Ajusta el ancho de la imagen al 100% del contenedor */
+  height: 100%;             /* Ajusta la altura de la imagen al 100% del contenedor */
+  object-fit: cover;       /* Hace que la imagen se recorte para llenar el contenedor sin distorsionarse */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+  margin: 10px;            /* Añade márgenes alrededor de la imagen */
+  box-sizing: border-box;  /* Incluye el margen en el tamaño total del contenedor */
 }
 

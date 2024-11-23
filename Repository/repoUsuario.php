@@ -191,6 +191,34 @@
                 echo json_encode(["error" => $e->getMessage()]);
             }
         }
+
+        /**
+         * Busca un usuario en la base de datos por su nombre de usuario.
+         * @param string $username Nombre de usuario del usuario a buscar.
+         * @return Usuario|null El usuario encontrado o null si no se encuentra.
+         * 
+         */
+        public static function findByUsername($username) {
+
+            $conn = BdConnection::getConnection();
+            try {
+                
+                
+
+                $sql = "SELECT * FROM usuario WHERE nombre = :username";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':username', $username);
+                $stmt->execute();
+
+                $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+                return get_object_vars($usuario);
+
+            } catch (PDOException $e) {
+                header('Content-Type: application/json');
+                http_response_code(500);
+                echo json_encode(["error" => $e->getMessage()]);
+            }
+        }
         
         
 

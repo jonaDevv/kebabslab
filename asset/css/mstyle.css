@@ -4,8 +4,9 @@
     top: 50%;                      /* Centrado vertical */
     left: 50%;                     /* Centrado horizontal */
     transform: translate(-50%, -50%); /* Ajuste para centrar exactamente */
-    width: 50vh;                  /* Ancho del modal (ajústalo según necesites) */
-    padding: 1%;                 /* Espacio interno */
+    width: 60vh;                  /* Ancho del modal (ajústalo según necesites) */
+    padding: 1%;  
+    height: 40vh;               /* Espacio interno */
     background-color: white;       /* Fondo blanco para el modal */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
     border-radius: 8px;            /* Bordes redondeados */
@@ -27,11 +28,14 @@
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
+    margin: auto;
+    margin-top: 30px;
+    padding: 1px 20px 10px 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 50vh;
+    height: 30vh;
     text-align: center;
+    
 }
 
 

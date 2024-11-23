@@ -1,9 +1,9 @@
 <?php
 namespace Controllers;
-
+use Helper\Sesion;
 use League\Plates\Engine;
 
-
+Sesion::iniciaSesion();
 class HomeController {
     protected $templates;
 

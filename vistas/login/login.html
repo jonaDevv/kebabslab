@@ -4,10 +4,10 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Iniciar sesión</h2>
-            <form id="loginForm">
+            <form id="loginForm" method="post" action="/Api/Api_login.php">
                 <div class="input-container">
                     <label for="username">Usuario:</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="nombre" required>
                 </div>
                 <br>
                 <div class="input-container">
@@ -15,8 +15,10 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <br>
-                <button id="logeo">Iniciar sesión</button>
+                <button id="logeo" type="submit">Iniciar sesión</button>
                 ¿No tienes cuenta? <a href="http://www.kebabslab.com/?menu=registro">Registrate</a>
             </form>
+            <div id="errores"></div>
+
         </div>
    

@@ -1,6 +1,8 @@
 <?php
 namespace AutoCargador;
 
+use Helper\Login;
+
 error_reporting(E_ALL); // Reporta todos los tipos de errores
 ini_set('display_errors', 1); // Muestra errores en la salida
 ini_set('display_startup_errors', 1); // Muestra errores en el inicio
@@ -14,7 +16,7 @@ class Control {
 
     // En "controllers/alGusto.php"
     public static function gusto() {
-        include __DIR__ . '/../vistas/principal/crearKebab.html';
+        include __DIR__ . '/../vistas/principal/verKebabGusto.html';
     }
 
     // En "controllers/carta.php"
@@ -38,7 +40,10 @@ class Control {
     }
 
     public static function cerrarSesion() {
-        require_once './Vistas/Login/cerrarsesion.php';
+        
+        Login::logout();
+        header("Location:/?menu=inicio");
+        exit();
     }
 
     // En "controllers/MantenimientoController.php"
@@ -46,13 +51,26 @@ class Control {
         require_once './Vistas/mantenimiento/mantenimiento.php';
     }
 
-    public static function listadoAnimales() {
-        require_once './Vistas/Mantenimiento/listadoanimales.php';
+    public static function gProducto() {
+        require_once './Vistas/mantenimiento/gProducto.php';
     }
 
-    public static function listadoVacunas() {
-        require_once './Vistas/Mantenimiento/listadovacunas.php';
+    public static function gUsuario() {
+        require_once './Vistas/mantenimiento/gUsuario.php';
     }
+
+    public static function gPedido() {
+        require_once './Vistas/mantenimiento/gPedido.php';
+    }
+
+    public static function gVenta() {
+        require_once './Vistas/mantenimiento/gVenta.php';
+    }
+    
+   
+    // En "controllers/pedidos.php"
+
+   
 
     // En "controllers/ErrorController.php"
     public static function notFound() {

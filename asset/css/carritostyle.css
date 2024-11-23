@@ -1,0 +1,69 @@
+/* Estilo para el modal */
+.carritomodal {
+    position: fixed;               /* Fija el contenedor en la pantalla */
+    top: 0;                        /* Alinea con el borde superior */
+    right: 0;                      /* Alinea con el borde derecho */
+    width: 50vh;                   /* Ancho del modal */
+    height: 100vh;                 /* Altura completa de la pantalla */
+    padding: 20px;                 /* Espacio interno */
+    background-color: white;       /* Fondo blanco */
+    box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.3); /* Sombra en el lado izquierdo */
+    z-index: 1000;                 /* Asegura que esté encima */
+    overflow-y: auto;              /* Habilita el desplazamiento si el contenido excede la altura */
+}
+
+/* Fondo oscuro detrás del modal */
+.carrito-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    z-index: 999;                         /* Detrás del modal pero encima del contenido */
+}
+
+/* Botón de cierre */
+.closeCarrito {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.closeCarrito:hover,
+.closeCarrito:focus {
+    color: black;
+}
+
+
+
+.BtnsCarrito {
+    text-align: center;
+}
+
+
+.modal-carrito {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+.carrito-container{
+
+
+    text-align: left;;
+}
+
+
+.modal-kebab-item{
+
+    text-align: left;
+}
+
+

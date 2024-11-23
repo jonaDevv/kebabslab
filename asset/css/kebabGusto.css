@@ -1,0 +1,428 @@
+*{
+  box-sizing: border-box;
+  font-family: Jetbrains Mono;
+}
+
+
+
+
+    
+.kebabmodal {
+  position: fixed;               /* Fija el contenedor en la pantalla */
+  top: 50%;                      /* Centrado vertical */
+  left: 50%;                     /* Centrado horizontal */
+  transform: translate(-50%, -50%); /* Ajuste para centrar exactamente */                   /* Alinea con el borde derecho */
+  height:700px; /* Ajusta según tu necesidad */
+  width: 800px;                 /* Altura completa de la pantalla */
+                  /* Espacio interno */
+       /* Fondo blanco */
+  box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.3); /* Sombra en el lado izquierdo */
+  z-index: 1000;                 /* Asegura que esté encima */
+  overflow-y: auto;              /* Habilita el desplazamiento si el contenido excede la altura */
+}
+
+/* Fondo oscuro detrás del modal */
+.kebab-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  z-index: 999;                         /* Detrás del modal pero encima del contenido */
+}
+
+/* Botón de cierre */
+.closeKebab {
+  color: #aaa;
+  float: right;
+  grid-column: 8 ; /* Nombre ocupa las dos columnas */
+  grid-row: 1;
+
+  
+  margin-left:40px;
+  cursor: pointer;
+}
+
+.closeKebabo:hover,
+.closeKebab:focus {
+  color: black;
+  filter: hue-rotate(-120deg) saturate(3) brightness(1.2);
+
+}
+
+
+.vistaKebab {
+  display: grid;
+  grid-template-columns: 5% 25% 15% 15% 5% 15% 5%; /* Dos columnas de igual tamaño */
+  grid-template-rows:5% 5% 5% 20% 5% 20%  5% 20% 10%  5%   ; /* Filas para imagen, nombre, descripción, y precio */
+  row-gap: 10px;
+  column-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(36, 36, 92, 0.9);
+  height:700px; /* Ajusta según tu necesidad */
+  width: 800px;
+  border-radius: 0% 3% 0% 10%;
+  margin:auto;
+  padding: 30px 50px 50px 20px;
+  overflow: auto;
+  overflow: hidden;
+ 
+  border:#ffffff solid 1px;
+  
+  font-family: Jetbrains Mono;
+  white-space: nowrap; /* Impide saltos de línea */
+}
+
+
+
+.part{
+
+    overflow: hidden;
+    
+    
+}
+
+#foto {
+
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  grid-column: 2/5 ; /* Imagen ocupa las dos columnas */
+  grid-row:3/8;
+  text-align: center;
+  background-size: cover; /* Asegura que la imagen cubra todo el área del contenedor */
+  background-position: center; /* Centra la imagen dentro del contenedor */
+
+  margin-left: -30px;
+  
+  color: black;
+  
+  
+  
+  
+  
+}
+
+#nombre {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  
+  grid-column: 3/7 ; /* Nombre ocupa las dos columnas */
+  grid-row: 1;
+  margin-left:-50px;
+  color:#f39c12;
+  font-weight: BOLD;
+  text-align: center;
+  font-size: 40PX;
+  
+  
+  
+
+}
+
+#descripcion {
+  grid-column: 2/4; /* Descripción ocupa las dos columnas */
+  grid-row: 6;
+  margin-left: 50px;
+  height: 100%;
+    width: 100%;
+    
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+  
+  color: white;
+  margin-top: 60PX;
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  
+  
+
+}
+
+#listaIngradientes {
+  grid-column: 7/9; /* Descripción ocupa las dos columnas */
+  grid-row: 3;
+  font-size: 14px;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: black;
+  
+  
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  color: rgb(255, 255, 255);
+  
+  
+
+}
+
+#ingredientesKebab {
+  grid-column: 5/7; /* Descripción ocupa las dos columnas */
+  grid-row: 3;
+  font-size: 14px;
+  
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: rgb(255, 255, 255);
+  
+ 
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  
+  
+
+}
+
+#alergenosTexto {
+  grid-column: 2/5; /* Descripción ocupa las dos columnas */
+  grid-row: 7;
+  font-size: 20px;
+  
+  
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: rgb(255, 255, 255);
+  
+  margin-top: 60PX;
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  
+  
+
+}
+
+
+#descripcionTexto {
+  grid-column: 2/5; /* Descripción ocupa las dos columnas */
+  grid-row: 5;
+ 
+  font-size: 20px;
+ 
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  text-align: center;
+
+  color: rgb(255, 255, 255);
+  
+  margin-top: 60PX;
+  backface-visibility: blur;
+  border-radius: 0% 0% 0% 0%;
+  
+  
+
+}
+
+#ingrediente {
+    grid-column: 5/7; /* Ingredientes en la primera columna */
+    grid-row: 4/8;
+    background-color: #ffffff;
+    color: black;
+    padding: 10px;
+    
+    height: 100%;
+    width: 100%;
+
+    
+  }
+  
+  #aIngrediente {
+    grid-column: 7/9; /* Añadir ingredientes en la segunda columna */
+    grid-row: 4/8;
+    background-color: #ffffff;
+    color: black;
+    padding: 10px;
+    
+    
+    height: 100%;
+    width: 100%;
+    
+  }
+
+ 
+
+  
+
+#alergenos {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+  margin-left: 50px;
+  grid-column: 2/4 ; /* Alergenos ocupan las dos columnas */
+  grid-row: 8;
+  text-align: center;
+  color:#ffffff;
+  height: 100%;
+  width: 100%;
+  margin-top: 60PX;
+  
+ 
+  border-radius: 0%  0%  0% 2%;
+
+}
+
+#precio {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  font-size:50px;
+  grid-column: 6/9; /* Precio ocupa las dos columnas */
+  grid-row: 8/9;
+  text-align: center;
+  color: #f39c12;
+  overflow: hidden;
+  
+  border-style: solid 1px;
+  border-color: #f39c12; 
+  border-radius: 10% 10% 10% 10%;
+}
+
+
+
+
+#pedir {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  
+  
+
+  grid-column: 6/9; /* Precio ocupa las dos columnas */
+  grid-row: 9;
+  text-align: center;
+  color: #ffffff;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background-color: #f39c12;
+  border-style: solid 1px;
+  border-color: #ffffff;
+  margin-top: -30PX;
+  
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  border-radius: 10% 10% 10% 10%;
+}
+
+#pedir:hover {
+    
+  color:#f39c12;
+  cursor: pointer;
+  transform: scale(1.1);
+  text-size-adjust: 120%;
+  background-color: #ffffff;
+  
+
+
+
+
+}
+
+#editar {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;  
+  
+  
+
+  grid-column: 5/7; /* Precio ocupa las dos columnas */
+  grid-row: 9;
+  text-align: center;
+  color: #ffffff;
+  overflow: hidden;
+  
+  height: 100%;
+  width: 100%;
+  background-color: #f39c12;
+  border-style: solid 1px;
+  border-color: #ffffff;
+  
+  margin-top: -30PX;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  border-radius: 10% 10% 10% 10%;
+}
+
+#editar:hover {
+    
+  color:#f39c12;
+  cursor: pointer;
+  transform: scale(1.1);
+  text-size-adjust: 120%;
+  background-color: #ffffff;
+  
+  
+
+
+
+
+}
+#plus {
+    grid-column: 2; /* Precio ocupa las dos columnas */
+    grid-row: 1;
+    display: flex;
+    justify-content: right;
+    
+    background-image: url("/asset/img/favicon1.png");
+    color: white;
+    height: 50px;
+    width: 40px;
+    
+    
+    
+    
+    
+}
+
+#plus:hover {
+    
+  color: white;
+  cursor: pointer;
+  transform: scale(1.1);
+  text-size-adjust: 120%;
+  rotate: 45deg;
+ 
+}
+
+
+
+.fotoKebab {
+  background-image: url("/asset/img/kebab1.jpeg"); /* URL de la imagen */
+  width: 100%;              /* Ajusta el ancho de la imagen al 100% del contenedor */
+  height: 100%;             /* Ajusta la altura de la imagen al 100% del contenedor */
+  object-fit: cover;       /* Hace que la imagen se recorte para llenar el contenedor sin distorsionarse */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+  margin: 10px;            /* Añade márgenes alrededor de la imagen */
+  box-sizing: border-box;  /* Incluye el margen en el tamaño total del contenedor */
+}
+
+.div-ingrediente {
+  background-color: #f39c12;
+  height: 400px;
+  width: 400px;
+  background-size: cover;
+  background-position: center;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+
+
+/* Efecto de fade-out (desvanecimiento) instantáneo */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+  pointer-events: none;  /* Deshabilita la interacción mientras se desvanece */
+}
+
