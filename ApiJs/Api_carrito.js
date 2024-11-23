@@ -35,7 +35,8 @@ function anadirCarrito(kebab) {
                         precio: kebab.precio
                     }],
                     precioTotal: kebab.precio,  // El precio total de la línea es el precio del primer kebab
-                    pedido_id: 10  // ID del pedido
+                    pedido_id: 10,  // ID del pedido
+                    cantidad: 1  // Nueva propiedad cantidad
                 }
             ]
         });
@@ -44,17 +45,18 @@ function anadirCarrito(kebab) {
 
     // Actualizar la vista del carrito en el DOM
     actualizarCarritoUI();
-    console.log(carritoData);
 }
+
 
 // Función para calcular el precio total de una línea de pedido (sumando el precio de todos los kebabs dentro)
 function calcularPrecioTotal(linea) {
     return linea.kebabs.reduce((total, kebab) => total + kebab.precio, 0);
 }
 
+// Calcular el precio total de todo el carrito
 function calcularPrecioCarritoTotal() {
     let total = 0;
-    
+
     // Recorre todas las líneas de pedido en el carrito
     carritoData.forEach(item => {
         item.lineasPedido.forEach(linea => {
@@ -64,7 +66,7 @@ function calcularPrecioCarritoTotal() {
             total += linea.precioTotal;
         });
     });
-    
+
     console.log("Total calculado:", total);  // Verifica que el total se calcule correctamente
     return total;
 }
@@ -78,6 +80,7 @@ function actualizarCarritoUI() {
             const kebabDiv = document.createElement("div");
             kebabDiv.classList.add("kebab-en-carrito");
             kebabDiv.id = `kebab-${linea.id}`;
+            kebabDiv.kebab = item;
 
             // Contamos las cantidades de cada tipo de kebab
             let kebabsSummary = linea.kebabs.reduce((summary, kebab) => {
@@ -118,7 +121,31 @@ function actualizarCarritoUI() {
     if (totalElement) {
         totalElement.textContent = `Total carrito: ${totalCarrito.toFixed(2)}€`;
     }
+
+    // Actualizar el carrito en el servidor
+    meterCarritoUser(carritoData);
 }
+
+// Función para enviar el carrito al servidor
+function meterCarritoUser(carro) {
+    let carritoTexto = JSON.stringify(carro);
+
+    fetch("/Api/Api_sesion.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: carritoTexto,
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Carrito actualizado:", data);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
+
 
 
 function rellenarCarrito() {
@@ -184,11 +211,32 @@ function vaciarCarrito() {
 
 }
 
+function meterBD(carro) {
 
 
-function meterCarritoUser(carrito) {
+    let carritoTexto = JSON.stringify(carro);
+
+    // Enviar mediante fetch o un formulario
+    fetch("Api/Api_usuario.php", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: carritoTexto,
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            console.log("Carrito actualizado:", data);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+
+}
+
+function meterCarritoUser(carro) {
     
-    let carritoTexto = JSON.stringify(carrito);
+    let carritoTexto = JSON.stringify(carro);
 
     // Enviar mediante fetch o un formulario
     fetch("Api/Api_sesion.php", {
@@ -205,6 +253,36 @@ function meterCarritoUser(carrito) {
         .catch((error) => {
             console.error("Error:", error);
         });
+}
+
+
+
+
+
+
+function leerCarritoUser() {
+    // Realizamos la solicitud GET al servidor para obtener el carrito
+    fetch("Api/Api_sesion.php", {
+        method: "GET",  // Usamos GET para leer los datos
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error al obtener el carrito");
+            }
+            return response.json();  // Convertimos la respuesta a JSON
+        })
+        .then((data) => {
+            console.log("Carrito cargado:", data);
+            // Aquí puedes manejar el carrito recibido
+            actualizarCarritoUI(data);  // Función para actualizar el carrito en la interfaz
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+
 }
 
 

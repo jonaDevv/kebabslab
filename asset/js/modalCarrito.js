@@ -66,8 +66,7 @@ window.addEventListener("load", function () {
                         if (pagarBtn) {
                             pagarBtn.addEventListener("click", function () {
                                 ticket= document.getElementsByClassName("popup");
-                                ticket.innerHTML = "";
-                                ticket.innerHTML=texto;
+                                
                             });
                         }
 

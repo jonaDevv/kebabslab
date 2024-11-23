@@ -22,6 +22,7 @@ Sesion::iniciaSesion();
     <script src="/asset/js/herramientas/validation.js"></script>
     <script src="/asset/js/registro.js"></script>
     <script src="/ApiJs/Api_carrito.js" defer></script>
+    <script src="/ApiJs/Api_usuario.js" defer></script>
 
     
     
