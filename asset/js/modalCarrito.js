@@ -44,7 +44,7 @@ window.addEventListener("load", function () {
                         // Vaciar el carrito al hacer clic en el botón
                         if (vaciarBtn) {
                             vaciarBtn.addEventListener("click", function () {
-                                alert("vaciar carrito");
+                                vaciarCarrito();
                             });
                         }
 
@@ -65,7 +65,9 @@ window.addEventListener("load", function () {
                         // Evento del botón de pagar
                         if (pagarBtn) {
                             pagarBtn.addEventListener("click", function () {
-                                alert("pagar");
+                                ticket= document.getElementsByClassName("popup");
+                                ticket.innerHTML = "";
+                                ticket.innerHTML=texto;
                             });
                         }
 
@@ -80,5 +82,28 @@ window.addEventListener("load", function () {
                 contenedor.style.display = "block"; // Mostrar si ya existe
             }
         });
+
+
+
+
+
+
+
+
+
+
+        let popup = document.getElementById("popup");
+
+        
     }
+
 });
+
+
+function openPopup() {
+    popup.classList.add("open-popup");
+}
+
+function closePopup() {
+    popup.classList.remove("open-popup");
+}

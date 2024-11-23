@@ -26,10 +26,10 @@ window.addEventListener("load", function() {
             
             
                 
-            
-                // Añadir el div al contenedor
-                cartaContenedor.appendChild(kebabDiv);
-                
+                if(cartaContenedor != null){
+                    // Añadir el div al contenedor
+                    cartaContenedor.appendChild(kebabDiv);
+                }
 
                 var auxiliar = document.createElement("div");
                 var auxiliar1= document.createElement("div");
@@ -89,7 +89,7 @@ window.addEventListener("load", function() {
                                     carro= document.getElementById("carrito");
                                     anadirCarrito(item);
                                    
-                                    console.log(carro)
+                                    
                                     
                                     
 
@@ -136,7 +136,12 @@ window.addEventListener("load", function() {
                                                 .then((respuesta) => respuesta.text())
                                                 .then((texto) => {
                                                     contenedor.innerHTML = texto;
-                                                    editarKebab(kebabDiv.kebab);
+
+                                                    const QuebabMod = structuredClone(kebabDiv.kebab);
+
+                                                    const anadirK=editarKebab(QuebabMod);
+
+
                                                     // Acceder a los elementos después de que estén en el DOM
                                                     const closeBtn = contenedor.querySelector(".closeKebab");
                                                     const pideBtn = contenedor.querySelector("#pedir");
@@ -147,9 +152,9 @@ window.addEventListener("load", function() {
                                                     // Cerrar el modal al hacer clic en la "X"
                                                     if (closeBtn) {
                                                         closeBtn.addEventListener("click", function () {
-                                                            contenedor.style.display = "none";
-                                                            overlayKeb.style.display = "none";
-                                                            window.location.reload();
+                                                            contenedor.remove();  // Elimina el modal
+                                                            overlayKeb.remove();  // Elimina el overlay
+                                                            
                                                             
                                                         });
                                                     }
@@ -160,10 +165,18 @@ window.addEventListener("load", function() {
                                                         pideBtn.addEventListener("click", function () {
                                                             
                                                             
-                                                            alert("pedir");
-                                                            contenedor.style.display = "none";
-                                                            overlayKeb.style.display = "none";
-                                                            anadirCarrito(kebabDiv.kebab);
+                                                           if(anadirK.ingredientes.length>0){
+                                                            contenedor.remove();  // Elimina el modal
+                                                            overlayKeb.remove();  // Elimina el overlay
+                                                            anadirCarrito(anadirK);
+                                                            console.log(anadirK);
+                                                            
+
+                                                           }else{
+                                                                alert("Ingredientes no disponibles");
+                                                            
+                                                           }
+                                                            
                                                             
 
 

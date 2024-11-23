@@ -34,7 +34,7 @@ switch ($method) {
     case 'POST':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-        var_dump($data);
+        
         // Verificar si se recibieron todos los datos necesarios
         if (
             isset($data[0]['nombre']) && // Verificar si el campo nombre está presente

@@ -1,0 +1,35 @@
+[{"lineasPedido": [
+        {
+            "id": 32,
+            "kebabs": {
+                "id": 2,
+                "kebab": "Kebab Vegetariano",
+                "ingredientes": [
+                    {
+                        "nombre": "Tomate",
+                        "precio": 1.5
+                    }
+                ]
+            },
+            "cantidad": 2,
+            "precio": 12.99,
+            "pedido_id": 3
+        },
+        {
+            "id": 33,
+            "kebabs": {
+                "id": 2,
+                "kebab": "Kebab Vegetariano",
+                "ingredientes": [
+                    {
+                        "nombre": "Tomate",
+                        "precio": 1.5
+                    }
+                ]
+            },
+            "cantidad": 2,
+            "precio": 12.99,
+            "pedido_id": 3
+        }
+    ]
+}]

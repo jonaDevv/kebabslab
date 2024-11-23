@@ -32,18 +32,19 @@ switch ($method) {
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
         
         // Verificar si se recibieron todos los datos necesarios
+        
         if (
             isset($data[0]['usuario_id']) && 
             isset($data[0]['fecha_hora']) &&
             isset($data[0]['lineasPedido']) &&
             isset($data[0]['estado']) &&
-            isset($data[0]['precio_total']) &&
-            isset($data[0]['direccion'])
+            isset($data[0]['precio_total'])
+            
            
             
         ) {
 
-            
+            var_dump($data[0]['lineasPedido']);
             $pedido= new Pedido(
         
                 null,  // ID se generará automáticamente

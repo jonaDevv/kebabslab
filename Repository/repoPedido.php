@@ -38,7 +38,56 @@
                     'precio_total' => $pedido->getPrecio_total(),
                     'direccion' => $pedido->getDireccion()
                 ]);
+                
+                $pedidoId = $conn->lastInsertId();
+
+                // Insertar nuevas relaciones
+                $lineas = $pedido->getLineasPedido();
+                
+                
+                if (!is_array($lineas)) {
+                    throw new Exception("El método getLineasPedido() no devolvió un array.");
+                }
         
+                foreach ($lineas as $linea) {
+                    
+                    
+                        
+                        
+                        //$lineaId = $linea['id'];
+                        //error_log("Insertando relación: pedido_id = $pedidoId, linea_id = $lineaId");
+                        
+                                // Asegúrate de convertir 'kebabs' a JSON si es un array o un objeto
+                        $kebabsJson = json_encode($linea['kebabs']);
+
+                        // Preparar la sentencia SQL para insertar un nuevo pedido
+                        $stmt = $conn->prepare("
+
+                             INSERT INTO linea_pedido (pedido_id, cantidad, kebabs, precio)
+                            VALUES (:pedido_id, :cantidad, :kebabs, :precio)
+                        
+                        ");
+
+                        // Verificar si la conversión a JSON fue exitosa
+                        if ($kebabsJson === false) {
+                        // Manejar el error si no se pudo convertir 'kebabs' a JSON
+                        echo json_encode(["error" => "Error al convertir kebabs a JSON"]);
+                        exit;
+                        }
+
+                        // Ejecutar la sentencia, asignando valores de las propiedades del objeto lineaPedido
+                        $stmt->execute([
+                        'pedido_id' => $pedidoId,
+                        'cantidad' => $linea['cantidad'],
+                        'kebabs' => $kebabsJson,  // Pasamos la cadena JSON
+                        'precio' => $linea['precio']
+                        ]);
+
+                       
+                   
+                }
+                
+
                 // Verificar si la inserción fue exitosa
                 if ($resultado) {
                     
@@ -107,8 +156,7 @@
                         $lineaPedido = new LineaPedido($row->id, $row->pedido_id, $row->cantidad, $kebabs, $row->precio);
                         
                         // Agregar la línea de pedido a la respuesta
-                        //$lineaPedidoArray[] = $lineaPedido->toJson();
-                        $pedido->setLineasPedido($lineaPedido->toJson());
+                        $lineaPedidoArray[] = $lineaPedido->toJson(); 
                     }
                     
                     
@@ -120,7 +168,8 @@
                         
                     }
                     
-                    $pedidosArray[]=$pedido->toJson();
+                    // Convertir el objeto a un array y añadirlo a la lista de usuarios
+                    $pedidosArray[] = $pedido->toJson(); // Asegúrate de que el método toArray() esté definido
                     
         
                     http_response_code(200);
@@ -180,7 +229,7 @@
         
                 // Insertar nuevas relaciones
                 $lineas = $pedido->getLineasPedido();
-                var_dump($lineas);
+                
                 
                 if (!is_array($lineas)) {
                     throw new Exception("El método getLineasPedido() no devolvió un array.");

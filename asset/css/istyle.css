@@ -188,6 +188,15 @@ header {
  
 }
 
+#icono-compra:hover{
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  
+
+
+}
+
 /* Indicador de cantidad en el carrito */
 .carrito-count {
   position: absolute; 
