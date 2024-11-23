@@ -72,13 +72,15 @@
         
                     http_response_code(200);
                     header('Content-Type: application/json');
-                    echo json_encode($registro); // Aquí devuelves el usuario en formato JSON
+                    echo json_encode($alergeno); // Aquí devuelves el usuario en formato JSON
+                    return $alergeno;
                     exit; // Termina la ejecución aquí para evitar enviar múltiples respuestas
 
                 } else {
                     http_response_code(404);
-                    echo json_encode(["message" => "No se encontró el usuario"]); 
+                    echo json_encode(["message" => "No se encontró el alergeno"]); 
                 }
+
             } catch (PDOException $e) {
                 header('Content-Type: application/json');
                 http_response_code(500);
@@ -101,14 +103,15 @@
             $conn = BdConnection::getConnection();
         
             try {
-                // Preparar la sentencia SQL para actualizar un usuario existente
+                $conn->beginTransaction();
+                // Preparar la sentencia SQL para actualizar un alergeno existente
                 $stmt = $conn->prepare("UPDATE alergeno
                                         SET nombre = :nombre, foto = :foto
                                         WHERE id = :id");
         
-                // Ejecutar la sentencia, asignando valores de las propiedades del objeto usuario
+                // Ejecutar la sentencia, asignando valores de las propiedades del objeto alergeno
                 $resultado = $stmt->execute([
-                    'id' => $id,  // Usa el parámetro $id para especificar el usuario a actualizar
+                    'id' => $id,  // Usa el parámetro $id para especificar el alergeno a actualizar
                     'nombre' => $alergeno->getNombre(),
                     'foto' => $alergeno->getFoto(),
 
@@ -116,21 +119,25 @@
 
                 header("Content-Type: application/json");
 
+                
+
                 // Verificar si la actualización fue exitosa
                 if ($resultado) {
                    
+                    $conn->commit();
                     return true;
                 } else {
-                    
+                    $conn->commit();
                     return false;
                 }
 
-               
                 echo json_encode($alergeno);
+                
 
 
             } catch (PDOException $e) {
                 // Manejo de errores y respuesta de estado HTTP
+                $conn->rollBack();
                 header('HTTP/1.1 500 Internal Server Error');
                 echo json_encode(["error" => "Error en la base de datos: " . $e->getMessage()]);
             }

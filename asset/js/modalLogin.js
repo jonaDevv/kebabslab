@@ -1,121 +1,71 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
+    // Crear el modal y el overlay al cargar la página
+    const overlay = document.createElement("div");
+    overlay.setAttribute("class", "modal-overlay");
+    overlay.setAttribute("id", "modalOverlay");
+    overlay.style.display = "none"; // Ocultar inicialmente
+    document.body.appendChild(overlay);
 
-    const openModal = document.getElementById("openModal");
+    const contenedor = document.createElement("div");
+    contenedor.setAttribute("id", "loginModal");
+    contenedor.setAttribute("class", "modal");
+    contenedor.style.display = "none"; // Ocultar inicialmente
+    document.body.appendChild(contenedor);
 
-    if (openModal) {
-        openModal.addEventListener("click", function() {
+    // Función para alternar visibilidad del modal
+    function toggleModal() {
+        const isVisible = contenedor.style.display === "block";
+        contenedor.style.display = isVisible ? "none" : "block";
+        overlay.style.display = isVisible ? "none" : "block";
+    }
 
-            // Crear el fondo oscuro detrás del modal
-            var overlay = document.createElement("div");
-            overlay.setAttribute("class", "modal-overlay");
-            document.body.appendChild(overlay);
+    // Cargar contenido del modal una sola vez
+    fetch("/vistas/login/login.html")
+        .then((respuesta) => respuesta.text())
+        .then((texto) => {
+            const auxiliar = document.createElement("div");
+            auxiliar.innerHTML = texto;
+            contenedor.appendChild(auxiliar);
 
-            // Crear el contenedor del modal
-            var contenedor = document.createElement("div");
-            contenedor.setAttribute("id", "loginModal");
-            contenedor.setAttribute("class", "modal");
-            document.body.appendChild(contenedor);
-        
-            var auxiliar = document.createElement("div");
-        
-            // Traer la plantilla del login
-            fetch("/vistas/login/login.html")
-                .then(respuesta => respuesta.text())
-                .then(texto => {
-                    auxiliar.innerHTML = texto;
-                    contenedor.appendChild(auxiliar);
-        
-                    // Acceder a los elementos después de que estén en el DOM
-                    var modal = document.getElementById("loginModal");
-                    var closeBtn = document.getElementsByClassName("close")[0];
-        
-                    // Verifica si los elementos existen antes de agregar los eventos
-                    if (modal && closeBtn) {
-                        // Cerrar el modal al hacer clic en la "X"
-                        closeBtn.addEventListener("click", function() {
-                            modal.style.display = "none";
-                            overlay.style.display = "none"; // Ocultar el fondo oscuro
-                            contenedor.remove();
-                        });
-        
-                        // Cerrar el modal al hacer clic fuera de su contenido
-                        window.addEventListener("click", function(event) {
-                            if (event.target == overlay) {
-                                modal.style.display = "none";
-                                overlay.style.display = "none"; // Ocultar el fondo oscuro
-                                contenedor.remove();
-                            }
-                        });
-                        
-                        var logeoBtn = document.getElementById("logeo");
-                        logeoBtn.addEventListener("click", function() {
-                            var username = document.getElementById("username").value;
-                            var password = document.getElementById("password").value;
-                            
-                            if (username && password) {
-                                // Enviar datos al servidor
-                                fetch("/Api/autentifica", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({
-                                        username: username,
-                                        password: password
-                                    })
-                                
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.success) {
-                                            // Mostrar el modal de inicio de sesión
-                                            modal.style.display = "block";
-                                            overlay.style.display = "block";
-                                            
-                                            // Mostrar mensaje de login exitoso
-                                            var successMsg = document.getElementById("successMsg");
-                                            successMsg.style.display = "block";
-                                            
-                                            // Mostrar mensaje de error
-                                            var errorMsg = document.getElementById("errorMsg");
-                                            errorMsg.style.display = "none";
-                                        } else {
-                                            // Mostrar mensaje de error
-                                            var errorMsg = document.getElementById("errorMsg");
-                                            errorMsg.style.display = "block";
-                                            
-                                            // Mostrar mensaje de login exitoso
-                                            var successMsg = document.getElementById("successMsg");
-                                            successMsg.style.display = "none";
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error("Error al enviar datos al servidor:", error);
-                                    })
-                                })
+            // Configurar el botón de cierre
+            const closeBtn = contenedor.querySelector(".close");
+            if (closeBtn) {
+                closeBtn.addEventListener("click", toggleModal);
+            }
+
+            // Cerrar el modal al hacer clic fuera de su contenido
+            overlay.addEventListener("click", toggleModal);
+
+            // Configurar el botón de logeo
+            const logeoBtn = contenedor.querySelector("#logeo");
+            if (logeoBtn) {
+                logeoBtn.addEventListener("click", function () {
+                    const loginForm = contenedor.querySelector("#loginForm");
+
+                    if (loginForm) {
+                        loginForm.addEventListener("submit", function (event) {
+                            event.preventDefault(); // Evitar el envío inmediato del formulario
+
+                            const username = contenedor.querySelector("#username");
+                            const password = contenedor.querySelector("#password");
+
+                            if (validarLogin(username, password)) {
+                                loginForm.submit();
                             } else {
-                                // Mostrar mensaje de error
-                                var errorMsg = document.getElementById("errorMsg"); 
+                                alert("Por favor, completa todos los campos correctamente.");
                             }
                         });
-                        // Mostrar el modal y el fondo oscuro
-                        modal.style.display = "block";
-                        overlay.style.display = "block";
-                    } else {
-                        console.error("No se han encontrado los elementos del modal.");
                     }
-                })
-                .catch(error => {
-                    console.error("Error al cargar la plantilla del login:", error);
                 });
-
-
-
-
-
+            }
+        })
+        .catch((error) => {
+            console.error("Error al cargar la plantilla del login:", error);
         });
 
-
-    } else {
-        console.error("Los elementos no están disponibles.");
+    // Agregar evento al botón de apertura del modal
+    const openModal = document.getElementById("openModal");
+    if (openModal) {
+        openModal.addEventListener("click", toggleModal);
     }
 });

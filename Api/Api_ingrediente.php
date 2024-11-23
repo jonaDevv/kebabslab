@@ -32,19 +32,18 @@ switch ($method) {
             isset($data[0]['nombre']) && // Verificar si el campo nombre está presente
             isset($data[0]['foto']) && // Verificar si el campo foto está presente
             isset($data[0]['precio']) && // Verificar si el campo precio está presente
-            isset($data[0]['estado']) && // Verificar si el campo estado está presente
-            isset($data[0]['alergenos']) // Verificar si el campo alergenos está presente
+            isset($data[0]['estado']) 
         )  // Verificar si el campo alergenos está presente
-         {
+        {
             // Crear el objeto Ingrediente
             // Crear el objeto Ingrediente
             $ingrediente = new Ingrediente(
                 null,  // ID se generará automáticamente
                 $data[0]['nombre'],
                 $data[0]['foto'],
-                $data[0]['precio'],
+                floatval($data[0]['precio']),
                 $data[0]['estado'],
-                $data[0]['alergenos'] // Debes asegurarte que este sea un array de IDs de alérgenos
+                $data[0]['alergenos']??$data[0]['alergenos']=[] // Debes asegurarte que este sea un array de IDs de alérgenos
             );
 
 
@@ -73,18 +72,22 @@ switch ($method) {
             $id = $data[0]['id']; // ID del ingrediente a actualizar
 
             // Crear un nuevo objeto ingrediente con los datos proporcionados
-            $ingrediente = new Ingrediente(
-                $data[0]['id'],  // ID del ingrediente
-                $data[0]['nombre'] ?? null,
-                $data[0]['foto'] ?? null,
-                $data[0]['precio'] ?? null,
-                $data[0]['estado'] ?? null,
-                $data[0]['alergenos'] ?? [] // Array de IDs de alérgenos, si existe
-            );
+            if($ing=repoIngrediente::read($id)){
+
+           
+                $ing->setNombre($data[0]['nombre']??$ing->getNombre());
+                $ing->setFoto($data[0]['foto']??$ing->getFoto());
+                $ing->setPrecio($data[0]['precio']??$ing->getPrecio());
+                $ing->setEstado($data[0]['estado']??$ing->getEstado());
+                $ing->setAlergeno($data[0]['alergenos']??$ing->getAlergeno());
+                
+            }else{
+                return false;
+            }
 
             header("Content-Type: application/json");
             // Llamar al método de actualización del repositorio
-            if (repoIngrediente::update($id, $ingrediente)) {
+            if (repoIngrediente::update($id, $ing)) {
                 http_response_code(200); // OK
                 echo json_encode(["message" => "Ingrediente actualizado correctamente"]);
             } else {
@@ -105,7 +108,7 @@ switch ($method) {
             header("Content-Type: application/json");
             if (repoIngrediente::delete($id)) {
 
-                http_response_code(204); // No Content
+                http_response_code(200); // No Content
                 echo json_encode(["message" => "Ingrediente eliminado con éxito"]);
                 
             } else {

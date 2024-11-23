@@ -6,11 +6,18 @@ error_reporting(E_ALL);
 require ("../MIautocargador.php");
 require ("../vendor/autoload.php");
 
-use Models\Ingrediente;
+
 use Models\Kebab; // Usar el modelo Kebab
 use Repository\repoKebab; // Cambiar al repositorio de Kebabs
 
 $method = $_SERVER['REQUEST_METHOD'];
+
+
+//AÑADIR TODAS LAS VALIDACIONESS  E INICIAR SESION
+
+
+
+
 
 switch ($method) {
     case 'GET':
@@ -79,28 +86,38 @@ switch ($method) {
                 foreach ($data[0]['ingredientes'] as $ingredienteId) {
                     $ingredientes[] = ['id' => $ingredienteId]; // Asumimos que cada ingrediente es un ID
                 }
+                
             }else{
 
                 $ingredientes = [];
             }
 
-            $kebab = new Kebab(
-                $data[0]['id'],  // ID del kebab
-                $data[0]['nombre'] ?? null,
-                $data[0]['foto'] ?? null,
-                $data[0]['precio'] ?? null,
-                $ingredientes  // Array de IDs de ingredientes
-            );
+            if($keb=repoKebab::read($id)){
+
+           
+                $keb->setNombre($data[0]['nombre']??$keb->getNombre());
+                $keb->setFoto($data[0]['foto']??$keb->getFoto());
+                $keb->setPrecio($data[0]['precio']??$keb->getPrecio());
+                $keb->setIngredientes($ingredientes??$keb->getIngredientes());
+        
+            }else{
+                return false;
+            }
+
+
 
             header("Content-Type: application/json");
             // Llamar al método de actualización del repositorio
-            if (repoKebab::update($id, $kebab)) {
+            if (repoKebab::update($id, $keb)) {
                 http_response_code(200); // OK
                 echo json_encode(["message" => "Kebab actualizado correctamente"]);
+                echo json_encode($keb);
             } else {
                 http_response_code(404); // Not Found
                 echo json_encode(["message" => "Kebab no encontrado"]);
             }
+
+            
         } else {
             http_response_code(400); // Bad Request
             echo json_encode(["message" => "ID de kebab no proporcionado"]);
@@ -113,9 +130,10 @@ switch ($method) {
             $id = $_GET['id'];
 
             header("Content-Type: application/json");
+            
             if (repoKebab::delete($id)) {
 
-                http_response_code(204); // No Content
+                http_response_code(200); // No Content
                 echo json_encode(["message" => "Kebab eliminado con éxito"]);
                 
             } else {

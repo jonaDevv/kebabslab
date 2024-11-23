@@ -4,19 +4,17 @@ namespace Models;
 Class Direccion{
 
    
-     public int $id;
-     public string $localidad;
-     public string $provincia;
-     public string $cordenadas;
-     public  int $usuario_id;
+     public ?int $id;
+     public string $direccion;
+     public ?string $cordenadas;
+     public  ?int $usuario_id;
 
-     public function __construct(int $id,string $localidad,string $provincia,string $cordenadas,string $usuario_id){
+     public function __construct(?int $id,?int $usuario_id,string $direccion,?string $cordenadas=""){
 
          $this->setId($id);
-         $this->setLocalidad($localidad);
-         $this->setProvincia($provincia);
-         $this->setCordenadas($cordenadas);
          $this->setUsuario_id($usuario_id);          
+         $this->setDireccion($direccion);
+         $this->setCordenadas($cordenadas);
 
     }  
 
@@ -25,27 +23,17 @@ Class Direccion{
          return $this->id;
      }   
                          
-     public function setId($id):void
+     public function setId(?int $id):void
      {
          $this->id = $id;
-     }                           
-     public function getLocalidad():string
-     {
-         return $this->localidad;
-     }                           
-     public function setLocalidad($localidad):void
-     {
-         $this->localidad = $localidad;
-     }
-     public function getProvincia():string
-     {
-         return $this->provincia;
-     }
-     public function setProvincia($provincia):void
-     {
-         $this->provincia = $provincia;
-     }                                              
-     public function getCordenadas():string
+     } 
+     public function getDireccion(){
+         return $this->direccion;
+     }                        
+     public function setDireccion($direccion):void{
+         $this->direccion = $direccion;
+     }                                                                 
+     public function getCordenadas()
      {
          return $this->cordenadas;
      }
@@ -53,23 +41,22 @@ Class Direccion{
      {
          $this->cordenadas = $cordenadas;
      }
-     public function getUsuario_id():string
-     {
-         return $this->usuario_id;
+      public function getUsuario_id():string
+      {
+          return $this->usuario_id;
      }
-     public function setUsuario_id($usuario_id):void
+     public function setUsuario_id(?int $usuario_id):void
      {
-         $this->usuario_id = $usuario_id;
-     }
+          $this->usuario_id = $usuario_id;
+    }
 
 
 
     public function __toString(): string {
         return $this->id . " " .
-               $this->localidad . " " .
-               $this->provincia . " " .
-               $this->cordenadas . " " .
-               $this->usuario_id;
+               $this->usuario_id. " " .
+               $this->direccion. " " .
+               $this->cordenadas ;
        
     }
 

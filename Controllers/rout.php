@@ -19,7 +19,13 @@ class rout{
                 "mantenimiento" => (Control::mantenimiento()),
                 "gusto" => (Control::gusto()),
                 "carta" => (Control::carta()),
-                "listadovacunas" => (Control::listadoVacunas()),
+                "gProducto" => (Control::gProducto()),
+                "gUsuario" => (Control::gUsuario()),
+                "gPedido" => (Control::gPedido()),
+                "gVenta" => (Control::gVenta()),
+                "cerrarSesion" => (Control::cerrarSesion()),
+
+                
                 default => (Control::notFound()) // Controlador de error si no se encuentra el menú
             };
             

@@ -1,0 +1,101 @@
+
+    
+    .kbab:has(.producto-container){
+      display: grid; /* Utilizamos flex para que el contenedor principal esté bien alineado */
+      justify-content: center; /* Centra los productos horizontalmente */
+      align-items: center;
+      
+     
+      padding-top: 0px;
+    }
+  
+    
+    /* Contenedor principal del producto */
+    .producto-container {
+      display: grid; /* Utilizamos flex para que el contenedor principal esté bien alineado */
+      justify-content: center; /* Centra los productos horizontalmente */
+      align-items: center;
+      padding-top: 20px;
+      
+
+
+      
+      
+
+
+
+     
+    }
+    
+    /* Estilo para el producto */
+    .producto {
+      display: grid; /* Usamos Grid para organizar las partes del producto */
+      grid-template-columns: 1fr ; /* La imagen tiene un ancho fijo, el resto ocupa el espacio disponible */
+      border-radius: 10px; /* Bordes redondeados */
+
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 14px;
+      
+      
+      background-position: center; /* Centra la imagen dentro del contenedor */
+      
+    }
+    
+    
+    
+   
+    
+    /* Estilo específico para cada parte */
+    #photo {
+      border-radius: 30px;
+      /* La imagen ocupa 2 filas */
+      grid-column:1/ 2;
+     
+      background-position: center; /* Centra la imagen dentro del contenedor */
+    }
+ 
+    #ingredient {
+      
+      border-radius: 5px;
+      color: white;
+      grid-column:2;
+    }
+    
+    
+    /* Estilo para el precio */
+    #price {
+      
+      font-weight: bold;
+      color:#f39c12;
+    }
+
+     /* Estilo para el precio */
+     #add {
+      background-color: rgba(255, 0, 0, 0.6); /* Fondo rojo para el precio */
+      width:60px;
+      height: 20px;
+      border-radius: 20%;
+      margin: auto;
+      font-weight: bold;
+      align-items: center;
+      color: white;
+    }
+
+    #add:hover{
+
+      background-color: #f39c12; /* Fondo rojo para el precio */
+      
+    }
+
+    #edit {
+      background-color:#f39c12; /* Fondo rojo para el precio */
+      width:60px;
+      height: 20px;
+      border-radius: 20%;
+      margin: auto;
+      font-weight: bold;
+      align-items: center;
+      color: white;
+    }

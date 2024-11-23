@@ -1,21 +1,50 @@
 <?php
 namespace Helper;
-Use Helper\sesion;
+
+use Helper\Sesion;
+
+
 
 class Login
 {
     public static function Identifica(string $usuario,string $contrasena,bool $recuerdame)
     {
+
+        
+
+
+
+
+
+
+        
         
     }
 
-    private static function ExisteUsuario(string $usuario,string $contrasena=null)
+    /** 
+     * 
+     * @param Usuario $usuario 
+     * @param string $contrasena 
+     * @return bool
+     */
+    public static function existeUsuario($usuario,string $contrasena=null)
     {
+        //
+        $passUser = $usuario['password'];
+
+        if ($passUser == $contrasena){
+
+            return true;
+        }
         
     }
+
+
+
 
     public static function UsuarioEstaLogueado()
     {
+
         
     }
 
@@ -23,25 +52,27 @@ class Login
 
 
 
-    function login($nombre){ //Solo para USERRR
+    public static function login($usuario){ //Solo para USERRR
 
-        //iniciaSesion();
-        $_SESSION['user']=$nombre;
+        Sesion::iniciaSesion();
+        unset($usuario['password']);
+        $_SESSION['user']=$usuario;
+       
 
     }
 
 
-    function logout(){
+   public static function logout(){
 
         
-        //$_SESSION['USER']="";
+        $_SESSION['user']="";
         session_unset(); 
-        // finalizaSesion();
+        Sesion::finalizaSesion();
 
     }
 
 
-    function estaLogeado() {
+    public static function leerUsuario(){
         return isset($_SESSION['user']);
     }
 
@@ -49,6 +80,5 @@ class Login
 
 
 
-    //1.Iniciar sesion
-    //2. Si esta logeado?
+   
 }
