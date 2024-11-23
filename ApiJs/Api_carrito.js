@@ -6,40 +6,83 @@ function anadirCarrito(kebab) {
     // Verifica si el kebab ya está en el carrito
     const carrito = document.getElementById("carrito");
 
-    // Aquí puedes usar un ID o alguna propiedad única del kebab para verificar si ya existe
-    if (!carrito.querySelector(`#kebab-${kebab.id}`)) {
-        const kebabDiv = document.createElement('div');
+    // Busca el kebab en el carrito usando su ID
+    let kebabDiv = carrito.querySelector(`#kebab-${kebab.id}`);
+
+    if (!kebabDiv) {
+        // Si no existe, crea un nuevo elemento en el carrito
+        kebabDiv = document.createElement('div');
         kebabDiv.classList.add('kebab-en-carrito');
         kebabDiv.id = `kebab-${kebab.id}`; // ID único para cada kebab
-        kebabDiv.textContent = `${kebab.nombre} - ${kebab.precio}€`;
+
+        // Incluye el nombre, precio y un contador inicial
+        kebabDiv.innerHTML = `
+            
+            <span>${kebab.nombre}</span> - 
+            <span>${kebab.precio}€</span>
+            <span class="cantidad">(x1)</span>
+        `;
 
         // Añadir el div al carrito
         carrito.appendChild(kebabDiv);
+
+        console.log(`Añadido: ${kebab.nombre}`);
     } else {
-        console.log("Este kebab ya está en el carrito");
+
+
+        // Si ya existe, incrementa la cantidad
+        const cantidadSpan = kebabDiv.querySelector('.cantidad');
+        const cantidadActual = parseInt(cantidadSpan.textContent.replace(/\D/g, '')) || 1; // Extraer el número
+        cantidadSpan.textContent = `(x${cantidadActual + 1})`;
+        console.log(`Incrementada cantidad de: ${kebab.nombre}`);
     }
+
+
+
+    // Actualizar el contador total de items en el carrito
+    const count = document.getElementsByClassName("carrito-count")[0];
+    count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
 }
 
 
-function rellenarCarrito() {
-    const carrito = document.getElementById("carrito");
-    const modalCarrito = document.getElementById("modal-carrito");
-    
-    // Limpia el modal antes de añadir los kebabs
-    modalCarrito.innerHTML = "<h2>Tu carrito</h2>"; // Añadimos un título al modal
 
-    // Copiamos los kebabs del carrito a modal-carrito
+function rellenarCarrito() {
+    // Obtiene el carrito y el contenedor del modal
+    const carrito = document.getElementById("carrito");
+
+    const modalCarritoContainer = document.getElementsByClassName("carrito-container")[0];
+
+    if (!modalCarritoContainer) {
+        console.log("No se encontró el contenedor del modal del carrito.");
+        return;
+    }
+
+    // Limpia el contenido del modal para evitar duplicados
+    modalCarritoContainer.innerHTML = '';
+
+   
+
+    // Copia los kebabs del carrito al modal
     const kebabsEnCarrito = carrito.children; // Obtiene los elementos en el carrito
 
-    Array.from(kebabsEnCarrito).forEach(kebabDiv => {
+    Array.from(kebabsEnCarrito).forEach(kebab => {
         const modalKebabDiv = document.createElement('div');
-        modalKebabDiv.classList.add('kebab-en-modal');
-        modalKebabDiv.textContent = kebabDiv.textContent; // Copia el contenido del kebab
+        modalKebabDiv.classList.add('modal-kebab-item');
+        modalKebabDiv.textContent = kebab.textContent; // Copia el contenido textual del kebab
 
-        // Añadir el div del kebab al modal
-        modalCarrito.appendChild(modalKebabDiv);
+        // Agrega el kebab al modal
+        modalCarritoContainer.appendChild(modalKebabDiv);
     });
 
-    // Mostrar el modal
-    modalCarrito.style.display = "block";
+    console.log("Carrito rellenado en el modal.");
+}
+
+
+function vaciarCarrito() {
+    // Vacia el carrito
+
+    const carrito = document.getElementById("carrito");
+    carrito.removeChield()
+
+
 }

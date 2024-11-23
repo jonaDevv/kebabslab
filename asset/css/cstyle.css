@@ -31,6 +31,9 @@
      /* Toma toda la altura del contenedor */
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
     background-color: #24245c;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
     
     
 }

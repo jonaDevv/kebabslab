@@ -34,7 +34,7 @@
   
 </header> -->
 
-<div id="head">
+
         <?php
           
           use Controllers\routHead;
@@ -42,7 +42,7 @@
         ?>
         
 
-        </div>
+      
 
 <?php $this->stop('header')?>
 

@@ -83,6 +83,12 @@
       color: white;
     }
 
+    #add:hover{
+
+      background-color: #f39c12; /* Fondo rojo para el precio */
+      
+    }
+
     #edit {
       background-color:#f39c12; /* Fondo rojo para el precio */
       width:60px;

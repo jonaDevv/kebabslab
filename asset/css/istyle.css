@@ -3,6 +3,8 @@
   font-family: Jetbrains Mono;
 }
 
+
+
 body{
 
     display: grid;
@@ -12,10 +14,11 @@ body{
     width: 100%;
     margin: 0;
     cursor: url('/asset/img/favicon1.png'), auto;
-    
-    
       
 }
+
+
+
 
 /* Estilos de footer */
 footer {
@@ -180,17 +183,26 @@ header {
   bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
   top: 50%;            /* Centrado verticalmente respecto al contenedor */
   transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
-  
-  
-
   width: 40px;
   height: 40px;
-
-
-  
  
 }
 
+/* Indicador de cantidad en el carrito */
+.carrito-count {
+  position: absolute; 
+  right: 68px;          /* Alineado con el borde derecho del ícono */
+  top: 20px;            /* Ajustado verticalmente */
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  color: white;          /* Texto blanco */
+  text-align: center;
+  line-height: 20px;     /* Centrar el texto verticalmente */
+  border-radius: 50%;    /* Forma circular */
+  font-size: 12px;
+}
 
 
 
@@ -212,7 +224,7 @@ header {
         /* Se ajusta 10px desde el borde derecho del contenedor */
            /* Centrado verticalmente respecto al contenedor */
 
-           width:100%;
+ width:100%;
   
  
   
@@ -251,6 +263,13 @@ header {
   cursor: pointer;
   white-space: nowrap; /* Impide saltos de línea */
   font-weight: bold;
+}
+
+
+#carrito{
+
+
+  display:none;
 }
 
 

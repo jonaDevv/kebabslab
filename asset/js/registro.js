@@ -2,7 +2,7 @@ window.addEventListener('load', function() {
 
         
         var registroForm = document.getElementById("registroForm");
-
+    if(registroForm){
         registroForm.addEventListener("submit", function(event) {
             event.preventDefault(); // Evitar el envío inmediato del formulario
 
@@ -50,7 +50,7 @@ window.addEventListener('load', function() {
             }
         });
 
-                
+    }            
 
             
 

@@ -1,114 +1,131 @@
 let ingredientesSeleccionados = []; // Array para almacenar los ingredientes seleccionados
 
 function editarKebab(kebab) {
-    // Asigno los datos del kebab a las variables para rellenar la plantilla
-    nombre = document.getElementById('nombre');
-    nombre.innerHTML = `${kebab.nombre.toUpperCase()}`;
+    if (kebab){
+        // Asigno los datos del kebab a las variables para rellenar la plantilla
+        nombre = document.getElementById('nombre');
+        precio = document.getElementById('precio');
+        if(nombre && precio){
+            nombre.innerHTML = `${kebab.nombre.toUpperCase()}`;
+        
+        
 
-    if (descripcion = document.getElementById('descripcion')) {
-        descripcion.innerHTML = kebab.descripcion;
-    }
+            if (descripcion = document.getElementById('descripcion')) {
+                descripcion.innerHTML = kebab.descripcion;
+            }
 
 
-    
-    precio = document.getElementById('precio');
-    precio.innerHTML = kebab.precio + "€";
+        
+            precio.innerHTML = kebab.precio + "€";
+        }
+        // Meto los ingredientes del kebab en un array
+        ingredientes = kebab.ingredientes;
 
-    // Meto los ingredientes del kebab en un array
-    ingredientes = kebab.ingredientes;
+        const ingredientesKebab = document.getElementById('ingrediente');
+        const aingredientes = document.getElementById("aIngrediente");
+        const alerge = document.getElementById('alergenos');
 
-    const ingredientesKebab = document.getElementById('ingrediente');
-    const aingredientes = document.getElementById("aIngrediente");
-    const alerge = document.getElementById('alergenos');
-    alerge.innerHTML = "";
+        if(ingredientesKebab && aingredientes && alerge){
+            alerge.innerHTML = "";
 
-    // Inicializamos el Map para rastrear alérgenos
-    alerge.grupoAlergenos = new Map();
+            // Inicializamos el Map para rastrear alérgenos
+            alerge.grupoAlergenos = new Map();
 
-    ingredientes.forEach(ingrediente => {
-        // Crear un div para el ingrediente
-        const ingredienteKeb = document.createElement('div');
+            ingredientes.forEach(ingrediente => {
+                // Crear un div para el ingrediente
+                const ingredienteKeb = document.createElement('div');
 
-        // Asignar la clase 'ingredientePropio' al div
-        ingredienteKeb.classList.add('ingredientePropio');
+                // Asignar la clase 'ingredientePropio' al div
+                ingredienteKeb.classList.add('ingredientePropio');
 
-        // Asignar el objeto completo como propiedad en el div para futuras referencias
-        ingredienteKeb.ingredienteData = ingrediente;
+                // Asignar el objeto completo como propiedad en el div para futuras referencias
+                ingredienteKeb.ingredienteData = ingrediente;
 
-        // Agregar el nombre del ingrediente al contenido del div
-        ingredienteKeb.textContent = `${ingrediente.nombre}`;
+                // Agregar el nombre del ingrediente al contenido del div
+                ingredienteKeb.textContent = `${ingrediente.nombre}`;
 
-        // Mostrar el ingrediente en el contenedor 'ingredientesKebab'
-        ingredientesKebab.appendChild(ingredienteKeb);
-
-        // Actualizar los alérgenos
-        actualizarAlergenos([ingrediente], alerge, "añadir");
-
-        ingredienteKeb.addEventListener("click", function () {
-            const pareID = ingredienteKeb.parentNode.id;
-
-            if (pareID === "ingrediente") {
-                // Mover el ingrediente del contenedor de "ingredientes" al contenedor de "kebab"
-                ingredientesKebab.removeChild(ingredienteKeb);
-                aingredientes.appendChild(ingredienteKeb);
-
-                // Eliminar el ingrediente del array de ingredientes del kebab
-                kebab.ingredientes = kebab.ingredientes.filter(ing => ing.id !== ingrediente.id);
-
-                // Actualizar los alérgenos
-                actualizarAlergenos([ingrediente], alerge, "eliminar");
-            } else {
-                // Mover el ingrediente del contenedor de "kebab" al contenedor de "ingredientes"
+                // Mostrar el ingrediente en el contenedor 'ingredientesKebab'
                 ingredientesKebab.appendChild(ingredienteKeb);
-
-                // Añadir el ingrediente al array de ingredientes del kebab
-                kebab.ingredientes.push(ingrediente);
 
                 // Actualizar los alérgenos
                 actualizarAlergenos([ingrediente], alerge, "añadir");
-            }
-        });
-    });
 
-    getIngredientes()
-        .then(json => {
-            json.forEach(item => {
-                const ingredienteDiv = document.createElement('div');
+                ingredienteKeb.addEventListener("click", function () {
+                    const pareID = ingredienteKeb.parentNode.id;
 
-                ingredienteDiv.classList.add('listaIngrediente');
-                ingredienteDiv.ingrediente = item;
-                ingredienteDiv.textContent = `${item.nombre} ${item.precio} €`;
-                aingredientes.appendChild(ingredienteDiv);
+                    if (pareID === "ingrediente") {
+                        // Mover el ingrediente del contenedor de "ingredientes" al contenedor de "kebab"
+                        ingredientesKebab.removeChild(ingredienteKeb);
+                        aingredientes.appendChild(ingredienteKeb);
 
-                ingredienteDiv.addEventListener("click", function () {
-                    const parentID = ingredienteDiv.parentNode.id;
+                        // Eliminar el ingrediente del array de ingredientes del kebab
+                        kebab.ingredientes = kebab.ingredientes.filter(ing => ing.id !== ingrediente.id);
 
-                    if (parentID === "aIngrediente") {
-                        // Mover a kebab
-                        aingredientes.removeChild(ingredienteDiv);
-                        ingredientesKebab.appendChild(ingredienteDiv);
-                        kebab.ingredientes.push(item);
-                        ingredientesSeleccionados.push(item);
-
-                        // Actualizar alérgenos
-                        actualizarAlergenos([item], alerge, "añadir");
+                        // Actualizar los alérgenos
+                        actualizarAlergenos([ingrediente], alerge, "eliminar");
                     } else {
-                        // Quitar del kebab
-                        ingredientesKebab.removeChild(ingredienteDiv);
-                        aingredientes.appendChild(ingredienteDiv);
-                        kebab.ingredientes = kebab.ingredientes.filter(ingrediente => ingrediente.id !== item.id);
-                        ingredientesSeleccionados = ingredientesSeleccionados.filter(ing => ing.id !== item.id);
-                        // Actualizar alérgenos
-                        actualizarAlergenos([item], alerge, "eliminar");
-                    }
+                        // Mover el ingrediente del contenedor de "kebab" al contenedor de "ingredientes"
+                        ingredientesKebab.appendChild(ingredienteKeb);
 
-                    // Actualizar precio total
-                    precio.innerHTML = cobrarATuGusto(ingredientesSeleccionados, kebab.precio, kebab.nombre) + " €";
+                        // Añadir el ingrediente al array de ingredientes del kebab
+                        kebab.ingredientes.push(ingrediente);
+
+                        // Actualizar los alérgenos
+                        actualizarAlergenos([ingrediente], alerge, "añadir");
+                    }
                 });
             });
-        })
-        .catch(error => console.log(error));
+        }
 
+        getIngredientes()
+            .then(json => {
+                json.forEach(item => {
+
+                        const ingredienteDiv = document.createElement('div');
+
+                        if(ingredienteDiv){
+
+                            ingredienteDiv.classList.add('listaIngrediente');
+                            ingredienteDiv.ingrediente = item;
+                            ingredienteDiv.textContent = `${item.nombre} ${item.precio} €`;
+
+                            if(aingredientes){
+                                aingredientes.appendChild(ingredienteDiv);
+                            }
+                            ingredienteDiv.addEventListener("click", function () {
+                                const parentID = ingredienteDiv.parentNode.id;
+
+                                if (parentID === "aIngrediente") {
+                                    // Mover a kebab
+                                    aingredientes.removeChild(ingredienteDiv);
+                                    ingredientesKebab.appendChild(ingredienteDiv);
+                                    kebab.ingredientes.push(item);
+                                    ingredientesSeleccionados.push(item);
+
+                                    // Actualizar alérgenos
+                                    actualizarAlergenos([item], alerge, "añadir");
+                                } else {
+                                    // Quitar del kebab
+                                    ingredientesKebab.removeChild(ingredienteDiv);
+                                    aingredientes.appendChild(ingredienteDiv);
+                                    kebab.ingredientes = kebab.ingredientes.filter(ingrediente => ingrediente.id !== item.id);
+                                    ingredientesSeleccionados = ingredientesSeleccionados.filter(ing => ing.id !== item.id);
+                                    // Actualizar alérgenos
+                                    actualizarAlergenos([item], alerge, "eliminar");
+                                }
+
+                                // Actualizar precio total
+                                        precio.innerHTML = cobrarATuGusto(ingredientesSeleccionados, kebab.precio, kebab.nombre) + " €";
+                            });
+                         }
+                });
+                
+            })
+            .catch(error => console.log(error));
+
+
+
+    }   
     return kebab;
 }
 

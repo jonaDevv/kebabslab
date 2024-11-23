@@ -20,7 +20,7 @@ window.addEventListener("load", function() {
                 // Agregar nombre y precio del kebab al contenido del div
                 kebabDiv.style.backgroundImage = `url(/asset/img/pngwing.com.png)`;
             
-            kebabDiv.textContent = `${item.nombre.toUpperCase()}`;
+                kebabDiv.textContent = `${item.nombre.toUpperCase()}`;
 
             
             
@@ -76,25 +76,22 @@ window.addEventListener("load", function() {
                             ingr = document.getElementById('ingredient');
                             ingredientes.forEach(ingrediente => ingr.innerHTML +="<br>"+ ingrediente.nombre );
                             
-                            
-                            
+                                            
                             
                         
-                            
-                            
-                            
-                            const pedirBtn = document.getElementById("add");
-                            if (pedirBtn) {
-                                pedirBtn.addEventListener("click", function() {
+                                      
+                            const addBtn = document.getElementById("add");
+                            if (addBtn) {
+                                addBtn.addEventListener("click", function() {
 
-                                    const carrito = document.getElementById("carrito");
-                                    carrito.style.display="none";
-                                    carrito.innerHTML += item;
+
+                                   
+                                    carro= document.getElementById("carrito");
+                                    anadirCarrito(item);
+                                   
+                                    console.log(carro)
                                     
-                                    const count = document.getElementsByClassName("carrito-count")[0];
-
-                                    // Convierte count.innerHTML a número y suma 1
-                                    count.innerHTML = (parseInt(count.innerHTML) || 0) + 1;
+                                    
 
                                     
                                 });
@@ -113,16 +110,17 @@ window.addEventListener("load", function() {
 
 
                                                                     // Verificar si ya existe el modal y el overlay
-                                        let overlay = document.querySelector(".kebab-overlay");
+                                        let overlayKeb = document.querySelector(".kebab-overlay");
                                         let contenedor = document.querySelector("#CModal");
 
-                                        if (!overlay) {
+                                        if (!overlayKeb) {
                                             // Crear el fondo oscuro detrás del modal si no existe
-                                            overlay = document.createElement("div");
-                                            overlay.setAttribute("class", "kebab-overlay");
-                                            document.body.appendChild(overlay);
+                                            overlayKeb = document.createElement("div");
+                                            overlayKeb.setAttribute("class", "kebab-overlay");
+                                            document.body.appendChild(overlayKeb);
+
                                         } else {
-                                            overlay.style.display = "block"; // Mostrar si ya existe
+                                            overlayKeb.style.display = "block"; // Mostrar si ya existe
                                         }
 
                                         
@@ -150,20 +148,21 @@ window.addEventListener("load", function() {
                                                     if (closeBtn) {
                                                         closeBtn.addEventListener("click", function () {
                                                             contenedor.style.display = "none";
-                                                            overlay.style.display = "none";
+                                                            overlayKeb.style.display = "none";
                                                             window.location.reload();
                                                             
                                                         });
                                                     }
 
-                                                    carro.
+                                                    
                                                     if (pideBtn) {
 
                                                         pideBtn.addEventListener("click", function () {
-                                                        alert("pedir");
-
+                                                            
+                                                            
+                                                            alert("pedir");
                                                             contenedor.style.display = "none";
-                                                            overlay.style.display = "none";
+                                                            overlayKeb.style.display = "none";
                                                             anadirCarrito(kebabDiv.kebab);
                                                             
 
@@ -218,16 +217,17 @@ window.addEventListener("load", function() {
                 });
                 
 
-                })
+            })
                     
 
                 
                 
+        }).catch(error => {
+            console.error('Hubo un error con la solicitud fetch:', error);
         });
+    
 
 
 
-    })
-    .catch(error => {
-        console.error('Hubo un error con la solicitud fetch:', error);
-    });
+})
+    
