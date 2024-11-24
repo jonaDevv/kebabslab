@@ -2,20 +2,40 @@ window.addEventListener('load', function () {
     
     
     
-    // Función para mostrar la imagen seleccionada desde la galería
- document.getElementById('inputGaleria').addEventListener('change', function(event) {
-    const archivo = event.target.files[0];
-    if (archivo) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('fotoPerfilImg').src = e.target.result;
-        };
-        reader.readAsDataURL(archivo);
+        // Función para mostrar la imagen seleccionada desde la galería
+    document.getElementById('inputGaleria').addEventListener('change', function(event) {
+        const archivo = event.target.files[0];
+        if (archivo) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('fotoPerfilImg').src = e.target.result;
+            };
+            reader.readAsDataURL(archivo);
+        }
+    });
+
+    checkSession()
+    .then(json => {
+        // No es necesario hacer JSON.parse si json.user ya es un objeto
+        const User = json; // User ya es un objeto
+
+        console.log(User);
+        mostrarPerfil(User);
+
+        
+        editarbtn=document.getElementById('editarPerfil');
+    if(editarbtn){
+        editarbtn.addEventListener('click',function(){
+            editarFicha(User);
+        })
     }
-});
+    })
+    .catch(error => {
+        console.error('Hubo un error con la solicitud fetch:', error);
+    });
+
 
     
-
 
 
 

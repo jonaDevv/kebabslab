@@ -21,48 +21,49 @@ if (Sesion::existeClave('user')) {
     echo json_encode(['status' => 'error', 'message' => 'No session found']);
 }
 
-if ($method === 'POST') {
 
-    // Recibir el JSON desde JavaScript
-    $rawData = file_get_contents("php://input");
-    $carrito = json_decode($rawData, true); // Convertir JSON a un array asociativo
+// if ($method === 'POST') {
 
-    if (json_last_error() === JSON_ERROR_NONE) {
-        // Asegúrate de que exista la clave 'user' en la sesión
-        if (!isset($_SESSION['user'])) {
-            $_SESSION['user'] = [];
-        }
-        // Guarda el carrito en $_SESSION['user']['carrito']
-        $_SESSION['user']['carrito'] = $carrito;
+//     // Recibir el JSON desde JavaScript
+//     $rawData = file_get_contents("php://input");
+//     $carrito = json_decode($rawData, true); // Convertir JSON a un array asociativo
 
-        echo "Carrito almacenado exitosamente.";
-    } else {
-        echo "Error al decodificar JSON.";
-    }
+//     if (json_last_error() === JSON_ERROR_NONE) {
+//         // Asegúrate de que exista la clave 'user' en la sesión
+//         if (!isset($_SESSION['user'])) {
+//             $_SESSION['user'] = [];
+//         }
+//         // Guarda el carrito en $_SESSION['user']['carrito']
+//         $_SESSION['user']['carrito'] = $carrito;
+
+//         echo "Carrito almacenado exitosamente.";
+//     } else {
+//         echo "Error al decodificar JSON.";
+//     }
 
     
-}
+// }
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Comprueba si hay un usuario en la sesión
-    if (isset($_SESSION['user'])) {
-        // Comprueba si el carrito está guardado en la sesión
-        if (isset($_SESSION['user']['carrito'])) {
-            // Si el carrito existe, devolverlo en formato JSON
-            echo json_encode(['status' => 'success', 'carrito' => $_SESSION['user']['carrito']]);
-        } else {
-            // Si no hay carrito, devolver un carrito vacío
-            echo json_encode(['status' => 'success', 'carrito' => []]);
-        }
-    } else {
-        // Si no hay un usuario en la sesión, devolver un error
-        echo json_encode(['status' => 'error', 'message' => 'No user session found']);
-    }
-} else {
-    // Si la solicitud no es GET, devolver un error de método no permitido
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
-}
+// if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+//     // Comprueba si hay un usuario en la sesión
+//     if (isset($_SESSION['user'])) {
+//         // Comprueba si el carrito está guardado en la sesión
+//         if (isset($_SESSION['user']['carrito'])) {
+//             // Si el carrito existe, devolverlo en formato JSON
+//             echo json_encode(['status' => 'success', 'carrito' => $_SESSION['user']['carrito']]);
+//         } else {
+//             // Si no hay carrito, devolver un carrito vacío
+//             echo json_encode(['status' => 'success', 'carrito' => []]);
+//         }
+//     } else {
+//         // Si no hay un usuario en la sesión, devolver un error
+//         echo json_encode(['status' => 'error', 'message' => 'No user session found']);
+//     }
+// } else {
+//     // Si la solicitud no es GET, devolver un error de método no permitido
+//     echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+// }
 
 
 ?>

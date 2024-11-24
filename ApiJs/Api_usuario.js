@@ -1,44 +1,16 @@
 
 
-function checkSession() {
-    fetch('/Api/Api_sesion.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Respuesta procesada del servidor:', data);  // Añadir este log
-            
-            if (data.status === 'success' && data.user) {
-                console.log('Sesión activa', data.user);
-                cargarPerfil(data.user.id);
-            } else {
-                console.log('No hay sesión activa:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error al verificar la sesión:', error);
-        });
+async function checkSession() {
+
+    const response = await fetch('/Api/Api_sesion.php');
+    
+      const sesion = await response.json();
+    
+    
+      return sesion.user;
 }
 
 
-
-
-async function cargarPerfil(id) {
-    const response = await fetch('/Api/Api_usuario.php?id=' + id, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-
-    const usuario = await response.json();
-
-    console.log('Usuario cargado:', usuario); // Agrega este log para ver qué datos devuelve la API
-    return usuario;
-}
 
 
 function mostrarPerfil(perfil) {
@@ -46,21 +18,62 @@ function mostrarPerfil(perfil) {
     const nombre = document.getElementById('nombrePerfil');
     const correo = document.getElementById('correoPerfil');
     const fotoPerfil = document.getElementById('fotoPerfil');
+    const direcciones = document.getElementById('direccionPerfil');
+    const monedero = document.getElementsByClassName('saldoPerfil')[0];
 
     // Asignamos los valores obtenidos del perfil a los elementos del DOM
     if (nombre) {
-        nombre.value = perfil.nombre || '';
+        nombre. innerHTML = perfil.nombre || '';
     }
 
     if (correo) {
-        correo.value = perfil.correo || '';
+        correo.innerHTML = perfil.correo || '';
     }
 
     if (fotoPerfil) {
         fotoPerfil.src = perfil.foto || 'default-foto.jpg'; // Si no tiene foto, se carga una predeterminada
     }
 
+    if (direcciones) {
+        direcciones.value = perfil.direcciones || '';
+    }
+
+    if (monedero) {
+        monedero.innerHTML+= " "+perfil.monedero + "€" || '';
+    }
+
     // Si deseas agregar más campos, como direcciones o pedidos, puedes hacerlo aquí
     // ejemplo: mostrar direcciones, pedidos, etc.
 }
 
+
+function recargarMonedero(){
+  
+}
+
+function agregarDireccion(){
+  
+}
+
+function editarFicha(perfil) {
+    let nombre = document.getElementById('nombrePerfil');
+    let correo = document.getElementById('correoPerfil');
+    let editarbtn = document.getElementById('editarPerfil');
+    let guardarbtn = document.createElement('button');
+    editarbtn.parentNode.appendChild(guardarbtn);
+    guardarbtn.textContent = 'Guardar';
+    guardarbtn.addEventListener('click', function () {
+        let nombreInput = document.getElementById('nombreInput');
+        let correoInput = document.getElementById('correoInput');
+        perfil.nombre = nombreInput.value;
+        perfil.correo = correoInput.value;
+        console.log(perfil);
+        mostrarPerfil(perfil);
+    });
+    
+    if (nombre && correo) {
+        // Convertir el nombre y el correo en campos de texto
+        nombre.innerHTML = `<input type="text" id="nombreInput" value="${perfil.nombre.toUpperCase()}" />`;
+        correo.innerHTML = `<input type="text" id="correoInput" value="${perfil.correo}" />`;
+    }
+}
