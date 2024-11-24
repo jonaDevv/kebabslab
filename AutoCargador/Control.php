@@ -46,6 +46,9 @@ class Control {
         exit();
     }
 
+    public static function perfiluser() {
+        require_once './Vistas/principal/perfilUser.html';
+    }
     // En "controllers/MantenimientoController.php"
     public static function mantenimiento() {
         require_once './Vistas/mantenimiento/mantenimiento.php';

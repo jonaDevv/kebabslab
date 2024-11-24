@@ -1,0 +1,129 @@
+/* Establecemos un fondo general y espaciado */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(36, 36, 92, 0.9);
+}
+
+/* Contenedor principal que tiene el grid */
+#cont-Perfil-User {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Tres columnas iguales */
+    gap: 20px; /* Espacio entre las columnas */
+    padding: 20px;
+    max-width: 90vw;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+/* Estilos para cada sección (perfil, monedero, direcciones, pedidos) */
+.ficha, .monederoPerfil, .direccionesPerfil, .pedidosPerfil {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Columna de monedero ocupando la tercera columna */
+.monederoPerfil {
+    grid-column: 3; /* Imagen ocupa las dos columnas */
+    grid-row: 2;
+}
+
+
+/* Usamos querySelector para aplicar estilos específicos dentro de cada sección */
+.ficha label, .monederoPerfil label, .direccionesPerfil label, .pedidosPerfil label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+.ficha input, .monederoPerfil input, .direccionesPerfil input, .pedidosPerfil input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    justify-content: center;
+}
+
+.ficha button, .monederoPerfil button, .direccionesPerfil button, .pedidosPerfil button {
+    width: 30%;
+    padding: 10px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.ficha button:hover, .monederoPerfil button:hover, .direccionesPerfil button:hover, .pedidosPerfil button:hover {
+    background-color: #e67e22; /* Color ligeramente más oscuro al hacer hover */
+}
+
+/* Espaciado y alineación para secciones específicas */
+.ficha .fotoPerfil {
+    background-color: #ddd;
+    height: 250px;
+    width: 250px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.monederoPerfil .saldoPerfil {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.direccionesPerfil .direccionPerfil {
+    margin-bottom: 15px;
+}
+
+
+/* Estilo para hacer que el contenido se vea bien en pantallas pequeñas */
+@media (max-width: 768px) {
+    #cont-Perfil-User {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+        gap: 10px; /* Reduce el espacio entre columnas en pantallas pequeñas */
+    }
+
+    .monederoPerfil {
+        grid-column: span 1; /* Ajusta la columna del monedero a una sola columna en pantallas pequeñas */
+        grid-row: 3; /* Reubica el monedero a la última fila */
+    }
+
+    .ficha, .monederoPerfil, .direccionesPerfil, .pedidosPerfil {
+        padding: 15px; /* Reduce el espaciado interno en pantallas pequeñas */
+    }
+
+    .ficha input, .monederoPerfil input, .direccionesPerfil input, .pedidosPerfil input {
+        font-size: 16px; /* Aumenta ligeramente el tamaño de fuente en pantallas pequeñas para mejor visibilidad */
+    }
+
+    .ficha button, .monederoPerfil button, .direccionesPerfil button, .pedidosPerfil button {
+        width: 100%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
+        font-size: 16px; /* Ajusta el tamaño de la fuente del botón */
+    }
+}
+
+/* En pantallas aún más pequeñas, como teléfonos en orientación vertical */
+@media (max-width: 480px) {
+    .ficha .fotoPerfil {
+        height: 200px; /* Ajusta el tamaño de la foto de perfil en pantallas muy pequeñas */
+    }
+
+    .ficha input, .monederoPerfil input, .direccionesPerfil input, .pedidosPerfil input {
+        font-size: 14px; /* Asegura que los campos de entrada no se vean demasiado grandes */
+    }
+
+    .ficha button, .monederoPerfil button, .direccionesPerfil button, .pedidosPerfil button {
+        width: 100%; /* Los botones ocupan el 100% del ancho en dispositivos muy pequeños */
+    }
+}

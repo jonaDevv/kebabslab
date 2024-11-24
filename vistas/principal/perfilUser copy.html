@@ -10,27 +10,18 @@
     
     <div id="cont-Perfil-User">
         <div class="ficha">
-            <!-- Aquí hemos modificado la div fotoPerfil para que sea un contenedor de imagen -->
-            <div class="fotoPerfil">
-                <img id="fotoPerfilImg" src="" alt="Foto de Perfil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-            </div>
-
-            <!-- Botones para subir o tomar una foto -->
-            <input type="file" id="inputGaleria" accept="image/*" style="display: none;">
-            <button id="btnGaleria" onclick="document.getElementById('inputGaleria').click();">Seleccionar</button>
-            <button id="btnCamara" onclick="activarCamara();">Tomar Foto</button>
-
+            <div class="fotoPerfil"></div>
             <div class="nombrePerfil">
                 <label>Nombre:</label>
-                <input id="nombrePerfil" name="nombre" value="">
+                <input  id="nombrePerfil" name="nombre" value="">
             </div>
             <div class="passPerfil">
                 <label>Contraseña:</label>
-                <input id="passPerfil" name="contraseña" value="">
+                <input  id="passPerfil" name="contraseña" value="">
             </div>
             <div class="correoPerfil">
                 <label>Correo:</label>
-                <input id="correoPerfil" name="correo" value="">
+                <input  id="correoPerfil" name="correo" value="">
             </div>
             <button id="agregar">Editar Perfil</button>
         </div>
@@ -44,7 +35,7 @@
         <div class="direccionesPerfil">
             <label>Direcciones:</label>
             <div class="direccionPerfil">
-                <input id="direccionPerfil" name="direccion" value="">
+                <input  id="direccionPerfil" name="direccion" value="">
             </div>
             <button id="agregar">Nueva Dirección</button>
         </div>
@@ -52,11 +43,10 @@
         <div class="pedidosPerfil">
             <label>Listado de Pedidos:</label>
             <div class="pedidoPuser">
-                <input id="pedidoPuser" name="pedido" value="">
+                <input  id="pedidoPuser" name="pedido" value="">
             </div>
         </div>
     </div>
-
     
 </body>
 </html>

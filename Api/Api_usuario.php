@@ -23,6 +23,7 @@ switch ($method) {
             } else {
                 echo json_encode(["success" => false, "message" => "Usuario no encontrado"]);
             }
+            
         } else {
             // Obtener todos los usuarios
             $usuarios = repoUsuario::getAll(); // Método para obtener todos los usuarios

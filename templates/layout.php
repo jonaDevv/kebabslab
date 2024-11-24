@@ -20,9 +20,11 @@ Sesion::iniciaSesion();
     <script src="/asset/js/rellenarEdicionKebab.js"></script> 
     <script src="/asset/js/carta.js"></script>
     <script src="/asset/js/herramientas/validation.js"></script>
+    <script src="/asset/js/perfilUsuario.js" defer></script>
     <script src="/asset/js/registro.js"></script>
     <script src="/ApiJs/Api_carrito.js" defer></script>
     <script src="/ApiJs/Api_usuario.js" defer></script>
+    
 
     
     
@@ -36,6 +38,7 @@ Sesion::iniciaSesion();
     <link rel="stylesheet" href="../asset/css/menuGestion.css">
     <link rel="stylesheet" href="../asset/css/usuarioLogeado.css">
     <link rel="stylesheet" href="../asset/css/kebabGusto.css">
+    <link rel="stylesheet" href="../asset/css/perfilUsuario.css">
     
 
 

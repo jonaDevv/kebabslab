@@ -13,13 +13,43 @@
 
     position: absolute;
     top: 70px; /* Ajusta la distancia desde la parte superior de la página */
-    right: 100px; /* Lo coloca en el extremo derecho */
+    right: 85px; /* Lo coloca en el extremo derecho */
     color: white;
   
     padding-right: 20px; /* Añade un poco de espacio a la derecha */
-    font-size:14px;
+    font-size:12px;
 }
 
 .cerrarsesion:hover{
     color: #f39c12;
+    
+}
+
+
+#icono-perfil {
+    position: absolute;
+    top: 30px; /* Ajusta la distancia desde la parte superior de la página */
+    right: 250px; /* Lo coloca en el extremo derecho */
+    color: white;
+    background-image: url("/asset/imgUser/Estoicor.webp");
+    padding-right: 20px; /* Añade un poco de espacio a la derecha */
+    font-size:14px;
+    border-radius: 15%;
+    border :1px solid #f39c12;
+   
+ 
+    background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    width: 50px; /* Asegúrate de que el contenedor tenga un tamaño */
+    height: 60px; 
+}
+
+#icono-perfil:hover{
+    cursor: pointer;
+    width: 65px;
+    height: 75px;
+    
+
+
 }
