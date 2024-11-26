@@ -26,14 +26,13 @@
         
             try {
                 // Preparar la sentencia SQL para insertar un nuevo usuario
-                $stmt = $conn->prepare("INSERT INTO pedido (usuario_id, fecha_hora, estado, precio_total,  direccion) 
-                                        VALUES (:usuario_id, :fecha_hora,:estado, :precio_total,  :direccion)");
+                $stmt = $conn->prepare("INSERT INTO pedido (usuario_id, estado, precio_total,  direccion) 
+                                        VALUES (:usuario_id,:estado, :precio_total,  :direccion)");
                                        
                 
                 // Ejecutar la sentencia, asignando valores de las propiedades del objeto pedido
                 $resultado = $stmt->execute([
                     'usuario_id' => $pedido->getUsuario_id(),
-                    'fecha_hora' => $pedido->getFecha_hora(),
                     'estado' => $pedido->getEstado(),
                     'precio_total' => $pedido->getPrecio_total(),
                     'direccion' => $pedido->getDireccion()
@@ -110,7 +109,7 @@
             
             try {
                 
-                $stmt = $conn->prepare("SELECT * FROM pedido WHERE id=:id");
+                $stmt = $conn->prepare("SELECT * FROM pedido WHERE id=:id ");
                 $stmt->execute(['id' => $id]);
                 
                 // Verificar qué registros se están obteniendo
@@ -335,7 +334,7 @@
                 
             try {  
                 // Preparar la consulta
-                $sql = "SELECT * FROM pedido"; 
+                $sql = "SELECT * FROM pedido ORDER BY fecha_hora ASC"; 
                 $stmt = $conn->prepare($sql);
         
                 // Ejecutar la consulta
@@ -357,7 +356,95 @@
                         
                     );
                     
-                    $stmtlineaPedido = $conn->prepare("SELECT * FROM linea_pedido WHERE pedido_id=:pedido_id");
+                    $stmtlineaPedido = $conn->prepare("SELECT * FROM linea_pedido WHERE pedido_id=:pedido_id ");
+                    $stmtlineaPedido->execute(['pedido_id' => $row->id]);
+
+                    $lineaPedidoArray = [];
+
+
+                    
+                        
+                    while ($row = $stmtlineaPedido->fetch(PDO::FETCH_OBJ)) {
+                    
+                        // Decodificar el campo kebabs (JSON en formato cadena)
+                        $kebabs = json_decode($row->kebabs, true); // Decodificar el JSON de kebabs
+                        
+                        // Verificar si la decodificación fue exitosa
+                        if ($kebabs === null) {
+                            throw new Exception('Error al decodificar el campo kebabs');
+                        }
+    
+                        // Crear el objeto LineaPedido
+                        $lineaPedido = new LineaPedido($row->id, $row->pedido_id, $row->cantidad, $kebabs, $row->precio);
+                        
+                        // Agregar la línea de pedido a la respuesta
+                        $lineaPedidoArray[] = $lineaPedido->toJson(); 
+                    }
+                    
+                    
+                        
+                        // Asignar el array de ingredientes al kebab
+                    if (count($lineaPedidoArray) > 0) {
+                        
+                        $pedido->setLineasPedido($lineaPedidoArray); 
+                        
+                    }
+                    
+                    // Convertir el objeto a un array y añadirlo a la lista de usuarios
+                    $pedidosArray[] = $pedido->toJson(); // Asegúrate de que el método toArray() esté definido
+                
+                    
+                }
+
+                 // Establecer la cabecera de tipo de contenido
+                 header("Content-Type: application/json");
+                 // Codificar el array de usuarios a JSON y devolverlo
+                 echo json_encode($pedidosArray);
+                //var_dump($pedidosArray);
+                 exit; // Terminar el script después de enviar la respuesta
+
+                 
+            } catch (PDOException $e) {
+                // Manejo de errores y respuesta de estado HTTP en caso de error
+                header('HTTP/1.1 500 Error en la base de datos');
+                echo json_encode(["error" => $e->getMessage()]);
+            }
+            
+        }
+
+
+
+        public static function getAllId($id)
+        {
+                // Obtener la conexión a la base de datos
+                $conn = BdConnection::getConnection();
+            
+                
+            try {  
+                // Preparar la consulta
+                $sql = "SELECT * FROM pedido WHERE usuario_id=:usuario_id ORDER BY fecha_hora ASC"; 
+                $stmt = $conn->prepare($sql);
+        
+                // Ejecutar la consulta
+                $stmt->execute(['usuario_id' => $id->id]);
+        
+                $pedidosArray = []; // Array para almacenar los usuarios
+               
+                while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                    
+                    $fecha = date_create($row->fecha_hora);
+                    $pedido = new Pedido(
+                        $row->id, 
+                        $row->usuario_id, 
+                        $fecha,
+                        $row->estado, 
+                        $row->precio_total,
+                        $row->direccion, 
+                        $row->coordenada 
+                        
+                    );
+                    
+                    $stmtlineaPedido = $conn->prepare("SELECT * FROM linea_pedido WHERE pedido_id=:pedido_id ");
                     $stmtlineaPedido->execute(['pedido_id' => $row->id]);
 
                     $lineaPedidoArray = [];

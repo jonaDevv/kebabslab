@@ -1,9 +1,18 @@
 /* Establecemos un fondo general y espaciado */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Jetbrains Mono;
     margin: 0;
     padding: 0;
     background-color: rgba(36, 36, 92, 0.9);
+}
+
+.direccion-item{
+
+    margin-bottom: 10px;
+    border: solid 1px #ccc;
+    background-color:  rgba(36, 36, 92, 0.9);
+    padding: 10px;
+    color:white;
 }
 
 /* Contenedor principal que tiene el grid */

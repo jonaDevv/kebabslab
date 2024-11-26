@@ -18,7 +18,7 @@
             <!-- Botones para subir o tomar una foto -->
             <input type="file" id="inputGaleria" accept="image/*" style="display: none;">
             <button id="btnGaleria" onclick="document.getElementById('inputGaleria').click();">Seleccionar</button>
-            <button id="btnCamara" onclick="activarCamara();">Tomar Foto</button>
+            <!-- <button id="btnCamara" onclick="activarCamara();">Tomar Foto</button> -->
 
             <div class="nombrePerfil">
                 <label>Nombre:</label>
@@ -44,7 +44,7 @@
         <div class="direccionesPerfil">
             <label>Direcciones:</label>
             <div class="direccionPerfil">
-                <input id="direccionPerfil" name="direccion" value="">
+                <div id="direccionPerfil"></div>
             </div>
             <button id="agregar">Nueva Dirección</button>
         </div>
@@ -57,6 +57,23 @@
         </div>
     </div>
 
-    
+     <!-- Modal de Añadir Crédito -->
+     <div id="modal-credito" class="modal-credito">
+        <div class="modal-content-credito">
+            <h2>Añadir Crédito</h2>
+            <div class="pago-detalle-credito">
+                <p>Introduce la cantidad que deseas añadir a tu monedero:</p>
+                <input type="number" id="cantidad-credito" placeholder="Cantidad en €" />
+            </div>
+            <div class="acciones-compra-credito">
+                <button class="addCredito">Añadir Crédito</button>
+                <button class="closeaddCredito">Cancelar</button>
+            </div>
+            <div class="credito-final-credito">
+                <p><strong>Crédito actual: </strong><span id="credito-actual-credito"></span>€</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

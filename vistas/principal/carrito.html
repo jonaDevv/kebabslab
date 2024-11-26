@@ -14,12 +14,45 @@
             
         </div>
         <div class="popup" id="popup">
-            <h2>Hello</h2>
-            <p>hola</p>
-            <button class="close-btn" onclick="closePopup()">Ok</button>
+            <div class="finalizar-compra-container">
+                <h2>Finalizar compra</h2>
+                <div class="pago-detalle">
+                    <p><strong>Total a pagar:</strong> <span id="total-pagar">25.50€</span></p>
+                    <p><strong>Tu crédito:</strong> <span id="credito-monedero">50.00€</span></p>
+                </div>
+            
+                <div class="acciones-compra">
+                    <button class="btnf btn-add-credito" onclick="añadirCredito()">Añadir crédito</button>
+                    <button class="btnf btn-tramitar" onclick="tramitarPedido()">Tramitar pedido</button>
+                    <button class="close-btn" onclick="closePopup()">Cerrar</button>
+                </div>
+            
+                <div class="credito-final">
+                    <p><strong>Crédito después de la compra:</strong> <span id="credito-final">24.50€</span></p>
+                </div>
+            </div>
+            
         </div>
         <div class="BtnsCarrito">
             <button type="submit" class="btn" onclick="openPopup()" id="pagarBtn">Pagar</button>
             <button class="btn" id="vaciarBtn">Vaciar Carrito</button>
         </div>
-        
+
+               <!-- Modal de Añadir Crédito -->
+     <div id="modal-credito" class="modal-credito">
+        <div class="modal-content-credito">
+            <h2>Añadir Crédito</h2>
+            <div class="pago-detalle-credito">
+                <p>Introduce la cantidad que deseas añadir a tu monedero:</p>
+                <input type="number" id="cantidad-credito" placeholder="Cantidad en €" />
+            </div>
+            <div class="acciones-compra-credito">
+                <button class="addCredito">Añadir Crédito</button>
+                <button class="closeaddCredito">Cancelar</button>
+            </div>
+            <div class="credito-final-credito">
+                <p><strong>Crédito actual: </strong><span id="credito-actual-credito"></span>€</p>
+            </div>
+        </div>
+    </div>
+                

@@ -18,9 +18,8 @@ switch ($method) {
             $id = $_GET['id'];
             $usuario = repoUsuario::read($id); // Método para obtener un usuario por ID
 
-            if ($usuario) {
-                echo json_encode(["success" => true, "user" => $usuario]);
-            } else {
+            if (!$usuario) {
+               
                 echo json_encode(["success" => false, "message" => "Usuario no encontrado"]);
             }
             
@@ -91,10 +90,10 @@ switch ($method) {
                 // Llamar al método de actualización del repositorio
                 if (repoUsuario::update($id, $user)) {
                     http_response_code(200); // OK
-                    echo json_encode(["success" => true, "message" => "Usuario actualizado correctamente"]);
+                    // echo json_encode(["success" => true, "message" => "Usuario actualizado correctamente"],);
                 } else {
                     http_response_code(404); // Not Found
-                    echo json_encode(["success" => false, "message" => "Error al actualizar el usuario"]);
+                    echo json_encode(["success" => false, "message" => "Error al actualizar el usuario",]);
                 }
             } else {
                 http_response_code(404); // Not Found

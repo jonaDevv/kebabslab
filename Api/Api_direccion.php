@@ -18,11 +18,11 @@ switch ($method) {
         
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             $id = $_GET['id'];
-            $pedido = repoDireccion::read($id); 
+            $direccion = repoDireccion::read($id); 
 
         } else {
             // Obtener todos los kebabs
-            $pedido = repoDireccion::getAll(); 
+            $direccion = repoDireccion::getAll(); 
         }
         break;
 

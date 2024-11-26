@@ -24,6 +24,11 @@ Sesion::iniciaSesion();
     <script src="/asset/js/registro.js"></script>
     <script src="/ApiJs/Api_carrito.js" defer></script>
     <script src="/ApiJs/Api_usuario.js" defer></script>
+    <script src="/ApiJs/Api_pedido.js" ></script>
+    <script src="/asset/js/gpedidos.js"></script>
+    <script src="/asset/js/finalizarCompra.js" ></script>
+    <script src="/asset/js/modalCarrito.js" ></script>
+
     
 
     
@@ -39,7 +44,9 @@ Sesion::iniciaSesion();
     <link rel="stylesheet" href="../asset/css/usuarioLogeado.css">
     <link rel="stylesheet" href="../asset/css/kebabGusto.css">
     <link rel="stylesheet" href="../asset/css/perfilUsuario.css">
-    
+    <link rel="stylesheet" href="../asset/css/gpedidos.css">
+    <link rel="stylesheet" href="../asset/css/finalizarCompra.css">
+    <link rel="stylesheet" href="../asset/css/modalCredito.css">
 
 
     

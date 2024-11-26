@@ -4,6 +4,7 @@ function editarKebab(k) {
     let ingredientesSeleccionados = []; // Array para almacenar los ingredientes seleccionados
     const kebab = structuredClone(k);
 
+   
     if (kebab){
         // Asigno los datos del kebab a las variables para rellenar la plantilla
         nombre = document.getElementById('nombre');
@@ -46,6 +47,7 @@ function editarKebab(k) {
 
                 // Agregar el nombre del ingrediente al contenido del div
                 ingredienteKeb.textContent = `${ingrediente.nombre}`;
+                
 
                 // Mostrar el ingrediente en el contenedor 'ingredientesKebab'
                 ingredientesKebab.appendChild(ingredienteKeb);
@@ -91,9 +93,11 @@ function editarKebab(k) {
                             ingredienteDiv.classList.add('listaIngrediente');
                             ingredienteDiv.ingrediente = item;
                             ingredienteDiv.textContent = `${item.nombre} ${item.precio} €`;
-
                             
-                            aingredientes.appendChild(ingredienteDiv);
+                            if(aingredientes){
+                                aingredientes.appendChild(ingredienteDiv);
+                            }
+                            
                             
                             ingredienteDiv.addEventListener("click", function () {
                                 const parentID = ingredienteDiv.parentNode.id;
