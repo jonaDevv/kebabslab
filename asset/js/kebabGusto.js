@@ -1,19 +1,38 @@
 window.addEventListener("load", function() {
         
 
-        getKebabId(29).then(json=>{
+        getKebabId(29).then(json => {
 
-             editarKebab(json);
 
-             
+                const KebabMod = structuredClone(json);
+            
+                const anadirK = editarKebab(KebabMod);
+                
+                const pideBtn = document.getElementById("pedir");
 
+                if (pideBtn) {
+
+                        pideBtn.addEventListener("click", function () {
+                                
+                                if (anadirK.ingredientes.length > 0) {
+                                // Realiza la acción si tiene ingredientes
+                                anadirCarrito(anadirK);
+                                console.log(anadirK);
+
+                                } else {
+                                alert("Ingredientes no disponibles");
+                                }
+                        })     
+                }
+
+                cerrarbtn= document.getElementsByClassName("closeKebab")[0]
+                if(cerrarbtn){
+                    cerrarbtn.style.display="none"
+                }
 
         });
        
 
-        //Cogemos el boton pedir t le asignamos un evento click para añadir elementos al carrito
-        
-        contenedorVista = document.getElementsByClassName('vistaKebab');
 
         
 

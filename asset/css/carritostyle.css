@@ -8,7 +8,7 @@
     padding: 20px;                 /* Espacio interno */
     background-color: white;       /* Fondo blanco */
     box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.3); /* Sombra en el lado izquierdo */
-    z-index: 1000;                 /* Asegura que esté encima */
+    z-index: 1005;                 /* Asegura que esté encima */
     overflow-y: auto;              /* Habilita el desplazamiento si el contenido excede la altura */
 }
 
@@ -52,18 +52,83 @@
     border: 1px solid #888;
     width: 80%;
     text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .carrito-container{
 
 
-    text-align: left;;
+    text-align: center;
 }
 
 
 .modal-kebab-item{
 
     text-align: left;
+    margin-left: 30px;
+
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
 
+.btn {
+    font-size: 15px;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+}
+
+.popup {
+   
+    text-align: center;
+   
+    position: fixed;               /* Fija el contenedor en la pantalla */
+    top: 50%;                      /* Centrado vertical */
+    left: 50%;                     /* Centrado horizontal */
+
+
+    z-index: 1000;
+    transform: translate(-50%, -50%) scale(0);
+  
+    visibility: hidden;
+    transition: transform 0.3s, visibility 0.3s;
+}
+.open-popup {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+.popup h2 {
+    font-size: 40px;
+}
+.popup p {
+    font-size: 20px;
+    padding-block: 10px;
+}
+
+.close-btn {
+    width: 50%;
+    padding: 1rem;
+    text-align: center;
+    background-color: red;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+.close-btn:hover {
+    background: rgb(242, 174, 16);
+    color:black;
+}
+
+.kebab-en-carrito div {
+    margin-bottom: 10px;  /* Añade espacio entre los kebabs */
+}

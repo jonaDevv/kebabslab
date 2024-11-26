@@ -1,0 +1,73 @@
+/* Estilo general */
+.finalizar-compra-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* Título */
+.finalizar-compra-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Detalle de pago */
+.pago-detalle p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #555;
+}
+
+.pago-detalle strong {
+    color: #333;
+}
+
+/* Botones */
+.acciones-compra {
+    margin: 20px 0;
+}
+
+.btnf {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-credito {
+    background-color: #3498db;
+}
+
+.btn-add-credito:hover {
+    background-color: #2980b9;
+}
+
+.btn-tramitar {
+    background-color: #27ae60;
+}
+
+.btn-tramitar:hover {
+    background-color: #1e8449;
+}
+
+/* Crédito final */
+.credito-final p {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #444;
+}
+
+.credito-final strong {
+    color: #2c3e50;
+}

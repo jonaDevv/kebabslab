@@ -2,6 +2,7 @@
     <div class="header-container">
       <div class="logo">
         <a href="?menu=inicio"><img src="/asset/img/favicon1.png" width="20px" height="30px">KebabsLab</a>
+        <a  href="?menu=perfiluser" id="icono-perfil"></a>
         <b class="perfilUsuario"><b class="saludo">Hola</b> <?php echo $_SESSION['user']['nombre']; ?></b>
         <img id="icono-compra" src="/asset/img/compra.png" height="40px" width="40px" /><b class="carrito-count"></b>
        <div id="carrito" display="none">
@@ -16,7 +17,9 @@
             <li><a href="?menu=inicio">Inicio</a></li>
             <li><a id="menuKebab">Kebab</a></li>
             <li><a href="?menu=misPedido">Mis pedidos</a></li>
-            <li><a href="?menu=gVenta">Monedero</a></li>
+            <li><a href="?menu=perfiluser">Mi perfil</a></li>
+            <li><a class="saldoM">Saldo: <b id="saldoM">0</b>€</a></li>
+
             <li><a class="cerrarsesion" href="?menu=cerrarSesion">Cerrar sesión</a></li>
           </ul>
         </nav>

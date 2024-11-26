@@ -1,18 +1,79 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Usuario</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Enlazamos el archivo CSS -->
+</head>
 <body>
-
-    <div class="perfilUsuario">
-        <section>
-            <div class="saludo">Hola</div>
-            <div class="nombre">Nombre</div>
-            <div class="correo">Correo</div>
-            <div class="fotoUsuario">Foto</div>
-        </section>
-       <div class="saludo">Hola</div>
-       <div class="nombre">Nombre</div>
-       <div class="correo">Correo</div>
-       <div class="fotoUsuario">Foto</div>
-    </div>  
     
+    <div id="cont-Perfil-User">
+        <div class="ficha">
+            <!-- Aquí hemos modificado la div fotoPerfil para que sea un contenedor de imagen -->
+            <div class="fotoPerfil">
+                <img id="fotoPerfilImg" src="" alt="Foto de Perfil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+            </div>
+
+            <!-- Botones para subir o tomar una foto -->
+            <input type="file" id="inputGaleria" accept="image/*" style="display: none;">
+            <button id="btnGaleria" onclick="document.getElementById('inputGaleria').click();">Seleccionar</button>
+            <!-- <button id="btnCamara" onclick="activarCamara();">Tomar Foto</button> -->
+
+            <div class="nombrePerfil">
+                <label>Nombre:</label>
+                <p id="nombrePerfil" name="nombre"></p>
+            </div>
+            <div class="passPerfil">
+                <label>Contraseña:</label>
+                <input id="passPerfil" name="contraseña" value="">
+            </div>
+            <div class="correoPerfil">
+                <label>Correo:</label>
+                <p id="correoPerfil" name="correo" value=""></p>
+            </div>
+            <button id="editarPerfil">Editar Perfil</button>
+        </div>
+        
+        <div class="monederoPerfil">
+            <label>Monedero:</label>
+            <div class="saldoPerfil">Saldo:</div>
+            <button id="recargar">Recargar</button>
+        </div>
+        
+        <div class="direccionesPerfil">
+            <label>Direcciones:</label>
+            <div class="direccionPerfil">
+                <div id="direccionPerfil"></div>
+            </div>
+            <button id="agregar">Nueva Dirección</button>
+        </div>
+        
+        <div class="pedidosPerfil">
+            <label>Listado de Pedidos:</label>
+            <div class="pedidoPuser">
+                <input id="pedidoPuser" name="pedido" value="">
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal de Añadir Crédito -->
+     <div id="modal-credito" class="modal-credito">
+        <div class="modal-content-credito">
+            <h2>Añadir Crédito</h2>
+            <div class="pago-detalle-credito">
+                <p>Introduce la cantidad que deseas añadir a tu monedero:</p>
+                <input type="number" id="cantidad-credito" placeholder="Cantidad en €" />
+            </div>
+            <div class="acciones-compra-credito">
+                <button class="addCredito">Añadir Crédito</button>
+                <button class="closeaddCredito">Cancelar</button>
+            </div>
+            <div class="credito-final-credito">
+                <p><strong>Crédito actual: </strong><span id="credito-actual-credito"></span>€</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

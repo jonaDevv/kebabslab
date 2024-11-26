@@ -17,6 +17,7 @@ class rout{
                 "registro" => (Control::openregistro()),
                 "cerrarsesion" => (Control::cerrarSesion()),
                 "mantenimiento" => (Control::mantenimiento()),
+                "perfiluser" => (Control::perfiluser()),
                 "gusto" => (Control::gusto()),
                 "carta" => (Control::carta()),
                 "gProducto" => (Control::gProducto()),

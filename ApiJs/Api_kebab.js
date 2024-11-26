@@ -12,12 +12,14 @@ async function getKebabs(){
     }
   });
 
-  const data = await response.json();
+  const dat = await response.json();
 
  
-  return data;
+  return dat;
 
 }
+
+
 
 
 /**

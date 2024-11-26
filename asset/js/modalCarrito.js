@@ -1,4 +1,11 @@
 window.addEventListener("load", function () {
+
+    const user=JSON.parse(localStorage.getItem('User'));
+
+
+
+
+
     const openCarrito = document.getElementById("icono-compra");
 
     if (openCarrito) {
@@ -44,7 +51,7 @@ window.addEventListener("load", function () {
                         // Vaciar el carrito al hacer clic en el botón
                         if (vaciarBtn) {
                             vaciarBtn.addEventListener("click", function () {
-                                alert("vaciar carrito");
+                                vaciarCarrito();
                             });
                         }
 
@@ -65,7 +72,11 @@ window.addEventListener("load", function () {
                         // Evento del botón de pagar
                         if (pagarBtn) {
                             pagarBtn.addEventListener("click", function () {
-                                alert("pagar");
+                                ticket= document.getElementsByClassName("popup");
+                                
+                                
+
+                                
                             });
                         }
 
@@ -80,5 +91,42 @@ window.addEventListener("load", function () {
                 contenedor.style.display = "block"; // Mostrar si ya existe
             }
         });
+
+
+
+
+
+
+
+
+
+
+       
+
+        
     }
+
 });
+
+
+function openPopup() {
+    popup.classList.add("open-popup");
+   
+                                
+    let totalPagar = document.getElementById("total").textContent; // Obtienes el texto completo con el símbolo de euro
+    totalPagar = parseFloat(totalPagar.replace('€', '').trim());  
+   
+    saldom=document.getElementById("saldoM").value;
+   
+    
+  console.log(saldom)
+    
+    
+    mostrarFinalizarCompra(totalPagar,saldom)
+    
+    
+}
+
+function closePopup() {
+    popup.classList.remove("open-popup");
+}

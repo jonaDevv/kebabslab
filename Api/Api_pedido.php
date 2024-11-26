@@ -9,7 +9,12 @@ require ("../vendor/autoload.php");
 
 use Models\Pedido;
 use Repository\repoPedido;
+use Helper\Sesion;
 
+Sesion::iniciaSesion();
+
+$rol = $_SESSION['user']['rol'];
+$id = $_SESSION['user']['id'];
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -21,9 +26,25 @@ switch ($method) {
             $pedido = repoPedido::read($id); 
             
         } else {
+
+            if ($rol == "usuario") {
+                // Obtener todos los pedidos del usuario
+                $pedido = repoPedido::getAllId($id); 
+
+            } else {
+
+                if ($rol == "administrador") {
+                    // Obtener todos los pedidos del usuario
+                    $pedido = repoPedido::getAll(); 
+
+                }else{
+
+                    http_response_code(301); // Not Found
+                    ;
+                }
+                 
+            }
             
-            // Obtener todos los kebabs
-            $pedido = repoPedido::getAll(); 
         }
         break;
 
@@ -32,13 +53,12 @@ switch ($method) {
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
         
         // Verificar si se recibieron todos los datos necesarios
+        
         if (
             isset($data[0]['usuario_id']) && 
-            isset($data[0]['fecha_hora']) &&
             isset($data[0]['lineasPedido']) &&
-            isset($data[0]['estado']) &&
-            isset($data[0]['precio_total']) &&
-            isset($data[0]['direccion'])
+            isset($data[0]['precio_total'])
+            
            
             
         ) {
@@ -48,10 +68,10 @@ switch ($method) {
         
                 null,  // ID se generará automáticamente
                 $data[0]['usuario_id'],
-                $data[0]['fecha_hora'],
+                $data[0]['fecha_hora']??"",
                 $data[0]['estado']??"recibido",
                 $data[0]['precio_total']??0.0,
-                $data[0]['direccion'],
+                $data[0]['direccion']??$data[0]['direccion']=[],
                 $data[0]['coordenada']??$data[0]['coordenada']="",
                 $data[0]['lineasPedido']??$data[0]['lineasPedido']=[]
                 
@@ -62,7 +82,7 @@ switch ($method) {
            
             if (repoPedido::create($pedido)) {
                 http_response_code(201); // 
-                echo json_encode(["message" => "Pedido creado con éxito"]);
+               
             } else {
                 http_response_code(500); // Error en la creación
                 echo json_encode(["message" => "Error al crear el pedido"]);

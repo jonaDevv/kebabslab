@@ -17,7 +17,7 @@ Class Pedido{
     public  $direccion;
     public $coordenada; //Point en formato WKT
     
-    public function __construct(?int $id,int $usuario_id,$fecha_hora, string $estado,float $precio_total,$direccion,$coordenada="",array $lineaPedido=[]){
+    public function __construct(?int $id,int $usuario_id,$fecha_hora=null, string $estado,float $precio_total,$direccion,$coordenada="",array $lineaPedido=[]){
         
         $this->setId($id);
         $this->setUsuario_id($usuario_id);          

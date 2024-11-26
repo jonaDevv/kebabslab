@@ -1,6 +1,10 @@
-let ingredientesSeleccionados = []; // Array para almacenar los ingredientes seleccionados
 
-function editarKebab(kebab) {
+
+function editarKebab(k) {
+    let ingredientesSeleccionados = []; // Array para almacenar los ingredientes seleccionados
+    const kebab = structuredClone(k);
+
+   
     if (kebab){
         // Asigno los datos del kebab a las variables para rellenar la plantilla
         nombre = document.getElementById('nombre');
@@ -16,7 +20,7 @@ function editarKebab(kebab) {
 
 
         
-            precio.innerHTML = kebab.precio + "€";
+            precio.innerHTML = k.precio + "€";
         }
         // Meto los ingredientes del kebab en un array
         ingredientes = kebab.ingredientes;
@@ -43,6 +47,7 @@ function editarKebab(kebab) {
 
                 // Agregar el nombre del ingrediente al contenido del div
                 ingredienteKeb.textContent = `${ingrediente.nombre}`;
+                
 
                 // Mostrar el ingrediente en el contenedor 'ingredientesKebab'
                 ingredientesKebab.appendChild(ingredienteKeb);
@@ -88,22 +93,27 @@ function editarKebab(kebab) {
                             ingredienteDiv.classList.add('listaIngrediente');
                             ingredienteDiv.ingrediente = item;
                             ingredienteDiv.textContent = `${item.nombre} ${item.precio} €`;
-
+                            
                             if(aingredientes){
                                 aingredientes.appendChild(ingredienteDiv);
                             }
+                            
+                            
                             ingredienteDiv.addEventListener("click", function () {
                                 const parentID = ingredienteDiv.parentNode.id;
 
                                 if (parentID === "aIngrediente") {
                                     // Mover a kebab
                                     aingredientes.removeChild(ingredienteDiv);
+
                                     ingredientesKebab.appendChild(ingredienteDiv);
-                                    kebab.ingredientes.push(item);
-                                    ingredientesSeleccionados.push(item);
+
+                                    kebab.ingredientes.push(ingredienteDiv.ingrediente);
+
+                                    ingredientesSeleccionados.push(ingredienteDiv.ingrediente);
 
                                     // Actualizar alérgenos
-                                    actualizarAlergenos([item], alerge, "añadir");
+                                    actualizarAlergenos([ingredienteDiv.ingrediente], alerge, "añadir");
                                 } else {
                                     // Quitar del kebab
                                     ingredientesKebab.removeChild(ingredienteDiv);
@@ -111,11 +121,12 @@ function editarKebab(kebab) {
                                     kebab.ingredientes = kebab.ingredientes.filter(ingrediente => ingrediente.id !== item.id);
                                     ingredientesSeleccionados = ingredientesSeleccionados.filter(ing => ing.id !== item.id);
                                     // Actualizar alérgenos
-                                    actualizarAlergenos([item], alerge, "eliminar");
+                                    actualizarAlergenos([ingredienteDiv.ingrediente], alerge, "eliminar");
                                 }
 
                                 // Actualizar precio total
-                                        precio.innerHTML = cobrarATuGusto(ingredientesSeleccionados, kebab.precio, kebab.nombre) + " €";
+                                precio.innerHTML = cobrarATuGusto(ingredientesSeleccionados, k.precio, kebab.nombre) + " €";
+                                kebab.precio = parseFloat(precio.innerHTML.replace(/[^\d.-]/g, ''));
                             });
                          }
                 });
@@ -174,12 +185,13 @@ function cobrarATuGusto(ingredientes,precio,nombre) {
     }
 
     
-    let total = 0;
+    let total = precio;
+
     if (nombre === "Tu Kebab") {
 
         if (ingredientes.length <= 3) {
             // Si hay 3 o menos ingredientes, incluir todos en el precio base
-            total = precio;
+            //total = precio;
         } else {
             // Ordenar ingredientes por precio de menor a mayor
             const sorted = [...ingredientes].sort((a, b) => a.precio - b.precio);
@@ -189,7 +201,7 @@ function cobrarATuGusto(ingredientes,precio,nombre) {
 
     }else{
 
-        total=precio;
+        //total=precio;
         
         ingredientes.forEach(ingrediente => {
             total += ingrediente.precio;  // Sumar el precio de cada ingrediente
