@@ -14,6 +14,7 @@ use Helper\Sesion;
 Sesion::iniciaSesion();
 
 $rol = $_SESSION['user']['rol'];
+$id = $_SESSION['user']['id'];
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -29,7 +30,7 @@ switch ($method) {
             if ($rol == "usuario") {
                 // Obtener todos los pedidos del usuario
                 $pedido = repoPedido::getAllId($id); 
-                
+
             } else {
 
                 if ($rol == "administrador") {
@@ -81,7 +82,7 @@ switch ($method) {
            
             if (repoPedido::create($pedido)) {
                 http_response_code(201); // 
-                echo json_encode(["message" => "Pedido creado con éxito"]);
+               
             } else {
                 http_response_code(500); // Error en la creación
                 echo json_encode(["message" => "Error al crear el pedido"]);

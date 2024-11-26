@@ -57,14 +57,13 @@ async function cargarPedidos() {
     }
 }
 
-// Función para crear el HTML de un pedido
 function crearPedidoElemento(pedido) {
     const divPedido = document.createElement('div');
     divPedido.classList.add('pedido');
     divPedido.setAttribute('data-id', pedido.id);
 
     const descripcion = document.createElement('p');
-    descripcion.textContent = `Pedido ${pedido.id} - ${pedido.descripcion}`;
+    descripcion.textContent = `Pedido ${pedido.id} - Usuario: ${pedido.usuario_id}`;
 
     // Crear los botones
     const botonSiguiente = document.createElement('button');
@@ -79,14 +78,15 @@ function crearPedidoElemento(pedido) {
     botonAnterior.style.backgroundColor = obtenerColorEstado(anteriorEstado);
 
     // Asignar texto y lógica de los botones
-    if (pedido.estado !== "recibidos") {
-        botonAnterior.textContent = `Mover a ${anteriorEstado.charAt(0).toUpperCase() + anteriorEstado.slice(1)}`;
+    if (pedido.estado !== "recibido") {
+        botonAnterior.textContent = ` ${anteriorEstado.charAt(0).toUpperCase() + anteriorEstado.slice(1)}`;
         botonAnterior.onclick = () => cambiarEstado(pedido.id, anteriorEstado);
         divPedido.appendChild(botonAnterior);
     }
 
-    if (pedido.estado !== "entregados") {
-        botonSiguiente.textContent = `Mover a ${siguienteEstado.charAt(0).toUpperCase() + siguienteEstado.slice(1)}`;
+    // Si el estado es "entregado", no mostrar el botón de "siguiente"
+    if (pedido.estado !== "entregado") {
+        botonSiguiente.textContent = `${siguienteEstado.charAt(0).toUpperCase() + siguienteEstado.slice(1)}`;
         botonSiguiente.onclick = () => cambiarEstado(pedido.id, siguienteEstado);
         divPedido.appendChild(botonSiguiente);
     }
@@ -96,37 +96,7 @@ function crearPedidoElemento(pedido) {
     return divPedido;
 }
 
-// Función para obtener el estado siguiente
-function getEstadoSiguiente(estado) {
-    const estados = ['recibido', 'preparacion', 'camino', 'entregado'];
-    const siguienteEstado = estados[estados.indexOf(estado) + 1];
-    return siguienteEstado ? siguienteEstado : estado;
-}
 
-// Función para obtener el estado anterior
-function getEstadoAnterior(estado) {
-    const estados = ['recibido', 'preparacion', 'camino', 'entregado'];
-    const anteriorEstado = estados[estados.indexOf(estado) - 1];
-    return anteriorEstado ? anteriorEstado : estado;
-}
-
-// Función para obtener el color correspondiente al estado
-function obtenerColorEstado(estado) {
-    switch (estado) {
-        case 'recibido':
-            return 'red';  // Rojo
-        case 'preparacion':
-            return 'orange';  // Naranja
-        case 'camino':
-            return 'yellow';  // Amarillo
-        case 'entregado':
-            return 'green';  // Verde
-        default:
-            return 'gray';  // Gris por defecto
-    }
-}
-
-// Función para cambiar el estado de un pedido
 function cambiarEstado(pedidoId, nuevoEstado) {
     const pedidoElemento = document.querySelector(`.pedido[data-id='${pedidoId}']`);
     const columnaDestino = document.getElementById(nuevoEstado);
@@ -141,8 +111,36 @@ function cambiarEstado(pedidoId, nuevoEstado) {
         descripcion: pedidoElemento.querySelector('p').textContent.split(' - ')[1]
     };
 
+    // Llamar al servidor para actualizar el estado
+    actualizarEstadoEnServidor(pedido);
+
     const nuevoPedidoElemento = crearPedidoElemento(pedido);
     columnaDestino.appendChild(nuevoPedidoElemento);
+}
+
+async function actualizarEstadoEnServidor(pedido) {
+    try {
+        console.log('Actualizando estado en el servidor para el pedido:', pedido); // Verifica el pedido que se envía
+        const response = await fetch('/Api/Api_pedido.php', {
+            method: 'PUT',  // O 'PUT' dependiendo de cómo manejes la API
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pedido)  // Enviamos el pedido con el nuevo estado
+        });
+
+        // Verificamos si la respuesta del servidor fue exitosa
+        if (!response.ok) {
+            throw new Error(`Error al actualizar el estado del pedido: ${response.status}`);
+        }
+
+        const respuesta = await response.json();
+        console.log('Estado del pedido actualizado en el servidor:', respuesta);
+        return respuesta; // Asegúrate de que el servidor esté enviando una respuesta válida
+
+    } catch (error) {
+        console.error('Error al actualizar el estado en el servidor:', error);
+    }
 }
 
 

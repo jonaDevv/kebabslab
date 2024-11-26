@@ -39,14 +39,50 @@ async function mostrarPerfil(id) {
     const correo = document.getElementById('correoPerfil');
     const fotoPerfil = document.getElementById('fotoPerfilImg');
     const monedero = document.getElementsByClassName('saldoPerfil')[0];
-    const pedidos = document.getElementsByClassName('pedidoPuser')[0];
-
-    await fetch(`/Api/Api_pedido.php?id=${id}`)
-    .then(respuesta => respuesta.json())  // Usa .json() para obtener un objeto JSON
-    .then(json => {
-        // Aquí ya tienes el objeto JSON, puedes procesarlo y actualizar el HTML
-        pedidos.innerHTML = JSON.stringify(json);  // Muestra los datos en formato texto
+   
+    
+    await fetch(`/Api/Api_pedido.php`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
+    .then(respuesta => respuesta.json())  // Convierte la respuesta a JSON
+    .then(json => {
+        if (json && Array.isArray(json)) { // Asegurarte de que la respuesta sea un array
+            json.forEach(pedido => {
+                if (pedido.estado === "recibido" || pedido.estado === "preparacion") {
+                    const pedidos = document.getElementsByClassName('pedidoPuser')[0];
+                    
+                    if (pedidos) {
+                        // Crear el botón de forma programática
+                        const boton = document.createElement('button');
+                        boton.textContent = 'Cancelar'; // Texto del botón
+                        boton.setAttribute('data-id', pedido.id); // Usar un atributo de datos para almacenar el id
+
+                        // Asocia el evento con la función `deletPedido`
+                        boton.addEventListener('click', function () {
+                            deletPedido(pedido.id); // Llama a la función y pasa el `id` desde el objeto pedido
+                        });
+
+                        // Agregar el contenido del pedido al contenedor
+                        pedidos.innerHTML += `Pedido: ${pedido.id} <br> Estado: ${pedido.estado} Total: ${pedido.precio_total}€<br>`;
+                        
+                        // Añadir el botón al contenedor
+                        pedidos.appendChild(boton); // Agrega el botón después del texto
+
+                        // Asegurarse de que el contenedor esté visible
+                        pedidos.style.display = "block";
+                    } else {
+                        console.error('Contenedor no encontrado');
+                    }
+                }
+            });
+        } else {
+            console.error('La respuesta JSON no contiene un array o está vacía');
+        }
+    })
+    
     .catch(error => {
         console.error("Error al hacer la solicitud:", error);
     });

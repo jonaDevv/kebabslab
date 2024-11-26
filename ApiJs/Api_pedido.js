@@ -19,6 +19,7 @@ async function createPedido(pedido){
 
 
 async function getPedidos(){
+    
 
     const response = await fetch('/Api/Api_pedido.php',{
         method: 'GET',
@@ -31,6 +32,25 @@ async function getPedidos(){
 
 
     return pedidos;
+}
+
+
+async function deletPedido(id){
+
+    console.log('Pedido cancelado:', id);
+
+    const response = await fetch(`/Api/Api_pedido.php?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    respuesta = await response.json();
+
+    console.log(respuesta);
+
+   
 }
     
   

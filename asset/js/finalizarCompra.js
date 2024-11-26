@@ -3,18 +3,7 @@ window.addEventListener('load', function () {
 
     
 
-    const tramitarbtn=document.getElementsByClassName("btnf btn-tramitar")[0]
-
-    
-    if(tramitarbtn){
-        tramitarbtn.addEventListener("click",function(){
-            
-            tramitarPedido();
-            
-            
-        })
-    }
-
+   
    
 
 
@@ -59,20 +48,9 @@ function añadirCredito() {
 }
 
 
-const totalPagar=document.getElementById("total-pagar")
 
-// Función para tramitar pedido
-function tramitarPedido() {
-        const misaldo=document.getElementById("saldoM").value
-      
-    if (misaldo >= totalPagar) {
-        misaldo -= totalPagar;
-        console.log(misaldo-totalPagar)
-        
-    } else {
-        alert("No tienes suficiente crédito para completar la compra. Añade crédito primero.");
-    }
-}
+
+
 
 
 

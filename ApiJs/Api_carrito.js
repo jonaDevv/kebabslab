@@ -230,14 +230,28 @@ function tramitarPedido(){
     
     if(carritoData.length>0){
 
-        if(user.monedero>=totalPagar){
-            user.monedero-=totalPagar;
-            alert("¡Pedido tramitado con éxito!");
-            actualizarCarritoUI();
-        }else{
-            alert("No tienes suficiente crédito para completar la compra. Añade crédito primero.");
+        // if(user.monedero>=totalPagar){
+        //     user.monedero-=totalPagar;
+            createPedido(
+                carritoData
+            ).then(json => {
 
-        }
+                console.log(json);
+                alert("¡Pedido tramitado con éxito!");
+                
+            })
+            .catch(error => {
+                console.error("Error al crear el pedido:", error);
+            });
+            
+            modalFinalizarcompra= document.getElementsByClassName("finalizar-compra-container")[0]
+            if(modalFinalizarcompra){
+                modalFinalizarcompra.style.display = "none";
+            }
+        // }else{
+        //     alert("No tienes suficiente crédito para completar la compra. Añade crédito primero.");
+
+        // }
   
     }else{
         alert("El carrito está vacío");
