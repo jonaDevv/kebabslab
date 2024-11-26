@@ -117,9 +117,7 @@ function openPopup() {
     totalPagar = parseFloat(totalPagar.replace('€', '').trim());  
    
     saldom=document.getElementById("saldoM").value;
-   
-    
-  console.log(saldom)
+
     
     
     mostrarFinalizarCompra(totalPagar,saldom)

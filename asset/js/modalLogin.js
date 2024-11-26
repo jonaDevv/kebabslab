@@ -68,4 +68,7 @@ window.addEventListener("load", function () {
     if (openModal) {
         openModal.addEventListener("click", toggleModal);
     }
+
+
+    
 });

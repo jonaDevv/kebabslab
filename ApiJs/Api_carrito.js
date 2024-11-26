@@ -2,14 +2,16 @@
 let carritoData = [];
 const user=JSON.parse(localStorage.getItem('User'));
 
-function anadirCarrito(kebab) {
-
+function anadirCarrito(kebab) {''
+    if (user)
+    {
         carritoData.push({
             usuario_id: user.id ,
             lineasPedido: [
                 {
                     
                     kebabs: [{
+                    
                         id: kebab.id,
                         kebab: kebab.nombre,
                         ingredientes: kebab.ingredientes,
@@ -27,7 +29,9 @@ function anadirCarrito(kebab) {
     // }
    
     actualizarCarritoUI();
-
+    }else{
+        alert("Incia sesion para añadir elementos al carrito")
+    }
      
 }
 
@@ -230,24 +234,41 @@ function tramitarPedido(){
     
     if(carritoData.length>0){
 
-        // if(user.monedero>=totalPagar){
-        //     user.monedero-=totalPagar;
-            createPedido(
-                carritoData
-            ).then(json => {
-
-                console.log(json);
-                alert("¡Pedido tramitado con éxito!");
-                
-            })
-            .catch(error => {
-                console.error("Error al crear el pedido:", error);
-            });
+        getUsuario(user.id).then(user=>{
+            console.log(user.id)
+            console.log(carritoData)
+            if(user.monedero>=carritoData){
+                user.monedero-=totalPagar;
+                createPedido(
+                    carritoData
+                ).then(json => {
+                    
+                    return alert("¡Pedido tramitado con éxito!");
+                    vaciarCarrito();
+                })
+                .catch(error => {
+                    console.error('Hubo un error con la solicitud fetch:', error);
+                });
+            }else{
+                return alert("No tienes suficiente dinero para pagar");
+            }
+        })
             
             modalFinalizarcompra= document.getElementsByClassName("finalizar-compra-container")[0]
-            if(modalFinalizarcompra){
-                modalFinalizarcompra.style.display = "none";
+            modalCarritoContainer= document.getElementById("CModal")
+            overlayCarrito= document.getElementsByClassName("carrito-overlay")[0]
+            if(modalFinalizarcompra && modalCarritoContainer){
+                
+                alert("¡Pedido tramitado con éxito!");
+                modalCarritoContainer.style.display = "none";
             }
+            if(modalFinalizarcompra){
+                modalFinalizarcompra.remove()
+                overlayCarrito.remove()
+                vaciarCarrito()
+                
+            }
+            aler
         // }else{
         //     alert("No tienes suficiente crédito para completar la compra. Añade crédito primero.");
 

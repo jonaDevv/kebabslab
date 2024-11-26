@@ -86,7 +86,7 @@ window.addEventListener("load", function() {
 
 
                                    
-                                    carro= document.getElementById("carrito");
+                                    // carro= document.getElementById("carrito");
                                     anadirCarrito(item);
                                    
                                     
