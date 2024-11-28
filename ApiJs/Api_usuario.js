@@ -34,6 +34,8 @@ async function getUsuario(id){
 async function mostrarPerfil(id) {
 
     perfil= await getUsuario(id);
+    
+    
     // Suponiendo que el objeto perfil tiene campos como nombre, correo y foto
     const nombre = document.getElementById('nombrePerfil');
     const correo = document.getElementById('correoPerfil');
@@ -41,51 +43,7 @@ async function mostrarPerfil(id) {
     const monedero = document.getElementsByClassName('saldoPerfil')[0];
    
     
-    await fetch(`/Api/Api_pedido.php`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(respuesta => respuesta.json())  // Convierte la respuesta a JSON
-    .then(json => {
-        if (json && Array.isArray(json)) { // Asegurarte de que la respuesta sea un array
-            json.forEach(pedido => {
-                if (pedido.estado === "recibido" || pedido.estado === "preparacion") {
-                    const pedidos = document.getElementsByClassName('pedidoPuser')[0];
-                    
-                    if (pedidos) {
-                        // Crear el botón de forma programática
-                        const boton = document.createElement('button');
-                        boton.textContent = 'Cancelar'; // Texto del botón
-                        boton.setAttribute('data-id', pedido.id); // Usar un atributo de datos para almacenar el id
-
-                        // Asocia el evento con la función `deletPedido`
-                        boton.addEventListener('click', function () {
-                            deletPedido(pedido.id); // Llama a la función y pasa el `id` desde el objeto pedido
-                        });
-
-                        // Agregar el contenido del pedido al contenedor
-                        pedidos.innerHTML += `Pedido: ${pedido.id} <br> Estado: ${pedido.estado} Total: ${pedido.precio_total}€<br>`;
-                        
-                        // Añadir el botón al contenedor
-                        pedidos.appendChild(boton); // Agrega el botón después del texto
-
-                        // Asegurarse de que el contenedor esté visible
-                        pedidos.style.display = "block";
-                    } else {
-                        console.error('Contenedor no encontrado');
-                    }
-                }
-            });
-        } else {
-            console.error('La respuesta JSON no contiene un array o está vacía');
-        }
-    })
     
-    .catch(error => {
-        console.error("Error al hacer la solicitud:", error);
-    });
 
     // Asignamos los valores obtenidos del perfil a los elementos del DOM
     if (nombre) {
@@ -143,8 +101,11 @@ async function mostrarPerfil(id) {
         monedero.innerHTML= " "+perfil.monedero + "€" || '';
     }
 
-    // Si deseas agregar más campos, como direcciones o pedidos, puedes hacerlo aquí
-    // ejemplo: mostrar direcciones, pedidos, etc.
+   
+
+   
+   
+    await actualizarCarritoUI();
 }
 
 
@@ -203,4 +164,10 @@ function editarFicha(perfil) {
         nombre.innerHTML = `<input type="text" id="nombreInput" value="${perfil.nombre.toUpperCase()}" />`;
         correo.innerHTML = `<input type="text" id="correoInput" value="${perfil.correo}" />`;
     }
+}
+
+function cerrarSesion(){
+
+    localStorage.removeItem('User');
+    window.location.href="?menu=cerrarSesion";
 }

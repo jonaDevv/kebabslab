@@ -1,11 +1,15 @@
 // Array global para gestionar el carrito
-let carritoData = [];
 const user=JSON.parse(localStorage.getItem('User'));
+let carritoData = [];
+carritoData=getCarritoLocalStorage();
+actualizarCarritoUI();
+console.log(carritoData);
 
-function anadirCarrito(kebab) {''
-    if (user)
-    {
-        carritoData.push({
+
+function anadirCarrito(kebab) {
+
+    
+      carritoData.push({
             usuario_id: user.id ,
             lineasPedido: [
                 {
@@ -27,12 +31,9 @@ function anadirCarrito(kebab) {''
         });
         console.log(`Añadido kebab con ID ${kebab.id} como nueva línea de pedido.`);
     // }
-   
+    saveCarritoLocalStorage(carritoData,user);
     actualizarCarritoUI();
-    }else{
-        alert("Incia sesion para añadir elementos al carrito")
-    }
-     
+    
 }
 
 async function encargarPedido(carritoData){
@@ -132,7 +133,9 @@ function actualizarCarritoUI() {
     // Actualizar el contador total de items en el carrito
     const count = document.querySelector(".carrito-count");
     const totalItems = carritoData.reduce((sum, item) => sum + item.lineasPedido.reduce((subSum, linea) => subSum + linea.kebabs.length, 0), 0);
-    count.textContent = totalItems;
+
+    count.textContent = totalItems > 0 ? totalItems : "";
+
 
     // Calcular y mostrar el precio total del carrito
     const totalCarrito = calcularPrecioCarritoTotal();
@@ -144,25 +147,7 @@ function actualizarCarritoUI() {
    return totalCarrito;
 }
 
-// Función para enviar el carrito al servidor
-function meterCarritoUser(carro) {
-    let carritoTexto = JSON.stringify(carro);
 
-    fetch("/Api/Api_sesion.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: carritoTexto,
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Carrito actualizado:", data);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
-}
 
 
 
@@ -225,6 +210,11 @@ function vaciarCarrito() {
      totalElement.innerHTML= "0.00€";
     alert("Carrito eliminado");
 
+    localStorage.removeItem(`carrito${user.id}`);
+    
+
+    
+
 
 
 }
@@ -282,6 +272,30 @@ function tramitarPedido(){
 
 }
 
+function saveCarritoLocalStorage(carritoData,user){
 
+    localStorage.setItem(`carrito${user.id}`, JSON.stringify(carritoData));
+    
+}
+
+function getCarritoLocalStorage(){
+
+     const carrito = JSON.parse(localStorage.getItem(`carrito${user.id}`));
+     return carrito  || [];
+     
+
+}
+
+function estadoCarrito(){
+
+    if (!user) {
+        carritoData = [];  // Vaciar el carrito si no hay usuario
+        console.log("El usuario no está autenticado, el carrito se muestra vacío.");
+    } else {
+        // Si hay usuario, cargar el carrito desde el Local Storage
+        carritoData = getCarritoLocalStorage();  // Cargar el carrito si el usuario está autenticado
+        console.log("El carrito se cargó con los datos del Local Storage.");
+    }
+}
 
 

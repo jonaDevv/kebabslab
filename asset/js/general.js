@@ -11,6 +11,17 @@ window.addEventListener("load", function() {
     
     }
 
+    cerrarSesionBtn=document.getElementsByClassName("cerrarsesion")[0]
+    if(cerrarSesionBtn){
+        cerrarSesionBtn.addEventListener("click",function(){
+            cerrarSesion()
+        })
+    
+    }
+
+    
+   
+
    
 
     

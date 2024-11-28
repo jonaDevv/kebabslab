@@ -32,26 +32,29 @@ async function cargarPedidos() {
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
+        if(response.status==200){
 
-        const pedidos = await response.json();
-        if (pedidos){
-            // Verificamos que la estructura de los datos sea la esperada
-            if (!Array.isArray(pedidos)) {
-                throw new Error('La respuesta no es un arreglo de pedidos');
-            }
+            const pedidos = await response.json();
 
-            pedidos.forEach(pedido => {
-                const pedidoElemento = crearPedidoElemento(pedido);
-               if(pedidoElemento){// Añadir el pedido a la columna correspondiente
-                const columna = document.getElementById(pedido.estado);
-                if (columna) {
-                    columna.appendChild(pedidoElemento);
+            if (pedidos){
                 
-                }
-            } 
-            });
 
+                pedidos.forEach(pedido => {
+                    const pedidoElemento = crearPedidoElemento(pedido);
+                if(pedidoElemento){// Añadir el pedido a la columna correspondiente
+                    const columna = document.getElementById(pedido.estado);
+                    if (columna) {
+                        columna.appendChild(pedidoElemento);
+                    
+                    }
+                } 
+                });
+
+            }
         }
+
+
+
     } catch (error) {
         console.error('Error al cargar los pedidos:', error);
     }
