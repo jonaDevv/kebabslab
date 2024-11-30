@@ -27,11 +27,17 @@ async function getUsuario(id){
     return usuario;
 }
 
+getUserLocaleStorage=async function(){
+    const user = JSON.parse(localStorage.getItem('User'));
+    return user;
+}
 
 
 
 
 async function mostrarPerfil(id) {
+    
+    const user = JSON.parse(localStorage.getItem('User'));
 
     perfil= await getUsuario(id);
     
@@ -42,8 +48,7 @@ async function mostrarPerfil(id) {
     const fotoPerfil = document.getElementById('fotoPerfilImg');
     const monedero = document.getElementsByClassName('saldoPerfil')[0];
    
-    
-    
+  
 
     // Asignamos los valores obtenidos del perfil a los elementos del DOM
     if (nombre) {
@@ -102,10 +107,10 @@ async function mostrarPerfil(id) {
     }
 
    
-
    
    
-    await actualizarCarritoUI();
+   
+    
 }
 
 
@@ -171,3 +176,9 @@ function cerrarSesion(){
     localStorage.removeItem('User');
     window.location.href="?menu=cerrarSesion";
 }
+
+
+
+
+
+

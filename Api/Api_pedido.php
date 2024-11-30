@@ -13,8 +13,14 @@ use Helper\Sesion;
 
 Sesion::iniciaSesion();
 
-$rol = $_SESSION['user']['rol'];
-$id = $_SESSION['user']['id'];
+if (isset($_SESSION['user'])) {
+    $rol = $_SESSION['user']['rol'];
+    $idus = $_SESSION['user']['id'];
+} else {
+    http_response_code(401); // Unauthorized
+    echo json_encode(["message" => "No estás autenticado."]);
+    exit;
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -23,19 +29,24 @@ switch ($method) {
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             $id = $_GET['id'];
             
-            $pedido = repoPedido::read($id); 
+           repoPedido::read($id);
+            if (!$pedido) {
+                http_response_code(404); // Not Found
+                echo json_encode(["message" => "Pedido no encontrado"]);
+                exit;
+            } 
             
         } else {
 
             if ($rol == "usuario") {
                 // Obtener todos los pedidos del usuario
-                $pedido = repoPedido::getAllId($id); 
+                repoPedido::getAllId($idus); 
 
             } else {
 
                 if ($rol == "administrador") {
                     // Obtener todos los pedidos del usuario
-                    $pedido = repoPedido::getAll(); 
+                    repoPedido::getAll(); 
 
                 }else{
 
@@ -112,7 +123,6 @@ switch ($method) {
            
 
                 $ped->setUsuario_id($data[0]['usuario_id']??$ped->getUsuario_id());
-                $ped->setFecha_hora($data[0]['fecha_hora']??$ped->getFecha_hora());
                 $ped->setLineasPedido($data[0]['lineasPedido']??$ped->getLineasPedido());
                 $ped->setEstado($data[0]['estado']??$ped->getEstado());
                 $ped->setPrecio_total($data[0]['precio_total']??$ped->getPrecio_total());

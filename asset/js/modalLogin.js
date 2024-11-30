@@ -45,15 +45,40 @@ window.addEventListener("load", function () {
                     if (loginForm) {
                         loginForm.addEventListener("submit", function (event) {
                             event.preventDefault(); // Evitar el envío inmediato del formulario
-
+                            const data = Object.fromEntries(new FormData(event.target));
+                            console.log(data);
                             const username = contenedor.querySelector("#username");
                             const password = contenedor.querySelector("#password");
 
                             if (validarLogin(username, password)) {
-                                loginForm.submit();
+
+                                fetch("/Api/Api_login.php", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(data)   
+                                })
+                                .then(respuesta => respuesta.json())
+                                .then(json => {
+
+                                    
+
+                                  
+                                    localStorage.setItem('User', JSON.stringify(json));
+                                    window.location.href="?menu=inicio";
+                                    
+                                })
+                                .catch(error => {
+                                    console.error('Hubo un error con la solicitud fetch:', error);
+                                });
+                                
+                                //loginForm.submit();
                             } else {
                                 alert("Por favor, completa todos los campos correctamente.");
                             }
+
+
                         });
                     }
                 });

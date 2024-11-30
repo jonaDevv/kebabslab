@@ -3,7 +3,7 @@ const user=JSON.parse(localStorage.getItem('User'));
 let carritoData = [];
 carritoData=getCarritoLocalStorage();
 actualizarCarritoUI();
-console.log(carritoData);
+
 
 
 function anadirCarrito(kebab) {
@@ -29,8 +29,7 @@ function anadirCarrito(kebab) {
             ],
             precio_total: calcularPrecioCarritoTotal()
         });
-        console.log(`Añadido kebab con ID ${kebab.id} como nueva línea de pedido.`);
-    // }
+       
     saveCarritoLocalStorage(carritoData,user);
     actualizarCarritoUI();
     
@@ -77,7 +76,7 @@ function calcularPrecioCarritoTotal() {
         });
     });
 
-    console.log("Total calculado:", total);  // Verifica que el total se calcule correctamente
+   
     return total;
 }
 
@@ -86,7 +85,11 @@ function calcularPrecioCarritoTotal() {
 
 function actualizarCarritoUI() {
     const carritoContainer = document.getElementById("carrito");
-    carritoContainer.innerHTML = "";  // Limpiar el contenedor
+    
+    if(carritoContainer){
+        carritoContainer.innerHTML = "";  
+    }
+        // Limpiar el contenedor
 
     carritoData.forEach(item => {
 
@@ -133,8 +136,10 @@ function actualizarCarritoUI() {
     // Actualizar el contador total de items en el carrito
     const count = document.querySelector(".carrito-count");
     const totalItems = carritoData.reduce((sum, item) => sum + item.lineasPedido.reduce((subSum, linea) => subSum + linea.kebabs.length, 0), 0);
-
-    count.textContent = totalItems > 0 ? totalItems : "";
+    if(count){
+        count.textContent = totalItems > 0 ? totalItems : "";
+    }
+    
 
 
     // Calcular y mostrar el precio total del carrito
@@ -213,32 +218,39 @@ function vaciarCarrito() {
     localStorage.removeItem(`carrito${user.id}`);
     
 
-    
-
-
-
 }
-
-
 function tramitarPedido(){
+    
+    let totalPagar=document.getElementById("total-pagar").textContent;
+    totalPagar=parseFloat(totalPagar.replace('€', '').trim());
+    let newMonedero=user.monedero-totalPagar;
     
     if(carritoData.length>0){
 
         getUsuario(user.id).then(user=>{
-            console.log(user.id)
-            console.log(carritoData)
-            if(user.monedero>=carritoData){
-                user.monedero-=totalPagar;
+            console.log("Lo que pagaste es:",totalPagar)
+            console.log("Tu dinero es:",user.monedero)
+           
+            if(user.monedero>=totalPagar){
+                
+
+                actualizarMonedero(user.id,newMonedero);
+                console.log("Nuevo Monedero:",newMonedero)
+                
                 createPedido(
                     carritoData
                 ).then(json => {
                     
                     return alert("¡Pedido tramitado con éxito!");
-                    vaciarCarrito();
+                    
                 })
                 .catch(error => {
                     console.error('Hubo un error con la solicitud fetch:', error);
                 });
+
+                //Restamos el dinero del monedero del user.
+
+                window.location.reload();
             }else{
                 return alert("No tienes suficiente dinero para pagar");
             }
@@ -258,7 +270,7 @@ function tramitarPedido(){
                 vaciarCarrito()
                 
             }
-            aler
+           
         // }else{
         //     alert("No tienes suficiente crédito para completar la compra. Añade crédito primero.");
 
@@ -280,8 +292,15 @@ function saveCarritoLocalStorage(carritoData,user){
 
 function getCarritoLocalStorage(){
 
-     const carrito = JSON.parse(localStorage.getItem(`carrito${user.id}`));
-     return carrito  || [];
+    if(user){
+
+        const carrito = JSON.parse(localStorage.getItem(`carrito${user.id}`));
+        return carrito  || [];
+
+    }else{
+        return [];
+    }
+    
      
 
 }
@@ -297,5 +316,6 @@ function estadoCarrito(){
         console.log("El carrito se cargó con los datos del Local Storage.");
     }
 }
+
 
 

@@ -16,6 +16,7 @@ body {
 h1 {
     text-align: center;
     margin-bottom: 30px;
+    color: #f39c12;
 }
 
 .columns {
@@ -23,6 +24,8 @@ h1 {
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
+    height:80vh;
+    overflow: scroll;
 }
 
 .column {
@@ -46,6 +49,38 @@ h1 {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+}
+
+.pedidoRecibido{
+
+    background-color: #f39c12;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: solid 1px #000000;
+    font-weight: bold;
+    
+}
+.siguiente{
+    background-color: #f39c12;
+    color: black;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: solid 1px #000000;
+  
+
+}
+.anterior{
+    background-color: #f39c12;
+    color: black;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: solid 1px #000000;
+  
+
 }
 
 button {
@@ -85,6 +120,16 @@ button:hover {
     button {
         width: 100%;
     }
+
+    .pedidoRecibido{
+
+        font-size: 14px;
+        
+    }
+    .siguiente{
+        font-size: 14px;
+    
+    }
 }
 
 @media (max-width: 480px) {
@@ -98,5 +143,15 @@ button:hover {
 
     button {
         padding: 10px;
+    }
+
+    .pedidoRecibido{
+
+        font-size: 12px;
+        
+    }
+    .siguiente{
+        font-size: 12px;
+    
     }
 }

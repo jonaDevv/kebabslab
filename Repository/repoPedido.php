@@ -199,22 +199,18 @@
                 // Actualizar el pedido
                 $stmt = $conn->prepare("
                                         UPDATE pedido
-                                        SET usuario_id = :usuario_id, fecha_hora = :fecha_hora,
+                                        SET usuario_id = :usuario_id,
                                             estado = :estado, precio_total = :precio_total, direccion = :direccion
                                         WHERE id = :id
                                         ");
         
-                $f = $pedido->getFecha_hora();
-                $fechaStr = $f['date'];
-                $fecha = new DateTime($fechaStr);
-                $fechaSinMicrosegundos = $fecha->format('Y-m-d H:i:s');
+            
 
         
                 // Ejecutar la sentencia de actualización del pedido
                 $stmt->execute([
                     'id' => $id,
                     'usuario_id' => $pedido->getUsuario_id(),
-                    'fecha_hora' => $fechaSinMicrosegundos,
                     'estado' => $pedido->getEstado(),
                     'precio_total' => $pedido->getPrecio_total(),
                     'direccion' => $pedido->getDireccion()
@@ -426,9 +422,9 @@
                 $stmt = $conn->prepare($sql);
         
                 // Ejecutar la consulta
-                $stmt->execute(['usuario_id' => $id->id]);
+                $stmt->execute(['usuario_id' => $id]);
         
-                $pedidosArray = []; // Array para almacenar los usuarios
+                $pedidosArray = []; // Array para almacenar los pedidos
                
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     

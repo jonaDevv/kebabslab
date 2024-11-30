@@ -3,9 +3,13 @@ window.addEventListener('load', function () {
 
 
 
+    cargarContenedoresPedido();
+   setInterval(cargarContenedoresPedido,20000);
 
 
-    cargarPedidos();
+   
+   setInterval(cargarPedidosUser,1000);
+   
 
 
 
@@ -15,135 +19,201 @@ window.addEventListener('load', function () {
 });
 
 
+async function cargarContenedoresPedido(){
 
+    reiniciarContenedor();
 
-
-
-// script.js
-
-// Simulando la función de fetch, para obtener los pedidos
-async function cargarPedidos() {
-    try {
-        // Este es un ejemplo de un `fetch` para obtener pedidos de una API
-        // Cambia la URL por la que corresponde en tu servidor
-        const response = await fetch('/Api/Api_pedido.php');
-
-        // Verificamos que la respuesta sea exitosa
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
+    getPedidos()
+    .then(json => {
+        if (Array.isArray(json)) {
+            json.forEach(item => {
+                repartirPedidos(item);
+            });
+        } else {
+            console.error("La respuesta no es un array", json);
         }
-        if(response.status==200){
+    })
+    .catch(error => {
+        console.error('Hubo un error con la solicitud fetch:', error);
+    });
 
-            const pedidos = await response.json();
 
-            if (pedidos){
+}
+
+
+async function repartirPedidos(pedido){
+    const us = await getUsuario(pedido.usuario_id);
+    console.log(us);
+    const recibido=document.getElementById("recibido");
+    const preparacion=document.getElementById("preparacion");
+    const entregado=document.getElementById("entregado");
+    const camino=document.getElementById("camino");
+
+    const siguiente=document.createElement("button");
+    const anterior=document.createElement("button");
+
+    const estadoPedido=pedido.estado;
+    
+    const pedidoRecibido=document.createElement("div");
+    pedidoRecibido.textContent=pedido.id+"  - "+us.nombre;
+    pedidoRecibido.classList.add("pedidoRecibido");
+   
+    
+    console.log(estadoPedido);
+
+    switch(estadoPedido){
+
+        case "recibido":
+            pedidoRecibido.style.backgroundColor="#9a2518";
+           
+            siguiente.classList.add("siguiente");
+            siguiente.textContent="->";
+            siguiente.addEventListener("click",function(){
+                cambiarEstad(pedido,"siguiente");
+            })
+            pedidoRecibido.appendChild(siguiente);
+            recibido.appendChild(pedidoRecibido);
+
+            break;
+        case "preparacion":
+            pedidoRecibido.style.backgroundColor="#f39c12";
+            anterior.classList.add("anterior");
+            anterior.textContent="<-";
+            anterior.addEventListener("click",function(){
+                cambiarEstad(pedido,"anterior");
+            })
+            pedidoRecibido.appendChild(anterior);
+            siguiente.classList.add("siguiente");
+            siguiente.textContent="->";
+            siguiente.addEventListener("click",function(){
+                cambiarEstad(pedido,"siguiente");
+            })
+            pedidoRecibido.appendChild(siguiente);
+
+            preparacion.appendChild(pedidoRecibido);
+            break;
+
+        case "entregado":
+            pedidoRecibido.style.backgroundColor="#2658b7";
+            anterior.classList.add("anterior");
+            anterior.textContent="<-";
+            anterior.addEventListener("click",function(){
+                cambiarEstad(pedido,"anterior");
+            })
+            pedidoRecibido.appendChild(anterior);
+           
+            entregado.appendChild(pedidoRecibido);
+            break;
+
+        case "camino":
+            pedidoRecibido.style.backgroundColor="#1a8a32";
+            anterior.classList.add("anterior");
+            anterior.textContent="<-";
+            anterior.addEventListener("click",function(){
+                cambiarEstad(pedido,"anterior");
+            })
+            pedidoRecibido.appendChild(anterior);
+            siguiente.classList.add("siguiente");
+            siguiente.textContent="->";
+            siguiente.addEventListener("click",function(){
+                cambiarEstad(pedido,"siguiente");
+            })
+            pedidoRecibido.appendChild(siguiente);
+            camino.appendChild(pedidoRecibido);
+            break;
+
+        default:
+            break;
+    }
+     
+}
+
+
+
+function cambiarEstad(pedido,direccion){
+
+   //Evaluamos el estado del pedido y la direccion para saber a donde es necesario cambiar
+
+    switch(direccion){
+        case "siguiente":
+
+            if(pedido.estado==="recibido"){
                 
+                cambiarEstado(pedido.id,"preparacion");
+                cargarContenedoresPedido();
 
-                pedidos.forEach(pedido => {
-                    const pedidoElemento = crearPedidoElemento(pedido);
-                if(pedidoElemento){// Añadir el pedido a la columna correspondiente
-                    const columna = document.getElementById(pedido.estado);
-                    if (columna) {
-                        columna.appendChild(pedidoElemento);
-                    
-                    }
-                } 
-                });
+            }else if(pedido.estado==="preparacion"){
+                
+                cambiarEstado(pedido.id,"camino")
+                cargarContenedoresPedido();
 
+                
+            }else if(pedido.estado==="camino"){
+                
+                cambiarEstado(pedido.id,"entregado")
+                cargarContenedoresPedido();
+
+               
             }
-        }
+            break;
 
+        case "anterior":
+            
+            if(pedido.estado==="preparacion"){
+                
+                cambiarEstado(pedido.id,"recibido");
+                cargarContenedoresPedido();
 
+            
+            }else if(pedido.estado==="camino"){
+                
+                cambiarEstado(pedido.id,"preparacion");
+                cargarContenedoresPedido();
 
-    } catch (error) {
-        console.error('Error al cargar los pedidos:', error);
-    }
-}
+                
+            }else if(pedido.estado==="entregado"){
+                
+                cambiarEstado(pedido.id,"camino");
+                cargarContenedoresPedido();
+            }
+            
+            break;
 
-function crearPedidoElemento(pedido) {
-    const divPedido = document.createElement('div');
-    divPedido.classList.add('pedido');
-    divPedido.setAttribute('data-id', pedido.id);
+        default:
 
-    const descripcion = document.createElement('p');
-    descripcion.textContent = `Pedido ${pedido.id} - Usuario: ${pedido.usuario_id}`;
-
-    // Crear los botones
-    const botonSiguiente = document.createElement('button');
-    const botonAnterior = document.createElement('button');
-
-    // Determinar el estado siguiente y anterior
-    const siguienteEstado = getEstadoSiguiente(pedido.estado);
-    const anteriorEstado = getEstadoAnterior(pedido.estado);
-
-    // Determinar los colores de los botones según el estado
-    botonSiguiente.style.backgroundColor = obtenerColorEstado(siguienteEstado);
-    botonAnterior.style.backgroundColor = obtenerColorEstado(anteriorEstado);
-
-    // Asignar texto y lógica de los botones
-    if (pedido.estado !== "recibido") {
-        botonAnterior.textContent = ` ${anteriorEstado.charAt(0).toUpperCase() + anteriorEstado.slice(1)}`;
-        botonAnterior.onclick = () => cambiarEstado(pedido.id, anteriorEstado);
-        divPedido.appendChild(botonAnterior);
+            console.log("No se ha encontrado ninguna accion");
+            break;
     }
 
-    // Si el estado es "entregado", no mostrar el botón de "siguiente"
-    if (pedido.estado !== "entregado") {
-        botonSiguiente.textContent = `${siguienteEstado.charAt(0).toUpperCase() + siguienteEstado.slice(1)}`;
-        botonSiguiente.onclick = () => cambiarEstado(pedido.id, siguienteEstado);
-        divPedido.appendChild(botonSiguiente);
-    }
 
-    divPedido.appendChild(descripcion);
+    
+   
 
-    return divPedido;
 }
 
 
-function cambiarEstado(pedidoId, nuevoEstado) {
-    const pedidoElemento = document.querySelector(`.pedido[data-id='${pedidoId}']`);
-    const columnaDestino = document.getElementById(nuevoEstado);
-
-    // Eliminar el pedido de la columna actual
-    pedidoElemento.parentElement.removeChild(pedidoElemento);
-
-    // Crear un nuevo pedido con los mismos datos en la nueva columna
-    const pedido = {
-        id: pedidoId,
-        estado: nuevoEstado,
-        descripcion: pedidoElemento.querySelector('p').textContent.split(' - ')[1]
-    };
-
-    // Llamar al servidor para actualizar el estado
-    actualizarEstadoEnServidor(pedido);
-
-    const nuevoPedidoElemento = crearPedidoElemento(pedido);
-    columnaDestino.appendChild(nuevoPedidoElemento);
-}
-
-async function actualizarEstadoEnServidor(pedido) {
-    try {
-        console.log('Actualizando estado en el servidor para el pedido:', pedido); // Verifica el pedido que se envía
-        const response = await fetch('/Api/Api_pedido.php', {
-            method: 'PUT',  // O 'PUT' dependiendo de cómo manejes la API
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pedido)  // Enviamos el pedido con el nuevo estado
-        });
-
-        // Verificamos si la respuesta del servidor fue exitosa
-        if (!response.ok) {
-            throw new Error(`Error al actualizar el estado del pedido: ${response.status}`);
-        }
-
-        const respuesta = await response.json();
-        console.log('Estado del pedido actualizado en el servidor:', respuesta);
-        return respuesta; // Asegúrate de que el servidor esté enviando una respuesta válida
-
-    } catch (error) {
-        console.error('Error al actualizar el estado en el servidor:', error);
+function reiniciarContenedor(){
+    const recibido=document.getElementById("recibido");
+    const preparacion=document.getElementById("preparacion");
+    const entregado=document.getElementById("entregado");
+    const camino=document.getElementById("camino");
+    if(recibido){    
+        recibido.innerHTML="";
     }
+    if(preparacion){
+        preparacion.innerHTML="";
+    }
+    if(entregado){
+        entregado.innerHTML="";
+    }
+    if(camino){
+        camino.innerHTML="";
+    }
+    
 }
+
+
+
+
 
 
