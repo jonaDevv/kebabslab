@@ -15,7 +15,6 @@ Sesion::iniciaSesion();
     <script src="/ApiJs/Api_ingrediente.js" defer></script>
     
     <script src="/asset/js/general.js" defer></script>
-    <script src="/asset/js/gestionPedidos.js" defer></script>
     <script src="/asset/js/kebabGusto.js" defer></script>
     <script src="/asset/js/rellenarEdicionKebab.js"></script> 
     <script src="/asset/js/carta.js"></script>
@@ -28,6 +27,8 @@ Sesion::iniciaSesion();
     <script src="/asset/js/gpedidos.js"></script>
     <script src="/asset/js/finalizarCompra.js" ></script>
     <script src="/asset/js/modalCarrito.js" ></script>
+    <script src="/asset/js/mispedidos.js" ></script>
+    <script src="/asset/js/pMantenimiento.js" ></script>
 
     
 
@@ -47,6 +48,8 @@ Sesion::iniciaSesion();
     <link rel="stylesheet" href="../asset/css/gpedidos.css">
     <link rel="stylesheet" href="../asset/css/finalizarCompra.css">
     <link rel="stylesheet" href="../asset/css/modalCredito.css">
+    <link rel="stylesheet" href="../asset/css/misPedidos.css">
+    <link rel="stylesheet" href="../asset/css/mantenimiento.css">
 
 
     

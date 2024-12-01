@@ -55,8 +55,10 @@ function añadirCredito() {
 
 
 
+
 // Actualiza los valores en la interfaz
 function actualizarUI() {
+   
     document.getElementById("credito-monedero").textContent = `${misaldo}€`;
     document.getElementById("credito-final").textContent = `${(misaldo - totalPagar).toFixed(2)}€`;
 }

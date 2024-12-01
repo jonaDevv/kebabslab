@@ -1,34 +1,33 @@
 /* styles.css */
 body {
-   font-family: Jetbrains Mono;
+    font-family: Jetbrains Mono;
     background-color: rgba(36, 36, 92, 0.9);
-
     margin: 0;
     padding: 0;
-}
-
-.container {
+ }
+ 
+ .container {
     max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px;
-}
-
-h1 {
+    margin: 10px auto;
+    padding: 10px;
+ }
+ 
+ h1 {
     text-align: center;
     margin-bottom: 30px;
     color: #f39c12;
-}
-
-.columns {
+ }
+ 
+ .columns {
     display: flex;
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
-    height:80vh;
-    overflow: scroll;
-}
-
-.column {
+    min-height: 80vh; /* Altura dinámica */
+    height: auto;
+ }
+ 
+ .column {
     flex: 1;
     padding: 10px;
     background-color: #fff;
@@ -36,122 +35,125 @@ h1 {
     border-radius: 8px;
     min-height: 300px;
     margin-bottom: 20px;
-}
-
-.column h2 {
+ }
+ 
+ .column h2 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.pedido {
+ }
+ 
+ .pedido {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border-radius: 5px;
-}
-
-.pedidoRecibido{
-
+ }
+ 
+ .pedidoRecibido {
     background-color: #f39c12;
     color: white;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border-radius: 5px;
     border: solid 1px #000000;
     font-weight: bold;
-    
-}
-.siguiente{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ 
+ .siguiente,
+ .anterior {
     background-color: #f39c12;
-    color: black;
+    color: white;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border-radius: 5px;
-    border: solid 1px #000000;
-  
-
-}
-.anterior{
-    background-color: #f39c12;
-    color: black;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: solid 1px #000000;
-  
-
-}
-
-button {
+    border: solid 1px white;
+ }
+ 
+ button {
     margin-top: 10px;
-    padding: 8px 15px;
+    padding: 12px 20px; /* Mejora para pantallas táctiles */
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-button:hover {
+ }
+ 
+ button:hover {
     background-color: #0056b3;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+ }
+ 
+ /* Responsive Design */
+ @media (max-width: 768px) {
     .columns {
         flex-direction: column;
         gap: 10px;
     }
-
+ 
     .column {
         flex: none;
         width: 100%;
     }
-
+ 
     h1 {
         font-size: 24px;
     }
-
+ 
     .pedido {
         font-size: 14px;
     }
-
+ 
     button {
-        width: 100%;
+        width: 100%; /* Botones más grandes */
+        font-size: 16px;
     }
-
-    .pedidoRecibido{
-
+ 
+    .pedidoRecibido {
         font-size: 14px;
+    }
+ 
+    .siguiente,
+    .anterior {
+        font-size: 14px;
+    }
+ }
+ 
+ @media (max-width: 480px) {
+    .columns {
+        justify-content: center;
+        align-items: center;
         
     }
-    .siguiente{
-        font-size: 14px;
-    
+ 
+    .column {
+        margin-bottom: 15px;
     }
-}
-
-@media (max-width: 480px) {
+ 
     h1 {
         font-size: 20px;
     }
-
+ 
     .pedido {
         font-size: 12px;
     }
-
+ 
     button {
         padding: 10px;
-    }
-
-    .pedidoRecibido{
-
-        font-size: 12px;
+        font-size: 14px;
         
     }
-    .siguiente{
+ 
+    .pedidoRecibido {
         font-size: 12px;
-    
     }
-}
+ 
+    .siguiente,
+    .anterior {
+        font-size: 12px;
+    }
+ }
+ 

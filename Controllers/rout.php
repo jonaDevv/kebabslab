@@ -24,6 +24,9 @@ class rout{
                 "gUsuario" => (Control::gUsuario()),
                 "gPedido" => (Control::gPedido()),
                 "gVenta" => (Control::gVenta()),
+                "misPedido" => (Control::misPedidos()),
+                "gkebab" => (Control::gkebab()),
+
                 "cerrarSesion" => (Control::cerrarSesion()),
 
                 

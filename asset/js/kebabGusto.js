@@ -11,17 +11,19 @@ window.addEventListener("load", function() {
                 const pideBtn = document.getElementById("pedir");
 
                 if (pideBtn) {
-
+                        
                         pideBtn.addEventListener("click", function () {
                                 
                                 if (anadirK.ingredientes.length > 0) {
                                 // Realiza la acción si tiene ingredientes
-                                anadirCarrito(anadirK);
-                                console.log(anadirK);
-
+                                        anadirCarrito(anadirK);
+                                
+                                        window.location.reload();
                                 } else {
                                 alert("Ingredientes no disponibles");
                                 }
+
+                                
                         })     
                 }
 

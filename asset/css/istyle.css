@@ -1,101 +1,84 @@
-*{
+/* Estilos generales */
+* {
   box-sizing: border-box;
-  font-family: Jetbrains Mono;
+  font-family: 'Jetbrains Mono', monospace;
 }
 
-
-
-body{
-
-    display: grid;
-    min-height: 100vh;
-    grid-template-rows: auto 1fr auto;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    cursor: url('/asset/img/favicon1.png'), auto;
-      
+body {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
+  margin: 0;
+  cursor: url('/asset/img/favicon1.png'), auto;
 }
 
-
-
-
-/* Estilos de footer */
+/* Footer */
 footer {
-    background-color: #24245c;
-    color: #fff;
-    padding: 20px 0;
-  }
-  
-  .footer-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 0 10%;
-    flex-wrap: wrap;
-    margin-top: auto;
-  }
-  
-  .footer-section {
-    flex: 1;
-    margin: 10px;
-  }
-  
-  .footer-section h3 {
-    margin-bottom: 10px;
-  }
-  
-  .footer-section ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li {
-    margin: 5px 0;
-  }
-  
-  .footer-section ul li a,
-  .footer-section .social a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .footer-section .social a {
-    margin: 0 5px;
-  }
-  
-  .footer-bottom {
-    text-align: center;
-    padding: 10px;
-    font-size: 0.9em;
-    background-color: #222;
-  }
+  background-color: #24245c;
+  color: #fff;
+  padding: 20px 0;
+}
 
-  /* Estilos del header */
-/* Estilos generales del header */
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10%;
+  flex-wrap: wrap;
+}
 
+.footer-section {
+  flex: 1;
+  margin: 10px;
+}
 
+.footer-section h3 {
+  margin-bottom: 10px;
+}
+
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 5px 0;
+}
+
+.footer-section ul li a,
+.footer-section .social a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-section .social a {
+  margin: 0 5px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+  background-color: #222;
+}
+
+/* Header */
 header {
   z-index: 10;
-  background-color:#24245c; /* Color de fondo del header */
+  background-color: #24245c;
   color: white;
-  
-  position: sticky;             /* Fija el contenedor en la pantalla */
-  top: 0%;                      /* Centrado vertical *;                     /* Centrado horizontal */
-  
+  position: sticky;
+  top: 0;
   width: 100%;
-
   padding: 20px;
-  
 }
 
-/* Contenedor principal del header */
 .header-container:not(#icono-compra) {
   display: flex;
-  flex-direction: column; /* Organiza los elementos en una columna (titulo arriba y menú abajo) */
-  align-items: center; /* Centra los elementos horizontalmente */
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Estilo para el logo */
 .logo a {
   text-align: center;
   justify-content: center;
@@ -104,20 +87,18 @@ header {
   text-decoration: none;
   font-weight: bold;
   margin-bottom: 10px;
-  height: 50px; /* Ajusta según el tamaño que desees */
 }
 
-/* Estilo para el menú */
 .menu nav ul {
   list-style-type: none;
   padding: 5px;
   margin: 0;
   display: flex;
-  justify-content: center; /* Centra el menú horizontalmente */
+  justify-content: center;
 }
 
 .menu nav ul li {
-  margin: 0 15px;  /* Espacio entre los elementos del menú */
+  margin: 0 15px;
 }
 
 .menu nav ul li a,
@@ -130,7 +111,6 @@ header {
   cursor: pointer;
 }
 
-/* Efecto hover para los enlaces y el botón */
 .menu nav ul li a:hover,
 .menu nav ul li button:hover {
   color: #f39c12;
@@ -138,105 +118,78 @@ header {
 
 .menu .nav-admin {
   display: none;
-  color:#f39c12;
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); /* Sombreado interno */
+  color: #f39c12;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Contenedor del video */
+/* Video Background */
 .video-background-container {
   position: relative;
   width: 90%;
-  height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow: hidden; /* Oculta cualquier parte del video que se salga */
-  
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Estilo del video */
 .video-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Hace que el video cubra todo el contenedor sin distorsionarse */
-  z-index: -1; /* Asegura que el video quede en el fondo */
-  border-radius: 0 0 20px 20px;
-}
-
-/* Estilo para el contenido de la página */
-.content {
-  position: relative;
-  z-index: 1; /* Asegura que el contenido se muestre por encima del video */
-  text-align: center; /* Centra el texto */
-  color: rgb(2, 2, 2);
-  padding: 20px;
-}
-.video-background {
-  filter: blur(5px); /* Ajusta el valor según lo que desees */
   object-fit: cover;
+  z-index: -1;
+  border-radius: 0 0 20px 20px;
+  filter: blur(5px);
   background-color: #222;
 }
 
-#icono-compra {
-  position: absolute;  /* Cambia a posición absoluta */
-  right: 60px; 
-  bottom:-10px;        /* Se ajusta 10px desde el borde derecho del contenedor */
-  top: 50%;            /* Centrado verticalmente respecto al contenedor */
-  transform: translateY(-50%);  /* Ajuste para centrar el icono verticalmente */
-  width: 40px;
-  height: 40px;
- 
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: rgb(2, 2, 2);
+  padding: 20px;
 }
 
-#icono-compra:hover{
+/* Carrito */
+#icono-compra {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+}
+
+#icono-compra:hover {
   cursor: pointer;
   width: 45px;
   height: 45px;
-  
-
-
 }
 
-/* Indicador de cantidad en el carrito */
 .carrito-count {
-  position: absolute; 
-  right: 68px;          /* Alineado con el borde derecho del ícono */
-  top: 20px;            /* Ajustado verticalmente */
-  margin: 0;
-  padding: 0;
+  position: absolute;
+  right: 68px;
+  top: 20px;
   width: 20px;
   height: 20px;
-  color: white;          /* Texto blanco */
+  color: white;
   text-align: center;
-  line-height: 20px;     /* Centrar el texto verticalmente */
-  border-radius: 50%;    /* Forma circular */
+  line-height: 20px;
+  border-radius: 50%;
   font-size: 12px;
 }
 
-
-
-/* Estilos del menú, inicialmente oculto */
+/* Menú Kebab */
 .nav-kebab {
   display: none;
-  position: absolute;  /* Posicionamiento absoluto */
-         /* Justo debajo del botón */
-  
-              /* Alineado a la izquierda del botón */
-  background-color:  #222; /* Fondo blanco para el menú */
-  
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle efecto de profundidad */
-  z-index: 1000;        /* Aseguramos que se muestre encima de otros elementos */
-  top:100%;
-  left:0%;
-
- 
-        /* Se ajusta 10px desde el borde derecho del contenedor */
-           /* Centrado verticalmente respecto al contenedor */
-
- width:100%;
-  
- 
-  
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #222;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 100%;
 }
 
 .nav-kebab ul {
@@ -257,10 +210,43 @@ header {
 }
 
 .nav-kebab li a:hover {
-  
-  color:white;
+  color: white;
 }
 
+/* Menú Kebab */
+.nav-producto {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #222;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 100%;
+}
+
+.nav-producto ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-producto li {
+  padding: 10px;
+}
+
+.nav-producto li a {
+  text-decoration: none;
+  color: #b81515;
+  padding: 5px 20px;
+  display: block;
+}
+
+.nav-producto li a:hover {
+  color: white;
+}
+
+/* Modal */
 #openModal {
   position: absolute;
   right: 200px;
@@ -270,21 +256,70 @@ header {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  white-space: nowrap; /* Impide saltos de línea */
+  white-space: nowrap;
   font-weight: bold;
 }
 
-
-#carrito{
-
-
-  display:none;
+#carrito {
+  display: none;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .footer-section {
+    margin: 10px 0;
+  }
 
+  .header-container:not(#icono-compra) {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+  }
 
+  .menu nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .menu nav ul li {
+    margin: 10px 0;
+  }
 
+  .video-background-container {
+    width: 100%;
+  }
 
- 
+  #icono-compra {
+    right: 20px;
+    top: 20px;
+  }
+
+  .carrito-count {
+    right: 28px;
+    top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo a {
+    font-size: 24px;
+  }
+
+  .menu nav ul li a,
+  .menu nav ul li button {
+    font-size: 16px;
+  }
+
+  .footer-section h3 {
+    font-size: 18px;
+  }
+
+  .footer-bottom {
+    font-size: 0.8em;
+  }
+}

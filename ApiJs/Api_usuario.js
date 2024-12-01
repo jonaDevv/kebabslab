@@ -1,8 +1,3 @@
-
-
-
-
-
 async function checkSession() {
 
     const response = await fetch('/Api/Api_sesion.php');
@@ -26,6 +21,8 @@ async function getUsuario(id){
     const usuario = await response.json()
     return usuario;
 }
+
+
 
 getUserLocaleStorage=async function(){
     const user = JSON.parse(localStorage.getItem('User'));
@@ -126,13 +123,15 @@ async function actualizarMonedero(id, saldo) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify([{id:id,monedero:saldo}]), // Solo envías el saldo en el cuerpo
+            body: JSON.stringify([{id:id,monedero:saldo}]), 
         });
+
 
         // Validar la respuesta del servidor
         if (!response.ok) {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
+
 
         // Procesar la respuesta
         const credit = await response.json();
@@ -176,6 +175,10 @@ function cerrarSesion(){
     localStorage.removeItem('User');
     window.location.href="?menu=cerrarSesion";
 }
+
+
+
+
 
 
 

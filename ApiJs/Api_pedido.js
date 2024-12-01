@@ -75,22 +75,22 @@ async function cambiarEstado(id,estado){
 
 async function cargarPedidosUser() {
     const contPedidos = document.getElementsByClassName("pedidoPuser")[0];
+
+    const user=await getUsuario(JSON.parse(localStorage.getItem('User')).id);
     
-    if (!contPedidos) {
-        console.error("No se encontró el contenedor 'pedidoPuser'.");
-        return;
+    if (contPedidos) {
+       
+        contPedidos.innerHTML = "";
+       
     }
     
-    // Limpiar el contenedor
-    contPedidos.innerHTML = "";
+   
 
     getPedidos()
     .then(json => {
         if (Array.isArray(json)) {
             json.forEach(item => {
                 const pedido = document.createElement("div");
-                pedido.classList.add("pedidoUser");
-                pedido.id = `pedido-${item.id}`;
                 pedido.textContent = `Pedido ID: ${item.id} ${item.estado} ${item.precio_total}`;
                 pedido.classList.add("pedidoRecibido");
                 pedido.style.width="80%";
@@ -102,10 +102,13 @@ async function cargarPedidosUser() {
                     cancelarBtn.style.backgroundColor="blue";
                     cancelarBtn.addEventListener("click", function() {
                         
+                        const newMonedero=parseFloat(user.monedero)+parseFloat(item.precio_total);
+                        actualizarMonedero(item.usuario_id,newMonedero)
                         deletPedido(item.id)
                         .then(json => {
                             console.log(json);
                             cargarPedidosUser();
+                            mostrarPerfil(item.usuario_id);
                         })
                         .catch(error => {
                             console.error('Hubo un error con la solicitud fetch:', error);
@@ -115,6 +118,11 @@ async function cargarPedidosUser() {
                    pedido.appendChild(cancelarBtn);
                 }
                 
+                pedido.addEventListener("click", function() {
+                    
+                    alert("Pedido " + pedido.id );
+                    
+                });
                 
    
                 contPedidos.appendChild(pedido);

@@ -70,8 +70,6 @@ switch ($method) {
             isset($data[0]['lineasPedido']) &&
             isset($data[0]['precio_total'])
             
-           
-            
         ) {
 
             

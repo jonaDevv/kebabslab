@@ -1,0 +1,164 @@
+/* Contenedor principal */
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: rgba(36, 36, 92, 0.9);
+    margin: 0;
+    padding: 0;
+}
+
+.gkebab-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;  /* Esto asegura que en pantallas más pequeñas, las columnas se ajusten */
+}
+
+/* Estilo para cada columna */
+.gkebab-column {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height:700px;
+    margin: 10px 0;
+    min-width: 300px; /* Para que las columnas no se encojan demasiado en pantallas pequeñas */
+}
+
+/* Estilo del formulario */
+.gkebab-formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.gkebab-formulario label {
+    margin: 8px 0 4px;
+    font-weight: bold;
+}
+
+.gkebab-formulario input, 
+.gkebab-formulario textarea {
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo de los botones */
+.gkebab-formulario button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gkebab-formulario button:hover {
+    background-color: #218838;
+}
+
+/* Estilo de las cajas de contenido */
+.gkebab-content-kebab {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 20px;
+    height: 600px;
+    overflow: scroll;
+}
+.gkebab-content-ingredientes {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 20px;
+    overflow: scroll;
+    height: 600px;
+    text-align: center;
+}
+
+/* Estilo para el campo de la imagen */
+.gkebab-formulario input[type="file"] {
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.gkebab-kebab{
+
+    background-color: #f39c12;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin:4px;
+   
+
+}
+
+/* Estilo para la imagen previa */
+#gkebab-imagen-previa {
+    margin-top: 10px;
+    max-width: 50%;
+    height: 50px;
+    display: none;
+    margin: auto;
+}
+
+/* Estilo para la zona de ingredientes */
+#gkebab-ingredientes-drop {
+    width: 300px;
+    height: 200px;
+    border: 2px dashed #888;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px; /* Asegura que la zona de arrastre tenga altura mínima */
+}
+
+/* Estilo de los ingredientes arrastrables */
+.gkebab-ingrediente {
+    margin: 10px;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gkebab-ingrediente:hover {
+    background-color: #e6e6e6;
+}
+
+/* Estilo cuando se arrastra sobre la zona de soltar */
+#gkebab-ingredientes-drop.hovered {
+    background-color: #e0f7fa;
+}
+
+/* Estilos para la zona de ingredientes en el kebab */
+.ingredientes-kebab {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70px;
+    width: 100%;
+    border: solid 1px black;
+    margin-top: 20px;
+    background-color: #fafafa;  /* Agregado para diferenciar visualmente la zona */
+    border-radius: 6px;
+    padding: 10px;
+}

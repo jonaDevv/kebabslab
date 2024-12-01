@@ -69,7 +69,16 @@ class Control {
     public static function gVenta() {
         require_once './Vistas/mantenimiento/gVenta.php';
     }
+
+    public static function misPedidos() {
+        require_once './Vistas/principal/misPedidos.php';
+    }
+
     
+    
+    public static function gkebab() {
+        include __DIR__ . '/../vistas/mantenimiento/gKebab.php';
+    }
    
     // En "controllers/pedidos.php"
 

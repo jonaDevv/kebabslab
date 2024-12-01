@@ -62,10 +62,10 @@ window.addEventListener("load", function () {
                                 .then(respuesta => respuesta.json())
                                 .then(json => {
 
-                                    
+                                    console.log(json);
 
                                   
-                                    localStorage.setItem('User', JSON.stringify(json));
+                                    localStorage.setItem('User', JSON.stringify(json.user));
                                     window.location.href="?menu=inicio";
                                     
                                 })

@@ -9,7 +9,7 @@ use Helper\Login;
 
 $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
         
-// Verificar si se recibieron todos los datos necesarios
+
 
     
    
@@ -41,17 +41,17 @@ $data = json_decode(file_get_contents("php://input"), true); // true convierte e
                     Login::login($usuario);
                     if (isset($_SESSION['user'])) {
                         
-                        echo json_encode(["success" => true]);
+                        echo json_encode(["success" => true, "user" => $usuario]);
                     }
                     else {
                         http_response_code(404); // Not Found
-                        echo "alert('error')";
+                        echo json_encode(["success" => false]);
                     }
 
 
                  } else {
                     http_response_code(404); // Not Found
-                    echo "alert('error')";
+                    echo json_encode(["success" => false]);
 
                 
                  

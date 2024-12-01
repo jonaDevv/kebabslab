@@ -1,13 +1,13 @@
 // Array global para gestionar el carrito
 const user=JSON.parse(localStorage.getItem('User'));
 let carritoData = [];
-carritoData=getCarritoLocalStorage();
+carritoData=getCarritoLocalStorage(user);
 actualizarCarritoUI();
 
 
 
 function anadirCarrito(kebab) {
-
+    
     
       carritoData.push({
             usuario_id: user.id ,
@@ -27,11 +27,14 @@ function anadirCarrito(kebab) {
                 }
                 
             ],
+            
             precio_total: calcularPrecioCarritoTotal()
+
         });
        
-    saveCarritoLocalStorage(carritoData,user);
     actualizarCarritoUI();
+    saveCarritoLocalStorage(carritoData,user);
+    console.log(carritoData)
     
 }
 
@@ -213,35 +216,38 @@ function vaciarCarrito() {
     carritoData=[];
     const totalElement = document.getElementById("total");
      totalElement.innerHTML= "0.00€";
-    alert("Carrito eliminado");
 
     localStorage.removeItem(`carrito${user.id}`);
     
 
 }
+
 function tramitarPedido(){
     
     let totalPagar=document.getElementById("total-pagar").textContent;
     totalPagar=parseFloat(totalPagar.replace('€', '').trim());
-    let newMonedero=user.monedero-totalPagar;
-    
+    let newMonedero=parseFloat(user.monedero)-parseFloat(totalPagar);
+    const carritoData=getCarritoLocalStorage(user);
+    console.log(carritoData)
     if(carritoData.length>0){
 
         getUsuario(user.id).then(user=>{
             console.log("Lo que pagaste es:",totalPagar)
-            console.log("Tu dinero es:",user.monedero)
-           
+            console.log("Tu dinero es:",parseFloat(user.monedero))
+            console.log(user)
+            console.log(carritoData)
+
             if(user.monedero>=totalPagar){
                 
 
-                actualizarMonedero(user.id,newMonedero);
-                console.log("Nuevo Monedero:",newMonedero)
                 
-                createPedido(
-                    carritoData
-                ).then(json => {
+                actualizarMonedero(user.id,newMonedero);
+                
+                
+                createPedido(carritoData).then(json => {
                     
-                    return alert("¡Pedido tramitado con éxito!");
+                    console.log("¡Pedido tramitado con éxito!");
+                    console.log(json);  
                     
                 })
                 .catch(error => {
@@ -250,7 +256,7 @@ function tramitarPedido(){
 
                 //Restamos el dinero del monedero del user.
 
-                window.location.reload();
+                // window.location.reload();
             }else{
                 return alert("No tienes suficiente dinero para pagar");
             }
@@ -261,7 +267,7 @@ function tramitarPedido(){
             overlayCarrito= document.getElementsByClassName("carrito-overlay")[0]
             if(modalFinalizarcompra && modalCarritoContainer){
                 
-                alert("¡Pedido tramitado con éxito!");
+               
                 modalCarritoContainer.style.display = "none";
             }
             if(modalFinalizarcompra){
@@ -271,10 +277,7 @@ function tramitarPedido(){
                 
             }
            
-        // }else{
-        //     alert("No tienes suficiente crédito para completar la compra. Añade crédito primero.");
-
-        // }
+       
   
     }else{
         alert("El carrito está vacío");
@@ -290,7 +293,7 @@ function saveCarritoLocalStorage(carritoData,user){
     
 }
 
-function getCarritoLocalStorage(){
+function getCarritoLocalStorage(user){
 
     if(user){
 

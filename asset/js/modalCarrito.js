@@ -72,6 +72,8 @@ window.addEventListener("load", function () {
                         // Evento del botón de pagar
                         if (pagarBtn) {
                             pagarBtn.addEventListener("click", function () {
+
+                                
                                 ticket= document.getElementsByClassName("popup");
                                 
                                 

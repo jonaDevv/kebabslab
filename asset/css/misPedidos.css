@@ -1,0 +1,41 @@
+/* Contenedor general */
+.cont-misPedidos {
+    display: flex;
+    flex-direction: column; /* Colocar los pedidos en columna */
+    gap: 15px; /* Espaciado entre los pedidos */
+    padding: 20px;
+    background-color: #f9f9f9; /* Fondo claro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    max-width: 800px; /* Ancho máximo del contenedor */
+    overflow-y: auto; /* Scroll vertical si hay demasiados pedidos */
+    max-height: 500px; /* Limitar la altura */
+    margin: auto; /* Centrar el contenedor en la página */
+    align-items: center; /* Centrar el contenido horizontalmente */
+    justify-content: center; /* Centrar el contenido verticalmente */
+    display: flex; /* Flexbox para centrar los elementos hijos */
+}
+
+/* Cada pedido individual */
+.cont-misPedidos .pedido {
+    background-color: #fff; /* Fondo blanco para destacar */
+    border: 1px solid #e0e0e0; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* Alinear contenido verticalmente */
+    justify-content: center; /* Centrar contenido en el eje vertical */
+    align-items: center; /* Centrar contenido en el eje horizontal */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra leve */
+    transition: transform 0.2s, box-shadow 0.2s; /* Efecto al pasar el cursor */
+    
+    width: 100%; /* Asegura que el pedido ocupe todo el espacio disponible */
+    max-width: 700px; /* Limita el tamaño del pedido para mantenerlo estético */
+    margin: 10px 0; /* Margen entre los pedidos */
+}
+
+/* Pedido: hover */
+.cont-misPedidos .pedido:hover {
+    transform: translateY(-2px); /* Efecto sutil de levantamiento */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+}

@@ -1,28 +1,24 @@
 window.addEventListener('load', function () {
     
     
-    checkSession()
-    .then(json => {
+    // checkSession()
+    // .then(json => {
         
 
         
-        mostrarPerfil(json.id);
+    //     mostrarPerfil(json.id);
         
 
-        editarbtn = document.getElementById('editarPerfil');
-        if (editarbtn) {
-            editarbtn.addEventListener('click', function () {
-                editarFicha(json);
-            });
-        }
+    //    
 
-        return json;
-    })
-    .catch(error => {
-        console.error('Hubo un error con la solicitud fetch:', error);
-    });
+    //     return json;
+    // })
+    // .catch(error => {
+    //     console.error('Hubo un error con la solicitud fetch:', error);
+    // });
 
     
+
     recargar=document.getElementById('recargar');
         if (recargar) {
             recargar.addEventListener('click', function () {
@@ -32,40 +28,57 @@ window.addEventListener('load', function () {
            
         }
 
+    const modalCredito = document.getElementById("modal-credito");
+    const us=JSON.parse(localStorage.getItem('User'));
+    let dinero=0;
+    getUsuario(us.id).then(json=>{
+        const useri=json;
+        mostrarPerfil(useri.id);
+        dinero=useri.monedero;
+
+        editarbtn = document.getElementById('editarPerfil');
+
+        if (editarbtn) {
+            editarbtn.addEventListener('click', function () {
+                editarFicha(json);
+            });
+        }
+    
+    })
 
 
-    const useri=JSON.parse(localStorage.getItem('User'));
-    cancelarBtn=document.getElementsByClassName("closeaddCredito")[0]
-    if(cancelarBtn){
-        cancelarBtn.addEventListener("click",function(){
-            modalCredito.style.display = "none";
-        })
-    }
     addCreditBtn=document.getElementsByClassName("addCredito")[0]
 
-    if(addCreditBtn)
-    {    addCreditBtn.addEventListener("click",function(){
+        if(addCreditBtn)
+        {    addCreditBtn.addEventListener("click",function(){
 
-            
-            cantidadCredito=document.getElementById("cantidad-credito")
-
-            const nuevoSaldo=parseFloat(cantidadCredito.value)+parseFloat(useri.monedero);
-            console.log(nuevoSaldo);
-            
-            actualizarMonedero(useri.id,nuevoSaldo).then(json=>{
-                console.log(json);
-                mostrarPerfil(useri.id);
                 
+                cantidadCredito=document.getElementById("cantidad-credito")
+
+                const nuevoSaldo=parseFloat(cantidadCredito.value)+parseFloat(dinero);
+                
+                
+                actualizarMonedero(us.id,nuevoSaldo).then(json=>{
+                   mostrarPerfil(us.id);
+                   
+                    
+                })
+
+                modalCredito.style.display = "none";
                 
             })
-            modalCredito.style.display = "none";
-            
-        })
-    }
+        }
 
+    cancelarBtn=document.getElementsByClassName("closeaddCredito")[0]
+        if(cancelarBtn){
+            cancelarBtn.addEventListener("click",function(){
+                modalCredito.style.display = "none";
+            })
+        }
     
     
-
+    
+        
 
 
 
@@ -80,7 +93,7 @@ window.addEventListener('load', function () {
 
 function recargarMonedero(){
 
-    modalCredito = document.getElementById("modal-credito");
+   const  modalCredito = document.getElementById("modal-credito");
 
     if (modalCredito.style.display === "none") {
         modalCredito.style.display = "block";

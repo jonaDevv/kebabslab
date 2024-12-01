@@ -19,6 +19,19 @@ async function getKebabs(){
 
 }
 
+async function crearKebab(kebab){
+    const response = await fetch('/Api/Api_kebab.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(kebab)
+    });
+    
+    const keb = await response.json();
+    return keb;
+}
+
 
 
 
