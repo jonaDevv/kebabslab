@@ -80,17 +80,7 @@ switch ($method) {
         if (isset($data[0]['id'])) {
             $id = $data[0]['id']; // ID del kebab a actualizar
 
-            // Crear un nuevo objeto kebab con los datos proporcionados
-            if (isset($data[0]['ingredientes'])) {
-                $ingredientes = [];
-                foreach ($data[0]['ingredientes'] as $ingredienteId) {
-                    $ingredientes[] = ['id' => $ingredienteId]; // Asumimos que cada ingrediente es un ID
-                }
-                
-            }else{
-
-                $ingredientes = [];
-            }
+           
 
             if($keb=repoKebab::read($id)){
 
@@ -98,7 +88,7 @@ switch ($method) {
                 $keb->setNombre($data[0]['nombre']??$keb->getNombre());
                 $keb->setFoto($data[0]['foto']??$keb->getFoto());
                 $keb->setPrecio($data[0]['precio']??$keb->getPrecio());
-                $keb->setIngredientes($ingredientes??$keb->getIngredientes());
+                $keb->setIngredientes($data[0]['ingredientes']??$keb->getIngredientes());
         
             }else{
                 return false;

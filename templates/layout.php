@@ -28,7 +28,7 @@ Sesion::iniciaSesion();
     <script src="/asset/js/finalizarCompra.js" ></script>
     <script src="/asset/js/modalCarrito.js" ></script>
     <script src="/asset/js/mispedidos.js" ></script>
-    <script src="/asset/js/pMantenimiento.js" ></script>
+    <script src="/asset/js/pMantenimientoKebab.js" ></script>
 
     
 
@@ -49,7 +49,7 @@ Sesion::iniciaSesion();
     <link rel="stylesheet" href="../asset/css/finalizarCompra.css">
     <link rel="stylesheet" href="../asset/css/modalCredito.css">
     <link rel="stylesheet" href="../asset/css/misPedidos.css">
-    <link rel="stylesheet" href="../asset/css/mantenimiento.css">
+    <link rel="stylesheet" href="../asset/css/mantenimientoKebab.css">
 
 
     

@@ -7,6 +7,7 @@ use Models\Kebab;
 use Models\BdConnection;
 use PDO; // Importa PDO
 use PDOException; 
+use Exception;
 
 Class repoKebab implements RepoCrud {
     
@@ -145,54 +146,83 @@ Class repoKebab implements RepoCrud {
             echo json_encode(["error" => "Datos de kebab inválidos"]);
             return false; // Salir de la función
         }
-
+    
         $conn = BdConnection::getConnection();
-
+    
         try {
             // Iniciar una transacción
             $conn->beginTransaction();
-
+    
             // 1. Actualizar los datos del kebab
-            $stmtUpdate = $conn->prepare("UPDATE kebab SET nombre = :nombre, precio = :precio, foto = :foto WHERE id = :id");
-            $stmtUpdate->execute([
+            $stmtUpdate = $conn->prepare("
+            UPDATE kebab SET nombre = :nombre, precio = :precio, foto = :foto WHERE id = :id
+            ");
+            $resultado = $stmtUpdate->execute([
                 'id' => $id,
                 'nombre' => $kebab->getNombre(),
                 'precio' => $kebab->getPrecio(),
                 'foto' => $kebab->getFoto(),
-                
             ]);
-
+    
+            if (!$resultado) {
+                throw new Exception("Fallo al actualizar el kebab.");
+            }
+    
             // 2. Actualizar las relaciones en la tabla intermedia
             // Eliminar relaciones existentes
             $stmtDeleteRelations = $conn->prepare("DELETE FROM kebab_ingrediente WHERE kebab_id = :kebab_id");
             $stmtDeleteRelations->execute(['kebab_id' => $id]);
-
+    
             // Insertar las nuevas relaciones
-            $ingredientes = $kebab->getIngredientes(); // Asegúrate de que esto devuelva un array de ids de ingredientes
-
+            $ingredientes = $kebab->getIngredientes(); // Se espera que esto devuelva un array de arrays o un array de IDs de ingredientes
+            
+            // Verifica si los ingredientes son válidos
+            if (empty($ingredientes)) {
+                throw new Exception("No se encontraron ingredientes para el kebab.");
+            }
+    
+            // Recorrer cada ingrediente en el array
             foreach ($ingredientes as $ingrediente) {
-                if (is_object($ingrediente) && method_exists($ingrediente, 'getId')) {
-                    $stmtInsertRelation = $conn->prepare("INSERT INTO kebab_ingrediente (kebab_id, ingrediente_id) VALUES (:kebab_id, :ingrediente_id)");
+                // Verificar que cada elemento sea un array con un campo 'id'
+                if (is_array($ingrediente) && isset($ingrediente['id'])) {
+                    $ingredienteId = $ingrediente['id']; // Asumimos que 'id' es un campo del ingrediente
+                    $kebabId = $id;
+    
+                    // Insertar la relación en la tabla intermedia
+                    $stmtInsertRelation = $conn->prepare("
+                        INSERT INTO kebab_ingrediente (kebab_id, ingrediente_id) 
+                        VALUES (:kebab_id, :ingrediente_id)
+                    ");
+    
                     $stmtInsertRelation->execute([
-                        'kebab_id' => $id,
-                        'ingrediente_id' => $ingrediente->getId(),
+                        'kebab_id' => $kebabId,
+                        'ingrediente_id' => $ingredienteId,
                     ]);
                 } else {
-                    error_log("Ingrediente inválido encontrado: " . print_r($ingrediente, true));
+                    // Si el ingrediente no es un array válido con un 'id', arroja un error
+                    throw new Exception("Ingrediente inválido encontrado: " . print_r($ingrediente, true));
                 }
             }
-
+    
             // Confirmar la transacción
             $conn->commit();
             return true; // La actualización fue exitosa
+    
         } catch (PDOException $e) {
             // Revertir la transacción en caso de error
             $conn->rollBack();
             header('HTTP/1.1 500 Error en la base de datos');
             echo json_encode(["error" => $e->getMessage()]);
             return false;
+        } catch (Exception $e) {
+            // Manejar excepciones personalizadas como ingrediente inválido
+            $conn->rollBack();
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(["error" => $e->getMessage()]);
+            return false;
         }
     }
+    
 
     public static function delete($id) {
         $conn = BdConnection::getConnection();

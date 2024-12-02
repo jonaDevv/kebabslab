@@ -17,11 +17,12 @@
                 <!-- Formulario para crear kebab -->
                 <form id="gkebab-registro-form">
                     <label for="gkebab-foto">FOTO</label>
+                    <br>
+                    <img id="gkebab-imagen-previa" src="" alt="Vista previa de la foto">
                     <input type="file" id="gkebab-foto" name="gkebab-foto" accept="image/*" capture="camera" onchange="mostrarImagen(event)">
                     <br>
 
                     <!-- Imagen previa -->
-                    <img id="gkebab-imagen-previa" src="" alt="Vista previa de la foto">
 
                     <label for="gkebab-nombre">NOMBRE</label>
                     <br>
@@ -64,7 +65,47 @@
         </div>
     </div>
 
-    
+     <!-- Formulario actualizar kebab -->
+<div id="modal-actualizar-kebab" class="modalAK">
+    <div class="modal-contentAK">
+        
 
+        <!-- Contenedor interno para organizar el formulario y los ingredientes -->
+        <div class="modal-inner-container">
+            <!-- Formulario -->
+            <div class="gkebab-columnAK">
+                <h2>ACTUALIZAR KEBAB</h2>
+                <form id="gkebab-registro-formA" class="gkebab-formularioA">
+                    <input type="hidden" id="gkebab-idA" name="gkebab-idA" required>
+                    <label for="gkebab-fotoA">FOTO</label>
+                    <br>
+                    <img id="gkebab-imagen-previaA" src="" alt="Vista previa de la foto">
+                    <input type="file" id="gkebab-fotoA" name="gkebab-fotoA" accept="image/*" capture="camera" onchange="mostrarImagenA(event)">
+
+                    <label for="gkebab-nombreA">NOMBRE</label>
+                    <input type="text" id="gkebab-nombreA" name="gkebab-nombreA" required>
+
+                    <label for="gkebab-ingredientesA">INGREDIENTES</label>
+                    <div id="gkebab-ingredientes-dropA" class="gkebab-drop-areaA"></div>
+
+                    <label for="gkebab-precioA">Precio</label>
+                    <input type="number" id="gkebab-precioA" name="gkebab-precioA" step="0.01" required>
+
+                    <button class="actualizarKebabA">Actualizar Kebab</button>
+                    <button class="borrarKebabA">Borrar Kebab</button>
+                </form>
+            </div>
+
+            <div class="gkebab-columnAK"> <span class="close-buttonAK" onclick="cerrarModal()">×</span>
+            <!-- Ingredientes disponibles -->
+                <h2>INGREDIENTES DISPONIBLES</h2>
+                <div class="gkebab-content-ingredientesAK">
+                    <!-- Aquí irán los ingredientes -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

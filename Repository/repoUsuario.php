@@ -256,7 +256,7 @@
                 ]);
         
                 if (!$resultado) {
-                    throw new Exception("Fallo al actualizar el usuario.");
+                    throw new Exception("Fallo al actualizar el alergeno.");
                 }
         
                 // Eliminar relaciones antiguas
