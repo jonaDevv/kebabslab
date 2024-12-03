@@ -70,7 +70,7 @@ switch ($method) {
     case 'PUT':
         // Captura los datos del cuerpo de la solicitud
         $data = json_decode(file_get_contents("php://input"), true); // true convierte el JSON en un array asociativo
-        
+        var_dump($data);
         // Verificar si se recibió el ID
         if (isset($data[0]['id'])) {
             $id = $data[0]['id']; // ID del usuario a actualizar

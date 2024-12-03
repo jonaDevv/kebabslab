@@ -1,55 +1,89 @@
-
+/* Estilo base */
 .perfilUsuario:not(saludo) {
     position: absolute;
-    top: 50px; /* Ajusta la distancia desde la parte superior de la página */
-    right: 100px; /* Lo coloca en el extremo derecho */
+    top: 2rem; /* Usar unidades relativas para una mejor adaptabilidad */
+    right: 5.6rem;
     color: #f39c12;
     font-weight: bold;
-    padding-right: 20px; /* Añade un poco de espacio a la derecha */
+    padding-right: 1rem;
+    font-size: 1rem; /* Escalable para diferentes pantallas */
 }
 
-
-.cerrarsesion{
-
+.cerrarsesion {
     position: absolute;
-    top: 70px; /* Ajusta la distancia desde la parte superior de la página */
-    right: 85px; /* Lo coloca en el extremo derecho */
+    top: 3.5rem;
+    right: 5.5rem;
     color: white;
-  
-    padding-right: 20px; /* Añade un poco de espacio a la derecha */
-    font-size:12px;
+    padding-right: 1rem;
+    font-size: 0.9rem;
 }
 
-.cerrarsesion:hover{
+.cerrarsesion:hover {
     color: #f39c12;
-    
 }
-
 
 #icono-perfil {
     position: absolute;
-    top: 30px; /* Ajusta la distancia desde la parte superior de la página */
-    right: 250px; /* Lo coloca en el extremo derecho */
-    color: white;
+    top: 2rem;
+    right: 16rem;
+    width: 50px;
+    height: 50px;
     background-image: url("/asset/imgUser/Estoicor.webp");
-    padding-right: 20px; /* Añade un poco de espacio a la derecha */
-    font-size:14px;
-    border-radius: 15%;
-    border :1px solid #f39c12;
-   
- 
-    background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    width: 50px; /* Asegúrate de que el contenedor tenga un tamaño */
-    height: 60px; 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%; /* Mejor visual para un icono circular */
+    border: 1px solid #f39c12;
+    transition: all 0.3s ease; /* Transición suave para efectos */
 }
 
-#icono-perfil:hover{
+#icono-perfil:hover {
     cursor: pointer;
-    width: 65px;
-    height: 75px;
-    
+    width: 60px;
+    height: 60px;
+}
 
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    /* Ajustes para tabletas */
+    .perfilUsuario:not(saludo) {
+        top: 2rem;
+        right: 1.5rem;
+        font-size: 0.9rem;
+    }
 
+    .cerrarsesion {
+        top: 4rem;
+        right: 1.5rem;
+        font-size: 0.8rem;
+    }
+
+    #icono-perfil {
+        top: 1rem;
+        right: 3rem;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para dispositivos móviles */
+    .perfilUsuario:not(saludo) {
+        top: 1.5rem;
+        right: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .cerrarsesion {
+        top: 3rem;
+        right: 1rem;
+        font-size: 0.7rem;
+    }
+
+    #icono-perfil {
+        top: 1rem;
+        right: 2rem;
+        width: 35px;
+        height: 35px;
+    }
 }

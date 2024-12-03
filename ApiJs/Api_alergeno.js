@@ -2,9 +2,9 @@
  * 
  * @returns Devuelve todos los ingredientesen el sistema
  */
-async function getIngredientes() {
+async function getAlergenos() {
   try {
-      const response = await fetch('/Api/Api_ingrediente.php', {
+      const response = await fetch('/Api/Api_alergeno.php', {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json'
@@ -16,45 +16,33 @@ async function getIngredientes() {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
-      const ingredientes = await response.json();
-      return ingredientes;
+      const alergenos = await response.json();
+      return alergenos;
   } catch (error) {
-      console.error('Error al obtener los ingredientes:', error);
+      console.error('Error al obtener los alergenos:', error);
       throw error; // Propaga el error para manejarlo fuera de la función
   }
 }
 
-async function crearIngrediente(ingrediente){
-  const response = await fetch('/Api/Api_ingrediente.php',{
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(ingrediente)
-  });
-  
-  const ing = await response.json();
-  return ing;
-}
 
 /**
  * 
  * @param {*} id del ingrediente que queremos obtener
  * @returns el ingrediente con el id especificado
  */
-async function getIngredienteId(id){
+async function getAlergenoId(id){
   
-    const response = await fetch('/Api/Api_ingrediente.php?id='+id,{
+    const response = await fetch('/Api/Api_alergeno.php?id='+id,{
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     }
   });
 
-  const ingrediente = await response.json();
+  const alergeno = await response.json();
 
 
-  return ingrediente;
+  return alergeno;
   
 }
 
@@ -65,9 +53,9 @@ async function getIngredienteId(id){
  * @param {*} data que es el json del ingrediente a actualizar
  * @returns la respuesta del servidor
  */
-async function updateIngredienteId(id,data){
+async function updateAlergenoId(id,data){
   
-    const response = await fetch('/Api/Api_ingrediente.php?id='+id,{
+    const response = await fetch('/Api/Api_alergeno.php?id='+id,{
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -75,9 +63,9 @@ async function updateIngredienteId(id,data){
     body: JSON.stringify(data)
   });
   
-  const actualiarIngrediente = await response.json();
+  const actualizarAlergeno = await response.json();
 
-  return actualizarIngrediente;
+  return actualizarAlergeno;
   
 }
 
@@ -88,19 +76,19 @@ async function updateIngredienteId(id,data){
  * @returns el kebab con el id especificado
  *  
  */
-async function deleteingredienteId(id){
+async function deleteAlergenoId(id){
   
-    const response = await fetch('/Api/Api_ingrediente.php?id='+id,{
+    const response = await fetch('/Api/Api_alergeno.php?id='+id,{
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     }
   });
 
-  const deleteIngrediente = await response.json();
+  const deleteAlergeno = await response.json();
 
 
-  return deleteIngrediente;
+  return deleteAlergeno;
   
 }
 

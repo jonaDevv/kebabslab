@@ -22,6 +22,20 @@ async function getUsuario(id){
     return usuario;
 }
 
+async function updateUser(id,perfil){
+    
+    const response = await fetch(`/Api/Api_usuario.php?id=${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(perfil)
+    }); 
+    
+    const perfilActualizado = await response.json();
+    return perfilActualizado;
+}
+
 
 
 getUserLocaleStorage=async function(){
@@ -43,6 +57,7 @@ async function mostrarPerfil(id) {
     const nombre = document.getElementById('nombrePerfil');
     const correo = document.getElementById('correoPerfil');
     const fotoPerfil = document.getElementById('fotoPerfilImg');
+    const password = document.getElementById('passPerfil');
     const monedero = document.getElementsByClassName('saldoPerfil')[0];
    
   
@@ -56,6 +71,9 @@ async function mostrarPerfil(id) {
         correo.innerHTML = perfil.correo || '';
     }
 
+    if (password) {
+        password.innerHTML =  '*****************' || '';
+    }
     if (fotoPerfil) {
         fotoPerfil.src = perfil.foto || 'default-foto.jpg'; // Si no tiene foto, se carga una predeterminada
     }
@@ -147,27 +165,79 @@ function agregarDireccion(){
   
 }
 
-function editarFicha(perfil) {
+async function editarFicha(perfil) {
     let nombre = document.getElementById('nombrePerfil');
     let correo = document.getElementById('correoPerfil');
+    let password = document.getElementById('passPerfil'); // Asegúrate de que este campo esté presente en tu HTML
     let editarbtn = document.getElementById('editarPerfil');
     let guardarbtn = document.createElement('button');
+    let cancelarbtn = document.createElement('button');
+
+    const user = JSON.parse(localStorage.getItem('User'));
+    const id = user.id;
+
+    // Cambiar el texto de los botones
+    cancelarbtn.textContent = 'Cancelar';
+    cancelarbtn.addEventListener('click', function () {
+        // Volver al estado original de los datos
+        nombre.innerHTML = perfil.nombre;
+        correo.innerHTML = perfil.correo;
+        password.innerHTML = '*****************';  // O puedes mostrar la contraseña oculta
+        // Si tienes más campos que cambiar, agrégales aquí
+        editarbtn.textContent = 'Editar';
+        editarbtn.parentNode.appendChild(editarbtn);
+        guardarbtn.remove();
+        cancelarbtn.remove();
+    });
+
+    // Mostrar los botones
     editarbtn.parentNode.appendChild(guardarbtn);
+    editarbtn.parentNode.appendChild(cancelarbtn);
+    editarbtn.style.display = "none";  // Quitar el botón de editar
+
     guardarbtn.textContent = 'Guardar';
-    guardarbtn.addEventListener('click', function () {
+
+    if (nombre && correo && password) {
+        // Convertir el nombre, el correo y la contraseña en campos de texto para editar
+        nombre.innerHTML = `<input type="text" id="nombreInput" value="${perfil.nombre}" />`;
+        correo.innerHTML = `<input type="text" id="correoInput" value="${perfil.correo}" />`;
+        password.innerHTML = `<input type="password" id="passwordInput" value="${perfil.password}" />`; // Usamos type="password"
+    }
+
+    guardarbtn.addEventListener('click', async function () {
         let nombreInput = document.getElementById('nombreInput');
         let correoInput = document.getElementById('correoInput');
+        let passwordInput = document.getElementById('passwordInput');
+
+        // Actualizar el perfil con los nuevos valores
         perfil.nombre = nombreInput.value;
         perfil.correo = correoInput.value;
-        console.log(perfil);
-        mostrarPerfil(perfil);
+        perfil.password = passwordInput.value; // Si hay un campo de contraseña
+
+        // Crear el objeto perfilModificado con los datos actuales
+        const perfilModificado = [{
+            id:id,
+            nombre: perfil.nombre,
+            correo: perfil.correo,
+            password: perfil.password || ''
+        }];
+        console.log(id);
+        console.log("El perfil  actualizado es:",JSON.stringify(perfilModificado)); 
+        try {
+            const response = await updateUser(id, perfilModificado); // Llamar a la función updateUser
+            console.log(response); // Mostrar la respuesta del servidor
+            // Si la actualización fue exitosa, actualizar la vista
+            nombre.innerHTML = perfil.nombre;
+            correo.innerHTML = perfil.correo;
+            password.innerHTML = '*****************'; // Ocultar la contraseña con asteriscos (o la puedes omitir)
+            editarbtn.style.display = "block";
+            guardarbtn.remove();
+            cancelarbtn.remove();
+            
+        } catch (error) {
+            console.error('Error al guardar el perfil:', error);
+        }
     });
-    
-    if (nombre && correo) {
-        // Convertir el nombre y el correo en campos de texto
-        nombre.innerHTML = `<input type="text" id="nombreInput" value="${perfil.nombre.toUpperCase()}" />`;
-        correo.innerHTML = `<input type="text" id="correoInput" value="${perfil.correo}" />`;
-    }
 }
 
 function cerrarSesion(){
@@ -176,10 +246,163 @@ function cerrarSesion(){
     window.location.href="?menu=cerrarSesion";
 }
 
+// Función para activar la edición de la foto al hacer clic
+function activarEdicionFoto() {
+    // Mostrar el botón de editar foto
+    document.getElementById('editarFotoBtn').style.display = 'block';
+    // Mostrar el input de tipo file
+    document.getElementById('fileInput').style.display = 'block';
+}
+
+// Función para previsualizar la imagen seleccionada
+function previewImage(event) {
+    const file = event.target.files[0];
+    
+    // Verificar si el archivo es una imagen
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            // Mostrar la imagen seleccionada en el contenedor
+            const fotoPerfilImg = document.getElementById('fotoPerfilImg');
+            fotoPerfilImg.src = e.target.result; // El resultado de la carga es la URL de la imagen
+        };
+        
+        reader.readAsDataURL(file); // Lee la imagen como una URL de datos
+    } else {
+        alert('Por favor selecciona una imagen.');
+    }
+}
+
+// Función para guardar la foto seleccionada
+function guardarFoto() {
+    const fotoPerfilImg = document.getElementById('fotoPerfilImg').src;
+    // Aquí puedes guardar la nueva imagen en el servidor o hacer lo que necesites con la imagen
+    console.log("Foto guardada:", fotoPerfilImg);
+    
+    // Ocultar el input y el botón después de guardar
+    document.getElementById('fileInput').style.display = 'none';
+    document.getElementById('editarFotoBtn').style.display = 'none';
+}
 
 
+// Función para activar la edición de la foto al hacer clic
+function activarEdicionFoto() {
+    // Mostrar el botón de editar foto
+    document.getElementById('editarFotoBtn').style.display = 'block';
+    // Mostrar el input de tipo file para seleccionar una imagen
+    document.getElementById('fileInput').style.display = 'block';
+}
 
+// Función para previsualizar la imagen seleccionada
+function previewImage(event) {
+    const file = event.target.files[0];
+    
+    // Verificar si el archivo es una imagen
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            // Mostrar la imagen seleccionada en el contenedor
+            const fotoPerfilImg = document.getElementById('fotoPerfilImg');
+            fotoPerfilImg.src = e.target.result; // El resultado de la carga es la URL de la imagen
+        };
+        
+        reader.readAsDataURL(file); // Lee la imagen como una URL de datos
+    } else {
+        alert('Por favor selecciona una imagen.');
+    }
+}
 
+// Función para editar el perfil
+async function editarPerfil() {
+    const nombre = document.getElementById('nombrePerfil');
+    const correo = document.getElementById('correoPerfil');
+    const password = document.getElementById('passPerfil');
+    const fotoPerfilImg = document.getElementById('fotoPerfilImg');
+    const fileInput = document.getElementById('fileInput');
+    
+    let editarbtn = document.getElementById('editarPerfil');
+    let guardarbtn = document.createElement('button');
+    let cancelarbtn = document.createElement('button');
+    
+    // Crear botones de guardar y cancelar
+    cancelarbtn.textContent = 'Cancelar';
+    cancelarbtn.addEventListener('click', function () {
+        // Volver a los valores originales
+        nombre.innerHTML = perfil.nombre;
+        correo.innerHTML = perfil.correo;
+        password.innerHTML = perfil.password;
+        fotoPerfilImg.src = perfil.foto || 'default-foto.jpg';  // Volver a la foto original
+        editarbtn.style.display = 'block';
+        guardarbtn.remove();
+        cancelarbtn.remove();
+    });
+
+    guardarbtn.textContent = 'Guardar';
+    editarbtn.style.display = 'none';  // Ocultar el botón de editar
+
+    // Mostrar los botones de guardar y cancelar
+    editarbtn.parentNode.appendChild(guardarbtn);
+    editarbtn.parentNode.appendChild(cancelarbtn);
+    
+    // Convertir los campos de texto en inputs para editar
+    nombre.innerHTML = `<input type="text" id="nombreInput" value="${perfil.nombre}" />`;
+    correo.innerHTML = `<input type="text" id="correoInput" value="${perfil.correo}" />`;
+    password.innerHTML = `<input type="password" id="passwordInput" value="${perfil.password}" />`;
+    
+    // Cambiar la imagen de perfil a un input de tipo file
+    fotoPerfilImg.insertAdjacentHTML('beforebegin', `<input type="file" id="fotoInput" accept="image/*" onchange="previewImage(event)" style="display: block; margin-top: 10px;">`);
+
+    // Evento para guardar los cambios al hacer clic en el botón "Guardar"
+    guardarbtn.addEventListener('click', async function () {
+        const nombreInput = document.getElementById('nombreInput');
+        const correoInput = document.getElementById('correoInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const fotoInput = document.getElementById('fotoInput');
+        
+        // Si se seleccionó una nueva foto, se actualiza el src de la imagen
+        let nuevaFoto = fotoPerfilImg.src;
+        if (fotoInput.files && fotoInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                nuevaFoto = e.target.result;
+                // Aquí iría el código para guardar la foto en el servidor
+            };
+            reader.readAsDataURL(fotoInput.files[0]);
+        }
+
+        // Actualizar el perfil con los nuevos valores
+        perfil.nombre = nombreInput.value;
+        perfil.correo = correoInput.value;
+        perfil.password = passwordInput.value;
+        perfil.foto = nuevaFoto; // Asignar la nueva foto seleccionada
+        
+        // Crear el objeto de perfil modificado
+        const perfilModificado = {
+            nombre: perfil.nombre,
+            correo: perfil.correo,
+            password: perfil.password,
+            foto: perfil.foto
+        };
+
+        try {
+            // Aquí puedes realizar la solicitud para guardar el perfil actualizado
+            const response = await updateUser(perfilModificado);
+            console.log(response);
+            // Si la actualización fue exitosa, actualizar la vista
+            nombre.innerHTML = perfil.nombre;
+            correo.innerHTML = perfil.correo;
+            password.innerHTML = perfil.password;
+            fotoPerfilImg.src = perfil.foto;
+            guardarbtn.remove();
+            cancelarbtn.remove();
+            editarbtn.style.display = 'block';
+        } catch (error) {
+            console.error('Error al guardar el perfil:', error);
+        }
+    });
+}
 
 
 

@@ -4,35 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil Usuario</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlazamos el archivo CSS -->
+  
 </head>
 <body>
     
     <div id="cont-Perfil-User">
         <div class="ficha">
-            <!-- Aquí hemos modificado la div fotoPerfil para que sea un contenedor de imagen -->
-            <div class="fotoPerfil">
-                <img id="fotoPerfilImg" src="" alt="Foto de Perfil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+            <!-- Foto de perfil y botón de edición -->
+            <div class="fotoPerfil" onclick="activarEdicionFoto()">
+                <img id="fotoPerfilImg" src="default-foto.jpg" alt="Foto de Perfil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                <button id="editarFotoBtn" style="display: none;">Editar Foto</button>
             </div>
-
-            <!-- Botones para subir o tomar una foto -->
-            <input type="file" id="inputGaleria" accept="image/*" style="display: none;">
-            <button id="btnGaleria" onclick="document.getElementById('inputGaleria').click();">Seleccionar</button>
-            <!-- <button id="btnCamara" onclick="activarCamara();">Tomar Foto</button> -->
-
+            <!-- Input para seleccionar una imagen, oculto para que se active al hacer click en la imagen -->
+            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="previewImage(event)">
+            
+            <!-- Información editable del perfil -->
             <div class="nombrePerfil">
                 <label>Nombre:</label>
                 <p id="nombrePerfil" name="nombre"></p>
             </div>
             <div class="passPerfil">
                 <label>Contraseña:</label>
-                <input id="passPerfil" name="contraseña" value="">
+                <p id="passPerfil" name="contraseña"></p>
             </div>
             <div class="correoPerfil">
                 <label>Correo:</label>
-                <p id="correoPerfil" name="correo" value=""></p>
+                <p id="correoPerfil" name="correo"></p>
             </div>
-            <button id="editarPerfil">Editar Perfil</button>
+            
+            <button id="editarPerfil">Editar</button>
         </div>
         
         <div class="monederoPerfil">
@@ -57,8 +57,8 @@
         </div>
     </div>
 
-     <!-- Modal de Añadir Crédito -->
-     <div id="modal-credito" class="modal-credito">
+    <!-- Modal de Añadir Crédito -->
+    <div id="modal-credito" class="modal-credito">
         <div class="modal-content-credito">
             <h2>Añadir Crédito</h2>
             <div class="pago-detalle-credito">
@@ -75,6 +75,6 @@
         </div>
     </div>
     
-
+   
 </body>
 </html>

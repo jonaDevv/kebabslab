@@ -115,7 +115,9 @@ async function cargarPedidosUser() {
                         });
                     });
                    // pedido.appendChild(cancelarBtn);
+                   if(pedido){
                    pedido.appendChild(cancelarBtn);
+                    }
                 }
                 
                 pedido.addEventListener("click", function() {
@@ -124,9 +126,9 @@ async function cargarPedidosUser() {
                     
                 });
                 
-   
+                if (contPedidos) {
                 contPedidos.appendChild(pedido);
-                
+                }
             });
         } else {
             console.error("La respuesta no es un array", json);

@@ -1,6 +1,6 @@
 window.addEventListener("load", function() {
 
-  listarKebabs();
+    listarKebabs();
    setInterval(listarKebabs,5000);
     listarIngredientes();
 
@@ -95,7 +95,9 @@ function mostrarImagenA(event) {
 async function listarKebabs() {
 
     const kebabCont = document.getElementsByClassName('gkebab-content-kebab')[0];
-
+    if(kebabCont){
+    kebabCont.innerHTML = "";
+    }
     getKebabs()
     .then(json => {
         if (Array.isArray(json)) {
@@ -112,7 +114,9 @@ async function listarKebabs() {
                     console.log(item);
 
                 });
+            if(kebabCont){
                 kebabCont.appendChild(kebab);
+            }
             });
         } else {
             console.error('Hubo un error con la solicitud fetch:', error);
@@ -259,7 +263,10 @@ async function listarIngredientes() {
                 });
 
                 // Agrega el ingrediente al primer contenedor
-                ingredientes.appendChild(ingrediente);
+                if (ingredientes) {
+                    ingredientes.appendChild(ingrediente);
+                }
+                
 
                 // Si hay un segundo contenedor, clonar y asignar eventos
                 if (ingredientesAK) {

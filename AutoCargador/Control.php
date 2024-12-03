@@ -74,7 +74,9 @@ class Control {
         require_once './Vistas/principal/misPedidos.php';
     }
 
-    
+    public static function gingrediente() {
+        require_once './Vistas/mantenimiento/gingrediente.php';
+    }
     
     public static function gkebab() {
         include __DIR__ . '/../vistas/mantenimiento/gKebab.php';

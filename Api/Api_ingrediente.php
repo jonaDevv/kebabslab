@@ -31,8 +31,8 @@ switch ($method) {
         if (
             isset($data[0]['nombre']) && // Verificar si el campo nombre está presente
             isset($data[0]['foto']) && // Verificar si el campo foto está presente
-            isset($data[0]['precio']) && // Verificar si el campo precio está presente
-            isset($data[0]['estado']) 
+            isset($data[0]['precio'])  // Verificar si el campo precio está presente
+            
         )  // Verificar si el campo alergenos está presente
         {
             // Crear el objeto Ingrediente
@@ -42,7 +42,7 @@ switch ($method) {
                 $data[0]['nombre'],
                 $data[0]['foto'],
                 floatval($data[0]['precio']),
-                $data[0]['estado'],
+                $data[0]['estado']??"activo",
                 $data[0]['alergenos']??$data[0]['alergenos']=[] // Debes asegurarte que este sea un array de IDs de alérgenos
             );
 

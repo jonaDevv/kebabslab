@@ -7,6 +7,7 @@
     use Models\BdConnection;
     use PDO; // Importa PDO
     use PDOException; 
+    use Exception;
      
 
     Class repoIngrediente implements RepoCrud{
@@ -118,10 +119,6 @@
         }
         
         
-        
-        
-
-        
         public static function update($id, $ingrediente) {
             // Asegurarse de que el objeto pasado es de tipo Ingrediente
             if (!$ingrediente instanceof Ingrediente) {
@@ -137,8 +134,13 @@
                 $conn->beginTransaction();
         
                 // 1. Actualizar los datos del ingrediente
-                $stmtUpdate = $conn->prepare("UPDATE ingrediente SET nombre = :nombre, precio = :precio, foto = :foto, estado = :estado WHERE id = :id");
-                $stmtUpdate->execute([
+                $stmtUpdate = $conn->prepare("
+                    UPDATE ingrediente 
+                    SET nombre = :nombre, precio = :precio, foto = :foto, estado = :estado 
+                    WHERE id = :id
+                ");
+                
+                $resultado = $stmtUpdate->execute([
                     'id' => $id,
                     'nombre' => $ingrediente->getNombre(),
                     'precio' => $ingrediente->getPrecio(),
@@ -146,38 +148,78 @@
                     'estado' => $ingrediente->getEstado(),
                 ]);
         
-                
-                $stmtDeleteRelations = $conn->prepare("DELETE FROM ingrediente_alergeno WHERE ingrediente_id = :ingrediente_id");
+                if (!$resultado) {
+                    throw new Exception("Fallo al actualizar el ingrediente.");
+                }
+        
+                // 2. Actualizar las relaciones en la tabla intermedia (ingrediente_alergeno)
+                // Eliminar relaciones existentes
+                $stmtDeleteRelations = $conn->prepare("
+                    DELETE FROM ingrediente_alergeno 
+                    WHERE ingrediente_id = :ingrediente_id
+                ");
                 $stmtDeleteRelations->execute(['ingrediente_id' => $id]);
         
-                // Insertar las nuevas relaciones
-                $alergenos = $ingrediente->getAlergeno(); // Asegúrate de que esto devuelva un array de ids de alérgenos
+                // Insertar las nuevas relaciones de alérgenos
+                $alergenos = $ingrediente->getAlergeno(); // Se espera que esto devuelva un array de objetos Alergeno o IDs
         
+                if (empty($alergenos)) {
+                    throw new Exception("No se encontraron alérgenos para el ingrediente.");
+                }
+        
+                // Recorrer cada alérgeno en el array
                 foreach ($alergenos as $alergeno) {
+                    // Si el alérgeno es un objeto, obtener su ID
                     if (is_object($alergeno) && method_exists($alergeno, 'getId')) {
-                        // Si es un objeto con el método getId(), procedemos normalmente
-                        $stmtInsertRelation = $conn->prepare("INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) VALUES (:ingrediente_id, :alergeno_id)");
+                        // Insertar la relación en la tabla intermedia
+                        $stmtInsertRelation = $conn->prepare("
+                            INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) 
+                            VALUES (:ingrediente_id, :alergeno_id)
+                        ");
                         $stmtInsertRelation->execute([
                             'ingrediente_id' => $id,
                             'alergeno_id' => $alergeno->getId(),
                         ]);
+                    } 
+                    // Si el alérgeno es un array, verificar que contenga un ID
+                    elseif (is_array($alergeno) && isset($alergeno['id'])) {
+                        $stmtInsertRelation = $conn->prepare("
+                            INSERT INTO ingrediente_alergeno (ingrediente_id, alergeno_id) 
+                            VALUES (:ingrediente_id, :alergeno_id)
+                        ");
+                        $stmtInsertRelation->execute([
+                            'ingrediente_id' => $id,
+                            'alergeno_id' => $alergeno['id'],
+                        ]);
                     } else {
-                        // Si el alérgeno no es un objeto válido con el método getId(), registramos un error
-                        error_log("Alergeno inválido encontrado: " . print_r($alergeno, true));
+                        // Si el alérgeno no es un objeto válido ni un array con ID, registrar el error
+                        throw new Exception("Alergeno inválido encontrado: " . print_r($alergeno, true));
                     }
                 }
         
                 // Confirmar la transacción
                 $conn->commit();
                 return true; // La actualización fue exitosa
+        
             } catch (PDOException $e) {
                 // Revertir la transacción en caso de error
                 $conn->rollBack();
-                header('HTTP/1.1 500 Error en la base de datos');
+                header('HTTP/1.1 500 Internal Server Error');
+                echo json_encode(["error" => $e->getMessage()]);
+                return false;
+            } catch (Exception $e) {
+                // Manejar excepciones personalizadas como alérgeno inválido
+                $conn->rollBack();
+                header('HTTP/1.1 400 Bad Request');
                 echo json_encode(["error" => $e->getMessage()]);
                 return false;
             }
         }
+        
+        
+
+        
+        
         
         
         
