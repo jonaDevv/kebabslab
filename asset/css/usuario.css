@@ -1,0 +1,67 @@
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .usuario-item {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .usuario-item select {
+        padding: 5px 10px;
+        margin-top: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    /* Estilo para los botones de cambiar rol */
+    .usuario-item button {
+        margin-top: 10px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .usuario-item button:hover {
+        background-color: #45a049;
+    }
+
+    .usuario-item h3 {
+        margin-top: 0;
+    }
+
+    .usuario-item p {
+        margin: 5px 0;
+    }
+
+    @media (min-width: 600px) {
+        .usuario-item {
+            width: 48%;
+        }
+    }
+
+    @media (min-width: 900px) {
+        .usuario-item {
+            width: 30%;
+        }
+    }
+

@@ -16,8 +16,8 @@ window.addEventListener('load', function () {
     // .catch(error => {
     //     console.error('Hubo un error con la solicitud fetch:', error);
     // });
-
     
+   
 
     recargar=document.getElementById('recargar');
         if (recargar) {
@@ -60,6 +60,7 @@ window.addEventListener('load', function () {
                 
                 actualizarMonedero(us.id,nuevoSaldo).then(json=>{
                    mostrarPerfil(us.id);
+                   
                    
                     
                 })
@@ -105,6 +106,9 @@ function recargarMonedero(){
     
     
 }
+
+
+
 
 
 

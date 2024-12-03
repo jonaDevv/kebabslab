@@ -36,6 +36,24 @@ async function updateUser(id,perfil){
     return perfilActualizado;
 }
 
+async function getUsuarios() {
+    const response = await fetch('/Api/Api_usuario.php', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = await response.json();  // Obtener el JSON completo
+
+    // Si 'data' ya es un arreglo de usuarios, solo lo retornamos
+    if (Array.isArray(data)) {
+        return data;  // Regresamos el arreglo de usuarios directamente
+    } else {
+        throw new Error('La respuesta no contiene un arreglo de usuarios.');
+    }
+}
+
 
 
 getUserLocaleStorage=async function(){
@@ -161,9 +179,7 @@ async function actualizarMonedero(id, saldo) {
     }
 }
 
-function agregarDireccion(){
-  
-}
+
 
 async function editarFicha(perfil) {
     let nombre = document.getElementById('nombrePerfil');
@@ -403,6 +419,13 @@ async function editarPerfil() {
         }
     });
 }
+
+
+
+
+
+
+
 
 
 

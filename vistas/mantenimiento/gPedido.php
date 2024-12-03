@@ -7,12 +7,12 @@
     
 </head>
 <body>
-    <div class="container">
+    <div class="containerA">
         <h1>GESTIÓN DE PEDIDOS</h1>
 
-        <div class="columns">
+        <div class="columnsA">
             
-            <div class="column" id="recibido">
+            <div class="columnA" id="recibido">
                 <h2>Recibidos</h2>
                 <div class="pedidos-recibido">
                 </div>
@@ -20,7 +20,7 @@
             </div>
 
             
-            <div class="column" id="preparacion">
+            <div class="columnA" id="preparacion">
                 <h2>En Preparación</h2>
                 <div class="pedidos-preparacion">
                 </div>
@@ -28,7 +28,7 @@
             </div>
 
         
-            <div class="column" id="camino">
+            <div class="columnA" id="camino">
                 <h2>En Camino</h2>
                 <div class="pedidos-camino">
                     
@@ -37,7 +37,7 @@
             </div>
 
           
-            <div class="column" id="entregado">
+            <div class="columnA" id="entregado">
                 <h2>Entregados</h2>
                 <div class="pedidos-entregado">
                     

@@ -1,4 +1,4 @@
-// Array global para gestionar el carrito
+
 const user=JSON.parse(localStorage.getItem('User'));
 let carritoData = [];
 carritoData=getCarritoLocalStorage(user);
@@ -6,9 +6,12 @@ actualizarCarritoUI();
 
 
 
-function anadirCarrito(kebab) {
-    
-    
+
+async function anadirCarrito(kebab) {
+   
+   const direccion= await getDireccionId(user.id);
+   console.log(direccion.direccion);
+   
       carritoData.push({
             usuario_id: user.id ,
             lineasPedido: [
@@ -27,14 +30,14 @@ function anadirCarrito(kebab) {
                 }
                 
             ],
-            
+            direccion: direccion.direccion,
             precio_total: calcularPrecioCarritoTotal()
 
         });
        
     actualizarCarritoUI();
     saveCarritoLocalStorage(carritoData,user);
-    console.log(carritoData)
+   
     
 }
 
@@ -177,11 +180,13 @@ function rellenarCarrito() {
 
     // Copia los kebabs del carrito al modal
     const kebabsEnCarrito = carrito.children; // Obtiene los elementos en el carrito
-
+    
     Array.from(kebabsEnCarrito).forEach(kebab => {
         const modalKebabDiv = document.createElement('div');
         modalKebabDiv.classList.add('modal-kebab-item');
         modalKebabDiv.textContent = kebab.textContent; // Copia el contenido textual del kebab
+         // Agrega el kebab al modal
+        console.log(kebab);
 
         // Agrega el kebab al modal
         modalCarritoContainer.appendChild(modalKebabDiv);
@@ -218,6 +223,8 @@ function vaciarCarrito() {
      totalElement.innerHTML= "0.00€";
 
     localStorage.removeItem(`carrito${user.id}`);
+
+    enviarCorreo('Prueba de cuerpo de correo', 'ejemplo@correo.com');
     
 
 }
@@ -239,7 +246,7 @@ function tramitarPedido(){
 
             if(user.monedero>=totalPagar){
                 
-
+                
                 
                 actualizarMonedero(user.id,newMonedero);
                 
@@ -248,12 +255,12 @@ function tramitarPedido(){
                     
                     console.log("¡Pedido tramitado con éxito!");
                     console.log(json);  
-                    
+                   
                 })
                 .catch(error => {
                     console.error('Hubo un error con la solicitud fetch:', error);
                 });
-
+                
                 //Restamos el dinero del monedero del user.
 
                 // window.location.reload();
@@ -261,7 +268,7 @@ function tramitarPedido(){
                 return alert("No tienes suficiente dinero para pagar");
             }
         })
-            
+           
             modalFinalizarcompra= document.getElementsByClassName("finalizar-compra-container")[0]
             modalCarritoContainer= document.getElementById("CModal")
             overlayCarrito= document.getElementsByClassName("carrito-overlay")[0]
@@ -283,7 +290,7 @@ function tramitarPedido(){
         alert("El carrito está vacío");
     }
 
-
+   
 
 }
 

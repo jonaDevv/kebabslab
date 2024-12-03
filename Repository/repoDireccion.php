@@ -54,8 +54,8 @@
             $conn = BdConnection::getConnection();
             
             try {
-                $stmt = $conn->prepare("SELECT * FROM direccion WHERE id=:id");
-                $stmt->execute(['id' => $id]);
+                $stmt = $conn->prepare("SELECT * FROM direccion WHERE usuario_id=:usuario_id");
+                $stmt->execute(['usuario_id' => $id]);
                 
                 // Verificar qué registros se están obteniendo
                 $registro = $stmt->fetch(PDO::FETCH_OBJ);

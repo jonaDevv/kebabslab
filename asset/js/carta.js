@@ -62,12 +62,13 @@ window.addEventListener("load", function() {
                         
                             auxiliar1.style.height = "100vh";
                             auxiliar1.style.width = "100vw";
+                            auxiliar1.style.marginTop= "50px";
                             
 
                             nombre=document.getElementById('name');
                             nombre.innerHTML = `${item.nombre.toUpperCase()}`;
-                            descripcion=document.getElementById('description');
-                            descripcion.innerHTML = item.descripcion;
+                            // descripcion=document.getElementById('description');
+                            // descripcion.innerHTML = item.descripcion;
                             precio=document.getElementById('price');
                             precio.innerHTML = item.precio + "€";
                             
@@ -76,8 +77,7 @@ window.addEventListener("load", function() {
                             ingr = document.getElementById('ingredient');
                             ingredientes.forEach(ingrediente => ingr.innerHTML +="<br>"+ ingrediente.nombre );
                             
-                                            
-                            
+                           
                         
                                       
                             const addBtn = document.getElementById("add");

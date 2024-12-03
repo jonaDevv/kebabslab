@@ -91,7 +91,10 @@ async function cargarPedidosUser() {
         if (Array.isArray(json)) {
             json.forEach(item => {
                 const pedido = document.createElement("div");
-                pedido.textContent = `Pedido ID: ${item.id} ${item.estado} ${item.precio_total}`;
+                pedido.textContent = `Pedido ID: ${item.id}
+                 
+                Estado:${item.estado} ${item.precio_total} €
+                                                            Dirección: ${item.direccion}`;
                 pedido.classList.add("pedidoRecibido");
                 pedido.style.width="80%";
 
@@ -106,14 +109,18 @@ async function cargarPedidosUser() {
                         actualizarMonedero(item.usuario_id,newMonedero)
                         deletPedido(item.id)
                         .then(json => {
+
                             console.log(json);
                             cargarPedidosUser();
                             mostrarPerfil(item.usuario_id);
+
                         })
                         .catch(error => {
                             console.error('Hubo un error con la solicitud fetch:', error);
                         });
                     });
+
+                    
                    // pedido.appendChild(cancelarBtn);
                    if(pedido){
                    pedido.appendChild(cancelarBtn);
@@ -143,5 +150,30 @@ async function cargarPedidosUser() {
 
     
 }
-    
-  
+
+
+async function enviarCorreo(cuerpo,destinatario) {
+    // Definir los datos a enviar a la API
+    const datosCorreo = {
+        cuerpo: cuerpo, // El cuerpo del correo que se enviará
+        destinatario: destinatario // Dirección del destinatario
+    };
+
+    try {
+        // Enviar la solicitud POST a la API
+        const respuesta = await fetch('/Api/Api_sendEmail.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosCorreo) // Convertir los datos a JSON
+        });
+
+        // Convertir la respuesta a JSON
+        const resultado = await respuesta.json();
+        console.log(resultado);
+        
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
+}

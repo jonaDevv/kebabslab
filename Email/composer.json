@@ -1,0 +1,17 @@
+{
+    "name": "jonatan/prueba-email",
+    "autoload": {
+        "psr-4": {
+            "Jonatan\\PruebaEmail\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jonadevv",
+            "email": "jonadevv@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

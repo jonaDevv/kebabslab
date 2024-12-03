@@ -125,7 +125,7 @@ switch ($method) {
                 $ped->setEstado($data[0]['estado']??$ped->getEstado());
                 $ped->setPrecio_total($data[0]['precio_total']??$ped->getPrecio_total());
                 $ped->setCoordenada($data[0]['coordenada']??$ped->getCoordenada());
-                $ped->setDireccion($lineasPedido??$ped->getDireccion());
+                $ped->setDireccion($data[0]['direccion']??$ped->getDireccion());
 
                 
         

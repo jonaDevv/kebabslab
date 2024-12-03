@@ -16,3 +16,23 @@ async function getDireccionId(id){
   return direccion;
   
 }
+
+
+
+async function createDireccion(direccion){
+    const response = await fetch('/Api/Api_direccion.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(direccion)
+    });
+  
+    const dir = await response.json();
+  
+  
+    return dir;
+    
+  }
+
+

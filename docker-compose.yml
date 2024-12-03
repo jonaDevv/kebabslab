@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog-pruebaEmail
+    ports:
+      - "8025:8025"  # Interfaz web de MailHog
+      - "1025:1025"  # Puerto SMTP para enviar correos
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

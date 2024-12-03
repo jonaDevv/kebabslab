@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
+  
 </head>
 <body>
     <div class="container">

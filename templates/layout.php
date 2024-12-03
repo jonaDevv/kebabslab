@@ -14,6 +14,12 @@ Sesion::iniciaSesion();
     <script src="/ApiJs/Api_kebab.js" defer></script>
     <script src="/ApiJs/Api_ingrediente.js" defer></script>
     <script src="/ApiJs/Api_alergeno.js" ></script>
+    <script src="/ApiJs/Api_carrito.js" defer></script>
+    <script src="/ApiJs/Api_usuario.js" defer></script>
+    <script src="/ApiJs/Api_pedido.js" ></script>
+    <script src="/ApiJs/Api_direccion.js"></script>
+   
+    
     
     <script src="/asset/js/general.js" defer></script>
     <script src="/asset/js/kebabGusto.js" defer></script>
@@ -22,15 +28,15 @@ Sesion::iniciaSesion();
     <script src="/asset/js/herramientas/validation.js"></script>
     <script src="/asset/js/perfilUsuario.js" defer></script>
     <script src="/asset/js/registro.js"></script>
-    <script src="/ApiJs/Api_carrito.js" defer></script>
-    <script src="/ApiJs/Api_usuario.js" defer></script>
-    <script src="/ApiJs/Api_pedido.js" ></script>
+    
     <script src="/asset/js/gpedidos.js"></script>
+    <script src="/asset/js/gusuarios.js"></script>
     <script src="/asset/js/finalizarCompra.js" ></script>
     <script src="/asset/js/modalCarrito.js" ></script>
     <script src="/asset/js/mispedidos.js" ></script>
     <script src="/asset/js/pMantenimientoKebab.js" ></script>
     <script src="/asset/js/pMantenimientoIngrediente.js" ></script>
+    
 
     
 
@@ -53,6 +59,8 @@ Sesion::iniciaSesion();
     <link rel="stylesheet" href="../asset/css/misPedidos.css">
     <link rel="stylesheet" href="../asset/css/mantenimientoKebab.css">
     <link rel="stylesheet" href="../asset/css/mantenimientoIngrediente.css">
+    <link rel="stylesheet" href="../asset/css/modalNewDireccion.css">
+    <link rel="stylesheet" href="../asset/css/usuario.css">
 
 
     

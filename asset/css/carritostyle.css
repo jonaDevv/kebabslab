@@ -1,4 +1,4 @@
-/* Estilo para el modal */
+
 .carritomodal {
     position: fixed;               /* Fija el contenedor en la pantalla */
     top: 0;                        /* Alinea con el borde superior */
@@ -9,7 +9,8 @@
     background-color: white;       /* Fondo blanco */
     box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.3); /* Sombra en el lado izquierdo */
     z-index: 1005;                 /* Asegura que esté encima */
-    overflow-y: auto;              /* Habilita el desplazamiento si el contenido excede la altura */
+    overflow-y: auto; 
+    font-family: Jetbrains Mono;       /* Habilita el desplazamiento si el contenido excede la altura */
 }
 
 /* Fondo oscuro detrás del modal */
@@ -58,16 +59,35 @@
 
 .carrito-container{
 
-
+    display: flex;
     text-align: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
 .modal-kebab-item{
 
-    text-align: left;
-    margin-left: 30px;
+    text-align: center;
+    margin:auto;
+    background-color: rgb(242, 174, 16);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    color: white;
+    height: 30px;
+    width:250px;
+    
 
+}
+
+.modal-kebab-item:hover{
+    background-color: rgba(36, 36, 92, 0.9);
+    color:rgb(242, 174, 16);
+    cursor: pointer;
+    height: 40px;
+    width:250px;
 }
 
 * {
@@ -137,4 +157,29 @@
 
     
     font-size: bold;
+    font-size: 20px;
+}
+
+#total{
+    font-size: 20px;
+    font-size: bold;
+}
+
+.botones-cantidad {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-cantidad {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-cantidad:hover {
+    background-color: #ddd;
 }
