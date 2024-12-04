@@ -159,16 +159,16 @@ async function cargarPedidosUser() {
 }
 
 
-async function enviarCorreo(cuerpo,destinatario) {
+async function enviarCorreo(cuerpo, destinatario) {
     // Definir los datos a enviar a la API
     const datosCorreo = {
-        cuerpo: cuerpo, // El cuerpo del correo que se enviará
+        cuerpo: cuerpo, // El cuerpo del correo
         destinatario: destinatario // Dirección del destinatario
     };
 
     try {
         // Enviar la solicitud POST a la API
-        const respuesta = await fetch('/Api/Api_sendEmail.php', {
+        const respuesta = await fetch('../Email/email.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -178,9 +178,15 @@ async function enviarCorreo(cuerpo,destinatario) {
 
         // Convertir la respuesta a JSON
         const resultado = await respuesta.json();
-        console.log(resultado);
-        
+        console.log('Respuesta del servidor:', resultado);
+
+        if (respuesta.ok) {
+            console.log('Correo enviado correctamente');
+        } else {
+            console.error('Error en el envío del correo:', resultado.message);
+        }
     } catch (error) {
         console.error('Error en la solicitud:', error);
     }
 }
+

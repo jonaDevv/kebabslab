@@ -272,6 +272,7 @@ function tramitarPedido(){
                 //Restamos el dinero del monedero del user.
 
                  window.location.reload();
+                 
             }else{
                 return alert("No tienes suficiente dinero para pagar");
             }

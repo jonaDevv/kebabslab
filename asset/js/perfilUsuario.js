@@ -78,6 +78,11 @@ window.addEventListener('load', function () {
         }
     
     
+    agregarBtn=document.getElementById("agregarDir")
+    agregarBtn.addEventListener("click",function(){
+        alert("Agregar Dirección")
+        enviarCorreo('Prueba de cuerpo de correo', 'ejemplo@correo.com');
+    })
     
         
 
