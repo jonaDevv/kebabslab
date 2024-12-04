@@ -125,6 +125,13 @@ async function cargarPedidosUser() {
                    if(pedido){
                    pedido.appendChild(cancelarBtn);
                     }
+
+                }else if(item.estado === "entregado"){
+
+                    pedido.style.backgroundColor="green";
+                    
+
+
                 }
                 
                 pedido.addEventListener("click", function() {

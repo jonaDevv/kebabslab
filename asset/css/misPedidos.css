@@ -1,4 +1,5 @@
 /* Contenedor general */
+
 .cont-misPedidos {
     display: flex;
     flex-direction: column; /* Colocar los pedidos en columna */
@@ -10,7 +11,8 @@
     max-width: 800px; /* Ancho máximo del contenedor */
     overflow-y: auto; /* Scroll vertical si hay demasiados pedidos */
     max-height: 500px; /* Limitar la altura */
-    margin: auto; /* Centrar el contenedor en la página */
+   margin-top: 5em;
+   margin-lefT:35em;
     align-items: center; /* Centrar el contenido horizontalmente */
     justify-content: center; /* Centrar el contenido verticalmente */
     display: flex; /* Flexbox para centrar los elementos hijos */

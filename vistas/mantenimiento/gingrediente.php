@@ -70,7 +70,7 @@
     <div class="modal-contentAKI">
         
 
-        <!-- Contenedor interno para organizar el formulario y los ingredientes -->
+        
         <div class="modal-inner-containerI">
             <!-- Formulario -->
             <div class="gingrediente-columnAK">

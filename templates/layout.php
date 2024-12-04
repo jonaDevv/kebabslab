@@ -36,6 +36,8 @@ Sesion::iniciaSesion();
     <script src="/asset/js/mispedidos.js" ></script>
     <script src="/asset/js/pMantenimientoKebab.js" ></script>
     <script src="/asset/js/pMantenimientoIngrediente.js" ></script>
+    <script src="/asset/js/pMantenimientoAlergeno.js" ></script>
+
     
 
     
@@ -59,6 +61,7 @@ Sesion::iniciaSesion();
     <link rel="stylesheet" href="../asset/css/misPedidos.css">
     <link rel="stylesheet" href="../asset/css/mantenimientoKebab.css">
     <link rel="stylesheet" href="../asset/css/mantenimientoIngrediente.css">
+    <link rel="stylesheet" href="../asset/css/mantenimientoAlergeno.css">
     <link rel="stylesheet" href="../asset/css/modalNewDireccion.css">
     <link rel="stylesheet" href="../asset/css/usuario.css">
 

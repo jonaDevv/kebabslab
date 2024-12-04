@@ -8,9 +8,16 @@ actualizarCarritoUI();
 
 
 async function anadirCarrito(kebab) {
-   
-   const direccion= await getDireccionId(user.id);
-   console.log(direccion.direccion);
+   var direccion ="";
+    try {
+
+        direccion = await getDireccionId(user.id);
+        
+       
+    } catch (error) {
+        console.error("Ocurrió un error al obtener la dirección:", error);
+        alert("Debe estar logeado para poder añadir elementos al carrito");
+    }
    
       carritoData.push({
             usuario_id: user.id ,
@@ -254,7 +261,8 @@ function tramitarPedido(){
                 createPedido(carritoData).then(json => {
                     
                     console.log("¡Pedido tramitado con éxito!");
-                    console.log(json);  
+                    console.log(json); 
+                    
                    
                 })
                 .catch(error => {
@@ -263,7 +271,7 @@ function tramitarPedido(){
                 
                 //Restamos el dinero del monedero del user.
 
-                // window.location.reload();
+                 window.location.reload();
             }else{
                 return alert("No tienes suficiente dinero para pagar");
             }
@@ -281,6 +289,7 @@ function tramitarPedido(){
                 modalFinalizarcompra.remove()
                 overlayCarrito.remove()
                 vaciarCarrito()
+                
                 
             }
            

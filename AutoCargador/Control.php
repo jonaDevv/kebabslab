@@ -77,6 +77,10 @@ class Control {
     public static function gingrediente() {
         require_once './Vistas/mantenimiento/gingrediente.php';
     }
+
+    public static function galergeno() {
+        require_once './Vistas/mantenimiento/galergeno.php';
+    }
     
     public static function gkebab() {
         include __DIR__ . '/../vistas/mantenimiento/gKebab.php';

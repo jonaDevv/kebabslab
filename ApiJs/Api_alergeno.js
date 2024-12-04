@@ -25,6 +25,23 @@ async function getAlergenos() {
 }
 
 
+async function createAlergeno(a){
+  
+    const response = await fetch('/Api/Api_alergeno.php',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(a)
+  });
+
+  const crearA = await response.json();
+
+  return crearA;
+  
+}
+
+
 /**
  * 
  * @param {*} id del ingrediente que queremos obtener

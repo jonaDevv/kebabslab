@@ -27,6 +27,7 @@ class rout{
                 "misPedido" => (Control::misPedidos()),
                 "gkebab" => (Control::gkebab()),
                 "gingrediente" => (Control::gingrediente()),
+                "galergeno" => (Control::galergeno()),
 
                 "cerrarSesion" => (Control::cerrarSesion()),
 
